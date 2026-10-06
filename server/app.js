@@ -11,6 +11,9 @@ import {
 import { z } from "zod";
 import path from "node:path";
 import { existsSync } from "node:fs";
+import multer from "multer";
+import { readFile, unlink } from "node:fs/promises";
+import { pipeline } from "node:stream/promises";
 import { courses, lessons, sources } from "../shared/catalog.js";
 export const hashPassword = (password) => {
   const salt = randomBytes(16).toString("hex");
@@ -21,6 +24,24 @@ function verifyPassword(password, stored) {
   const actual = scryptSync(password, salt, 64),
     expected = Buffer.from(hash, "hex");
   return actual.length === expected.length && timingSafeEqual(actual, expected);
+}
+function websiteOrigin(value) {
+  if (!value || typeof value !== "string") return null;
+  try {
+    const url = new URL(value.trim());
+    if (
+      !["http:", "https:"].includes(url.protocol) ||
+      url.username ||
+      url.password ||
+      url.pathname !== "/" ||
+      url.search ||
+      url.hash
+    )
+      return null;
+    return url.origin;
+  } catch {
+    return null;
+  }
 }
 const lessonSchema = z.object({
   title: z.string().trim().min(3).max(140),
@@ -53,12 +74,23 @@ const lessonSchema = z.object({
         return false;
       }
     }, "Use a YouTube or Vimeo HTTPS link"),
+  mediaIds: z
+    .array(z.string().regex(/^(?:[a-f\d]{24}|[a-f\d-]{36})$/i))
+    .max(30)
+    .optional()
+    .default([]),
   status: z.enum(["draft", "published"]),
 });
 export function createApp(
   store,
   { production = false, clientOrigin = "" } = {},
 ) {
+  const configuredOrigin = websiteOrigin(clientOrigin);
+  if (clientOrigin && !configuredOrigin) {
+    throw new Error(
+      "CLIENT_ORIGIN must be an HTTP or HTTPS website address without a path, query, or credentials.",
+    );
+  }
   const app = express();
   app.disable("x-powered-by");
   app.set("trust proxy", 1);
@@ -87,17 +119,26 @@ export function createApp(
       !["GET", "HEAD", "OPTIONS"].includes(req.method) &&
       req.headers.origin
     ) {
+      const origin = websiteOrigin(req.headers.origin);
       const allowed = production
-        ? [clientOrigin]
+        ? [configuredOrigin]
         : [
             "http://localhost:5173",
             "http://127.0.0.1:5173",
             "http://localhost:4000",
             "http://127.0.0.1:4000",
-            clientOrigin,
+            configuredOrigin,
+            // Vite preserves Host when proxying /api. Accept the actual local
+            // website origin, including alternate ports and LAN addresses.
+            // Production continues to require the explicit configured origin.
+            websiteOrigin(`${req.protocol}://${req.get("host")}`),
           ];
-      if (!allowed.includes(req.headers.origin))
-        return res.status(403).json({ error: "This origin is not allowed." });
+      if (!origin || !allowed.includes(origin))
+        return res.status(403).json({
+          error: production
+            ? "Teacher login is not enabled for this website address. Set CLIENT_ORIGIN on the server to this site's exact origin and restart the server."
+            : "This website address is not allowed. Open the URL shown by npm run dev, or set CLIENT_ORIGIN in .env to your browser's website address and restart the server.",
+        });
     }
     next();
   });
@@ -116,6 +157,59 @@ export function createApp(
     req.sessionKey = key;
     next();
   };
+  const mediaUpload = multer({
+    dest: path.resolve(".data/uploads"),
+    limits: { fileSize: 4_000_000, files: 1 },
+    fileFilter: (_req, file, done) => {
+      if (
+        [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+          "video/mp4",
+          "video/webm",
+          "application/pdf",
+          "text/plain",
+          "text/markdown",
+        ].includes(file.mimetype)
+      )
+        return done(null, true);
+      return done(
+        new Error(
+          "Choose a JPG, PNG, GIF, WebP, MP4, WebM, PDF, TXT or Markdown file.",
+        ),
+      );
+    },
+  });
+  const inspectUpload = async (file) => {
+    const head = await readFile(file.path).then((data) => data.subarray(0, 16));
+    const signatures = {
+      "image/png": head
+        .subarray(0, 8)
+        .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])),
+      "image/jpeg": head[0] === 255 && head[1] === 216 && head[2] === 255,
+      "image/gif": ["GIF87a", "GIF89a"].includes(
+        head.subarray(0, 6).toString("ascii"),
+      ),
+      "image/webp":
+        head.subarray(0, 4).toString("ascii") === "RIFF" &&
+        head.subarray(8, 12).toString("ascii") === "WEBP",
+      "video/mp4": head.subarray(4, 8).toString("ascii") === "ftyp",
+      "video/webm": head
+        .subarray(0, 4)
+        .equals(Buffer.from([0x1a, 0x45, 0xdf, 0xa3])),
+      "application/pdf": head.subarray(0, 5).toString("ascii") === "%PDF-",
+      "text/plain": !head.includes(0),
+      "text/markdown": !head.includes(0),
+    };
+    if (!signatures[file.mimetype])
+      throw Object.assign(
+        new Error("The file contents do not match their declared file type."),
+        { status: 400 },
+      );
+  };
+  const cleanUpload = (file) => unlink(file.path).catch(() => {});
   app.get("/api/health", (_req, res) =>
     res.json({ status: "ok", storage: store.mode }),
   );
@@ -123,7 +217,21 @@ export function createApp(
     const published = [];
     for (const lesson of lessons) {
       const override = await store.get("published-" + lesson.id);
-      published.push(override ? { ...lesson, ...override } : lesson);
+      const attachments = [];
+      for (const id of override?.mediaIds ?? []) {
+        const saved = await store.get(`upload-${id}`);
+        if (saved)
+          attachments.push({
+            id: saved.id,
+            name: saved.name,
+            type: saved.type,
+            size: saved.size,
+          });
+      }
+      published.push({
+        ...(override ? { ...lesson, ...override } : lesson),
+        mediaAttachments: attachments,
+      });
     }
     res.json({ courses, lessons: published, sources });
   });
@@ -139,6 +247,129 @@ export function createApp(
       configured: !!admin,
       authenticated: !!session && session.expires > Date.now(),
     });
+  });
+  app.post(
+    "/api/admin/uploads",
+    protect,
+    (req, res, next) => {
+      mediaUpload.single("file")(req, res, (error) =>
+        error ? next(error) : next(),
+      );
+    },
+    async (req, res) => {
+      if (!req.file)
+        return res.status(400).json({ error: "Choose a file to upload." });
+      try {
+        await inspectUpload(req.file);
+        const name =
+          path
+            .basename(req.file.originalname)
+            .replace(/[^\p{L}\p{N}._ -]/gu, "")
+            .slice(0, 120) || "classroom-file";
+        const saved = await store.putFile(req.file.path, {
+          name,
+          type: req.file.mimetype,
+          createdAt: new Date().toISOString(),
+        });
+        res.status(201).json({
+          id: saved.id,
+          name: saved.name,
+          type: saved.type,
+          size: saved.size,
+        });
+      } finally {
+        await cleanUpload(req.file);
+      }
+    },
+  );
+  app.post(
+    "/api/admin/import-notes",
+    protect,
+    (req, res, next) => {
+      mediaUpload.single("file")(req, res, (error) =>
+        error ? next(error) : next(),
+      );
+    },
+    async (req, res) => {
+      if (!req.file)
+        return res
+          .status(400)
+          .json({ error: "Choose a Markdown or text notes file." });
+      try {
+        if (!["text/plain", "text/markdown"].includes(req.file.mimetype))
+          return res.status(400).json({
+            error:
+              "Notes import supports .txt and .md. Upload PDFs as student resources.",
+          });
+        await inspectUpload(req.file);
+        const text = await readFile(req.file.path, "utf8");
+        if (Buffer.byteLength(text) > 30_000)
+          return res
+            .status(413)
+            .json({ error: "Notes import is limited to 30 KB." });
+        const chunks = text
+          .trim()
+          .split(/\n(?=#{1,3}\s)/)
+          .filter(Boolean);
+        const notes = chunks
+          .slice(0, 20)
+          .map((chunk, i) => {
+            const lines = chunk.split(/\r?\n/);
+            const heading =
+              lines[0].replace(/^#{1,3}\s*/, "").trim() ||
+              `Imported notes ${i + 1}`;
+            return [
+              heading.slice(0, 120),
+              lines.slice(1).join("\n").trim().slice(0, 5000) ||
+                chunk.slice(0, 5000),
+            ];
+          })
+          .filter(([, body]) => body);
+        if (!notes.length)
+          return res
+            .status(400)
+            .json({ error: "Add note text under a heading and try again." });
+        res.json({ name: path.basename(req.file.originalname), notes });
+      } finally {
+        await cleanUpload(req.file);
+      }
+    },
+  );
+  app.get("/api/media/:id", async (req, res, next) => {
+    try {
+      const file = await store.getFile(req.params.id);
+      if (!file) return res.status(404).json({ error: "Media not found." });
+      let isPublished = false;
+      for (const lesson of lessons) {
+        const published = await store.get(`published-${lesson.id}`);
+        if (published?.mediaIds?.includes(file.metadata.id)) {
+          isPublished = true;
+          break;
+        }
+      }
+      if (!isPublished) {
+        const token = req.cookies.sewestian_session;
+        const session =
+          token && token.length === 64
+            ? await store.get(
+                "session-" + createHash("sha256").update(token).digest("hex"),
+              )
+            : null;
+        if (!session || session.expires < Date.now())
+          return res.status(404).json({ error: "Media not found." });
+      }
+      res.set({
+        "Content-Type": file.metadata.type,
+        "X-Content-Type-Options": "nosniff",
+        "Content-Disposition": "inline",
+        "Cache-Control": isPublished
+          ? "public, max-age=3600"
+          : "private, no-store",
+      });
+      await pipeline(file.stream, res);
+    } catch (error) {
+      next(error);
+    }
   });
   app.post(
     "/api/auth/login",
@@ -195,12 +426,18 @@ export function createApp(
     for (const lesson of lessons) {
       const draft = await store.get("draft-" + lesson.id),
         published = await store.get("published-" + lesson.id);
+      const mediaAttachments = [];
+      for (const id of (draft ?? published)?.mediaIds ?? []) {
+        const file = await store.get(`upload-${id}`);
+        if (file) mediaAttachments.push(file);
+      }
       result.push({
         ...lesson,
         ...published,
         ...draft,
         status: draft ? "draft" : published ? "published" : "original",
         publishedAt: published?.publishedAt ?? null,
+        mediaAttachments,
       });
     }
     res.json(result);
@@ -212,6 +449,11 @@ export function createApp(
     if (!parsed.success)
       return res.status(400).json({ error: parsed.error.issues[0].message });
     const { status, ...content } = parsed.data;
+    for (const id of content.mediaIds)
+      if (!(await store.get(`upload-${id}`)))
+        return res.status(400).json({
+          error: "One attached upload could not be found. Upload it again.",
+        });
     content.updatedAt = new Date().toISOString();
     if (status === "published") {
       content.publishedAt = content.updatedAt;
@@ -232,11 +474,20 @@ export function createApp(
   }
   app.use((err, _req, res, _next) => {
     console.error(err.message);
-    res.status(err.status === 400 ? 400 : 500).json({
+    const mediaTypeError = err.message?.startsWith("Choose a JPG");
+    const status =
+      err.code === "LIMIT_FILE_SIZE"
+        ? 413
+        : err.status === 400 || mediaTypeError
+          ? 400
+          : 500;
+    res.status(status).json({
       error:
-        err.status === 400
-          ? "Invalid request body."
-          : "Something went wrong. Please try again.",
+        err.code === "LIMIT_FILE_SIZE"
+          ? "That file is too large. Upload a file smaller than 4 MB."
+          : err.status === 400 || mediaTypeError
+            ? err.message
+            : "Something went wrong. Please try again.",
     });
   });
   return app;

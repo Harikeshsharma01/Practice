@@ -1012,6 +1012,58 @@ function downloadBlob(blob, name) {
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+function MediaAttachments({ attachments = [] }) {
+  if (!attachments.length) return null;
+  return (
+    <section className="lesson-media">
+      <span className="overline">FROM YOUR TEACHER</span>
+      <div className="lesson-media-grid">
+        {attachments.map((file) => (
+          <figure key={file.id}>
+            {file.type.startsWith("image/") ? (
+              <img
+                src={`/api/media/${file.id}`}
+                alt={file.name}
+                loading="lazy"
+              />
+            ) : file.type.startsWith("video/") ? (
+              <video
+                src={`/api/media/${file.id}`}
+                controls
+                preload="metadata"
+                aria-label={file.name}
+              />
+            ) : file.type === "application/pdf" ? (
+              <a
+                className="uploaded-document"
+                href={`/api/media/${file.id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FileText size={24} />
+                <span>{file.name}</span>
+                <ExternalLink size={15} />
+              </a>
+            ) : (
+              <a
+                className="uploaded-document"
+                href={`/api/media/${file.id}`}
+                download={file.name}
+              >
+                <FileText size={24} />
+                <span>{file.name}</span>
+                <Download size={15} />
+              </a>
+            )}
+            {file.type.startsWith("image/") && (
+              <figcaption>{file.name}</figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
 async function exportSlides(lesson) {
   const { default: PptxGenJS } = await import("pptxgenjs");
   const pptx = new PptxGenJS();
@@ -1232,6 +1284,7 @@ function Lesson() {
                   </div>
                 </section>
               ))}
+              <MediaAttachments attachments={l.mediaAttachments} />
               <div className="notebook-tip">
                 <Sparkles size={19} />
                 <span>
@@ -1476,6 +1529,11 @@ function VideoPanel({ lesson }) {
           )}
         </div>
       )}
+      <MediaAttachments
+        attachments={(lesson.mediaAttachments || []).filter((file) =>
+          file.type.startsWith("video/"),
+        )}
+      />
     </div>
   );
 }
@@ -1682,7 +1740,11 @@ function Admin() {
         setItems(data);
         if (!selected) {
           setSelected(data[0].id);
-          setForm({ ...data[0], videoUrl: data[0].videoUrl || "" });
+          setForm({
+            ...data[0],
+            videoUrl: data[0].videoUrl || "",
+            mediaIds: data[0].mediaIds || [],
+          });
         }
       }
     } catch (e) {
@@ -1720,6 +1782,7 @@ function Admin() {
           summary: form.summary,
           notes: form.notes,
           videoUrl: form.videoUrl,
+          mediaIds: form.mediaIds || [],
           status: publish ? "published" : "draft",
         }),
       });
@@ -1855,7 +1918,11 @@ function Admin() {
                   className={selected === l.id ? "active" : ""}
                   onClick={() => {
                     setSelected(l.id);
-                    setForm({ ...l, videoUrl: l.videoUrl || "" });
+                    setForm({
+                      ...l,
+                      videoUrl: l.videoUrl || "",
+                      mediaIds: l.mediaIds || [],
+                    });
                     setError("");
                   }}
                 >
@@ -1982,6 +2049,139 @@ function Admin() {
                     A YouTube or Vimeo video you have permission to share.
                   </small>
                 </label>
+                <section className="teacher-uploads">
+                  <span className="overline">YOUR TEACHING MATERIALS</span>
+                  <p>
+                    Attach an image, short video or PDF to this lesson. Import a
+                    Markdown or text file to turn its headings into notebook
+                    sections.
+                  </p>
+                  <div className="upload-controls">
+                    <label>
+                      Upload an image, video or PDF
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/webm,application/pdf"
+                        disabled={busy}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          setBusy(true);
+                          setError("");
+                          try {
+                            const data = new FormData();
+                            data.append("file", file);
+                            const response = await fetch("/api/admin/uploads", {
+                              method: "POST",
+                              body: data,
+                            });
+                            const result = await response.json();
+                            if (!response.ok)
+                              throw new Error(result.error || "Upload failed.");
+                            setForm((current) => ({
+                              ...current,
+                              mediaIds: [
+                                ...(current.mediaIds || []),
+                                result.id,
+                              ],
+                              mediaAttachments: [
+                                ...(current.mediaAttachments || []),
+                                result,
+                              ],
+                            }));
+                            toast(
+                              "File attached. Save your lesson draft to keep it.",
+                            );
+                          } catch (error) {
+                            setError(error.message);
+                          } finally {
+                            setBusy(false);
+                            e.target.value = "";
+                          }
+                        }}
+                      />
+                    </label>
+                    <label>
+                      Import Markdown or text notes
+                      <input
+                        type="file"
+                        accept=".md,.markdown,.txt,text/plain,text/markdown"
+                        disabled={busy}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          setBusy(true);
+                          setError("");
+                          try {
+                            const data = new FormData();
+                            data.append("file", file);
+                            const response = await fetch(
+                              "/api/admin/import-notes",
+                              { method: "POST", body: data },
+                            );
+                            const result = await response.json();
+                            if (!response.ok)
+                              throw new Error(
+                                result.error || "Notes import failed.",
+                              );
+                            if (form.notes.length + result.notes.length > 20)
+                              throw new Error(
+                                "This lesson has room for 20 notebook sections. Shorten the import first.",
+                              );
+                            setForm((current) => ({
+                              ...current,
+                              notes: [...current.notes, ...result.notes],
+                            }));
+                            toast(
+                              `${result.notes.length} sections imported. Save your draft to keep them.`,
+                            );
+                          } catch (error) {
+                            setError(error.message);
+                          } finally {
+                            setBusy(false);
+                            e.target.value = "";
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <small>
+                    Uploads are limited to 4 MB each. Students can view images,
+                    PDFs and short video clips after you publish. Use the video
+                    link above for longer lessons.
+                  </small>
+                  {!!form.mediaAttachments?.length && (
+                    <div className="upload-list">
+                      {form.mediaAttachments.map((file) => (
+                        <div key={file.id}>
+                          <FileText size={15} />
+                          <span>
+                            {file.name}
+                            <small>{(file.size / 1024).toFixed(0)} KB</small>
+                          </span>
+                          <button
+                            type="button"
+                            className="icon-button"
+                            aria-label={`Remove ${file.name}`}
+                            onClick={() =>
+                              setForm({
+                                ...form,
+                                mediaIds: (form.mediaIds || []).filter(
+                                  (id) => id !== file.id,
+                                ),
+                                mediaAttachments: form.mediaAttachments.filter(
+                                  (item) => item.id !== file.id,
+                                ),
+                              })
+                            }
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </section>
                 {error && (
                   <p className="form-error" role="alert">
                     {error}
@@ -2085,6 +2285,7 @@ function CourseBook() {
             </span>
             <h2>{l.title}</h2>
             <p className="chapter-summary">{l.summary}</p>
+            <MediaAttachments attachments={l.mediaAttachments} />
             {l.notes.map(([title, body], j) => (
               <div key={j}>
                 <h3>{title}</h3>

@@ -139,3 +139,98 @@ test("authentication, protected drafts, public publishing, validation and persis
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test("local login accepts the actual website origin while production requires its configured origin", async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), "sewestian-origin-"));
+  const store = await createStore({ directory });
+  const password = "origin-test-" + crypto.randomUUID();
+  await store.set("admin", {
+    email: "teacher@example.test",
+    passwordHash: hashPassword(password),
+  });
+  async function withServer(options, run) {
+    const server = createApp(store, options).listen(0, "127.0.0.1");
+    await new Promise((resolve) => server.once("listening", resolve));
+    const base = `http://127.0.0.1:${server.address().port}`;
+    const login = (origin, headers = {}) =>
+      fetch(base + "/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: origin,
+          ...headers,
+        },
+        body: JSON.stringify({ email: "teacher@example.test", password }),
+      });
+    try {
+      await run(login, base);
+    } finally {
+      await new Promise((resolve) => server.close(resolve));
+    }
+  }
+  try {
+    await withServer({}, async (login, base) => {
+      assert.equal(
+        (await login(base)).status,
+        200,
+        "same-origin login on an alternate development port",
+      );
+      assert.equal(
+        (await login("http://192.168.1.12:5174", { Host: "192.168.1.12:5174" }))
+          .status,
+        200,
+        "LAN origin preserved by the development proxy",
+      );
+      assert.equal(
+        (await login("http://[::1]:5174", { Host: "[::1]:5174" })).status,
+        200,
+        "IPv6 loopback",
+      );
+      assert.equal(
+        (await login("https://attacker.example")).status,
+        403,
+        "unrelated origins remain blocked",
+      );
+      assert.equal(
+        (await login("null")).status,
+        403,
+        "opaque origins remain blocked",
+      );
+    });
+    await withServer(
+      { production: true, clientOrigin: "  https://classroom.example/  " },
+      async (login, base) => {
+        const response = await login("https://classroom.example");
+        assert.equal(
+          response.status,
+          200,
+          "configured origin tolerates surrounding whitespace and trailing slash",
+        );
+        assert.match(response.headers.get("set-cookie"), /Secure/);
+        assert.equal(
+          (await login(base)).status,
+          403,
+          "development same-origin handling is disabled in production",
+        );
+        assert.equal(
+          (await login("https://preview.classroom.example")).status,
+          403,
+          "no implicit subdomain access",
+        );
+        assert.equal(
+          (await login("https://classroom.example.attacker.example")).status,
+          403,
+          "no hostname prefix matching",
+        );
+        assert.equal((await login("null")).status, 403);
+      },
+    );
+    assert.throws(
+      () =>
+        createApp(store, { clientOrigin: "https://classroom.example/admin" }),
+      /CLIENT_ORIGIN/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});

@@ -22,6 +22,7 @@
     "helmet": "^8.1.0",
     "lucide-react": "^0.468.0",
     "mongoose": "^8.19.0",
+    "multer": "^2.4.0",
     "pptxgenjs": "^4.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

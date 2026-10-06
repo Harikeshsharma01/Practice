@@ -20,6 +20,7 @@ export const sources = [
     note: "Use the applicable official textbook and your institution’s approved practical list.",
   },
 ];
+import { expandedLessons } from "./expanded-lessons.js";
 export const lessons = [
   {
     id: "computer-systems",
@@ -834,6 +835,7 @@ export const lessons = [
       explanation: "The dollar signs fix the column B and row 1.",
     },
   },
+  ...expandedLessons,
 ];
 const unit = (title, ids = [], pending = []) => ({
   title,
@@ -854,12 +856,12 @@ export const courses = [
       unit("Operating systems", ["operating-systems"]),
       unit(
         "Algorithms & programming",
-        ["algorithms", "cpp"],
+        ["algorithms", "cpp", "recursion", "searching"],
         ["Board-specific C++ practical list"],
       ),
       unit(
         "Web foundations",
-        ["html"],
+        ["html", "css-layout", "colour-codes"],
         ["Prescribed textbook chapter mapping"],
       ),
     ],
@@ -874,7 +876,11 @@ export const courses = [
     description:
       "Discover the circuits and hardware that make computing possible.",
     units: [
-      unit("Digital foundations", ["number-systems", "logic-gates"]),
+      unit("Digital foundations", [
+        "number-systems",
+        "logic-gates",
+        "half-adder",
+      ]),
       unit(
         "Computer organisation",
         ["computer-systems"],
@@ -896,10 +902,17 @@ export const courses = [
     color: "lavender",
     description: "Connect programming, systems and the modern web.",
     units: [
-      unit("Systems & programming", ["operating-systems", "cpp", "algorithms"]),
+      unit("Systems & programming", [
+        "operating-systems",
+        "cpp",
+        "algorithms",
+        "recursion",
+        "searching",
+        "data-structures-plus",
+      ]),
       unit(
         "Web development",
-        ["html"],
+        ["html", "css-layout", "colour-codes"],
         ["Prescribed HTML and scripting coverage"],
       ),
       unit(
@@ -919,7 +932,7 @@ export const courses = [
     description:
       "Explore digital logic, processor architecture and communication.",
     units: [
-      unit("Digital logic", ["logic-gates", "number-systems"]),
+      unit("Digital logic", ["logic-gates", "number-systems", "half-adder"]),
       unit(
         "Processor foundations",
         ["computer-systems"],
@@ -946,14 +959,17 @@ export const courses = [
         "computer-systems",
         "number-systems",
         "logic-gates",
+        "half-adder",
       ]),
       unit("Computational thinking & programming", [
         "algorithms",
         "python-basics",
         "control-flow",
+        "python-functions",
+        "lists-and-tuples",
         "data-structures",
       ]),
-      unit("Society, law & ethics", ["cyber-safety"]),
+      unit("Society, law & ethics", ["cyber-safety", "cybersecurity"]),
       unit(
         "Practical portfolio",
         [],
@@ -973,13 +989,23 @@ export const courses = [
     units: [
       unit(
         "Computational thinking & programming",
-        ["python-basics", "functions-files", "data-structures"],
+        [
+          "python-basics",
+          "control-flow",
+          "python-functions",
+          "functions-files",
+          "data-structures",
+          "data-structures-plus",
+          "lists-and-tuples",
+          "recursion",
+          "searching",
+        ],
         ["Exception handling, binary/CSV files and prescribed programs"],
       ),
-      unit("Computer networks", ["networks"]),
+      unit("Computer networks", ["networks", "network-addressing"]),
       unit(
         "Database management",
-        ["sql"],
+        ["sql", "database-design"],
         ["Python–SQL connectivity and prescribed project requirements"],
       ),
     ],
@@ -996,13 +1022,13 @@ export const courses = [
     units: [
       unit(
         "Employability skills",
-        ["cyber-safety"],
+        ["cyber-safety", "cybersecurity"],
         ["Official employability skills units"],
       ),
       unit("IT foundations", ["computer-systems", "operating-systems"]),
       unit(
         "Productivity & web skills",
-        ["spreadsheets", "html"],
+        ["spreadsheets", "html", "css-layout", "colour-codes"],
         ["Current 802 subject-specific units and practical list"],
       ),
     ],
@@ -1024,7 +1050,15 @@ export const courses = [
       ),
       unit(
         "Data & web foundations",
-        ["sql", "networks", "html"],
+        [
+          "sql",
+          "database-design",
+          "networks",
+          "network-addressing",
+          "html",
+          "css-layout",
+          "colour-codes",
+        ],
         [
           "Current 802 programming environment, subject units and practical list",
         ],

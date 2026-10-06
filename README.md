@@ -5,19 +5,19 @@ A responsive learning portal for Maharashtra and CBSE classes XI and XII, built 
 ## What is available
 
 - Eight provisional board/class pathways: Maharashtra XI/XII CS–I and CS–II; CBSE XI/XII Computer Science (083) and Information Technology (802).
-- Fifteen original foundation lessons. One canonical lesson can belong to several courses without duplication.
-- Five working simulations: binary conversion, six logic gates, a simplified CPU cycle, bubble sort and a web request journey.
+- Twenty-six original foundation lessons. One canonical lesson can belong to several courses without duplication.
+- Fourteen interactive simulations: binary and hex, six logic gates, a simplified CPU cycle, bubble sort, networking, full addition, recursive call stacks, binary search, Python list indices, stacks and queues, a safe sample SQL filter, subnet calculation, colour contrast and CSS layouts.
 - Search, board/class filters, bookmarks and learning progress saved in the student's browser.
 - Worked examples, practical tasks with solutions, self-check questions, notebook-style PNG exports and editable PPTX exports.
 - Printable course books combining available notes, examples, exercises and solutions. Browser printing can save these as PDFs.
-- Teacher authentication with a salted scrypt password hash and an eight-hour HttpOnly session cookie. Drafts remain private; publishing changes the public lesson. Teachers can attach YouTube/Vimeo lessons.
+- Teacher authentication with a salted scrypt password hash and an eight-hour HttpOnly session cookie. Drafts remain private; publishing changes the public lesson. Teachers can add YouTube/Vimeo links, upload 4 MB images, short videos and PDFs, and import headings from Markdown/text notes.
 - Responsive layouts, keyboard navigation, reduced-motion support and locally served fonts.
 
 ## Content status — please read before classroom use
 
-This is a foundation edition, **not a completed or officially verified curriculum**. The supplied ChatGPT share links, CBSE academic website and eBalbharati were blocked by the workspace's network proxy (403). Their contents were not imported. Course maps are explicitly provisional and show pending areas. The 2026–27 curriculum, unit allocation, marking scheme, practical counts, prescribed programming environments and institutional requirements must be checked against official documents before claiming syllabus coverage.
+This is a foundation edition, **not a completed or officially verified curriculum**. The supplied ChatGPT share links, CBSE academic website, Maharashtra board website and eBalbharati were blocked by the workspace's network proxy (403). Their contents were not imported. Course maps are explicitly provisional and show pending areas. The 2026–27 curriculum, unit allocation, marking scheme, practical counts, prescribed programming environments and institutional requirements must be checked against official documents before claiming syllabus coverage. Provide the official PDFs and shared notes for exact alignment; references and access results are in `docs/SOURCE_STATUS.md`.
 
-CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. Videos are empty until the teacher adds a permitted video link. Five simulations are implemented; other topics do not yet have dedicated simulations. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. There is no AI image/video service or arbitrary code execution. Student progress is per browser, without cross-device accounts.
+CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. Videos are empty until a teacher adds a link or uploads a permitted short clip. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. There is no AI image/video service or arbitrary code execution. Student progress is per browser, without cross-device accounts.
 
 ## Local development
 
@@ -32,7 +32,7 @@ cp .env.example .env
 npm run dev
 ```
 
-The frontend runs on port 5173 and proxies `/api` to Express on port 4000. If `MONGODB_URI` is absent in development, the server explicitly uses an ignored `.data/` JSON store. It preserves local drafts across restarts but is not used for production.
+Vite normally serves the frontend at `http://localhost:5173` and proxies `/api` to Express on port 4000. If that port is busy, Vite automatically uses its next available port, such as `http://localhost:5174`; open the exact address Vite prints in the terminal. The development API accepts the matching same-origin request, including localhost, loopback, and LAN addresses forwarded by Vite. Production login still requires the exact configured `CLIENT_ORIGIN`. If `MONGODB_URI` is absent in development, the server explicitly uses an ignored `.data/` JSON store. It preserves local drafts and uploaded media across restarts but is not used for production.
 
 For MongoDB development, set `MONGODB_URI` in `.env` to a reachable database. Never commit secrets.
 
