@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.718
+The photo leaves this item open-ended.
+
+00:00:02.718 --> 00:00:09.965
+Suggested practice circuits are an XOR from basic gates, a 2-to-1 multiplexer, and an equality comparator.
+
+00:00:10.965 --> 00:00:13.683
+The photo leaves this item open-ended.
+
+00:00:13.683 --> 00:00:20.930
+Suggested practice circuits are an XOR from basic gates, a 2-to-1 multiplexer, and an equality comparator.
+
+00:00:21.930 --> 00:00:26.874
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:26.874 --> 00:00:28.934
+Do not leave inputs floating.
+
+00:00:28.934 --> 00:00:36.350
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

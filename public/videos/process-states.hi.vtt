@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:19.812
+Process ready, running या waiting अवस्था में हो सकता है।
+
+00:00:19.812 --> 00:00:39.625
+CPU मिलने पर ready से running जाता है; input की प्रतीक्षा में waiting हो सकता है।

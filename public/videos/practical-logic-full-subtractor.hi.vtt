@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:15.320
+Full subtractor पिछले स्थान का borrow-in भी लेता है।
+
+00:00:15.320 --> 00:00:30.640
+Difference और borrow-out को अलग निकालें और सभी आठ combinations जाँचें।

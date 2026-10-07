@@ -5,10 +5,12 @@ A responsive learning portal for Maharashtra and CBSE classes XI and XII, built 
 ## What is available
 
 - Eight provisional board/class pathways: Maharashtra XI/XII CS–I and CS–II; CBSE XI/XII Computer Science (083) and Information Technology (802).
-- Eighty-seven lessons: 26 foundation lessons and 61 practical workshops, with 592 logical note sections. One canonical lesson can belong to several courses without duplication.
+- 138 lessons: 77 explanatory lessons and 61 practical workshops, with 847 logical note sections. One canonical lesson can belong to several courses without duplication.
 - Twenty-one interactive simulations, including seven step-by-step journeys from input to output: binary and hex, six logic gates, a simplified CPU cycle, bubble sort, networking, full addition, recursive call stacks, binary search, Python list indices, stacks and queues, a safe sample SQL filter, subnet calculation, colour contrast and CSS layouts.
 - Search, board/class filters, bookmarks and learning progress saved in the student's browser.
 - Worked examples, practical tasks with solutions, self-check questions, notebook-style PNG exports and editable PPTX exports.
+- 33 unit study books across all eight current teaching pathways, each with 50 logical study pages (1,650 page placements, with shared content reused). Handwriting/typed reading, topic navigation, answer reveals, saved position, Markdown download and complete-book PDF printing.
+- 138 locally generated narrated MP4 explainers, one per current canonical topic, with English captions, Hindi explanation summaries, transcripts and downloads. Guided four-stop concept maps complement the 21 interactive labs.
 - Printable course books combining available notes, examples, exercises and solutions. Browser printing can save these as PDFs.
 - Teacher authentication with a salted scrypt password hash and an eight-hour HttpOnly session cookie. Drafts remain private; publishing changes the public lesson. Teachers can add YouTube/Vimeo links, upload 4 MB images, short videos and PDFs, and import headings from Markdown/text notes. The chapter studio supports new chapters, duplication, up to 100 logical pages per chapter, a 50-page outline planner, course assignments, page ordering, editable examples/solutions/quizzes, and appearance controls.
 - Practical journal filters, worked solutions, viva prompts and observations saved in the student’s browser.
@@ -22,7 +24,7 @@ See [the teacher guide](docs/TEACHER_GUIDE.md) for the complete workflow and pho
 
 This is a foundation edition, **not a completed or officially verified curriculum**. The two supplied journal photos were transcribed into 35 labeled practical entries; their ambiguous or inferred items are flagged for teacher review. The supplied ChatGPT share links, CBSE academic website, Maharashtra board website and eBalbharati were blocked by the workspace's network proxy (403). Their contents were not imported. Course maps are explicitly provisional and show pending areas. The 2026–27 curriculum, unit allocation, marking scheme, practical counts, prescribed programming environments and institutional requirements must be checked against official documents before claiming syllabus coverage. Provide the official PDFs and shared notes for exact alignment; references and access results are in `docs/SOURCE_STATUS.md`.
 
-CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. Videos are empty until a teacher adds a link or uploads a permitted short clip. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. There is no AI image/video service or arbitrary code execution. Optional text drafting requires a backend OpenAI API key; it is disabled without that key. Student progress is per browser, without cross-device accounts.
+CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. The bundled short videos are narrated slide explainers with a synthetic English voice. Hindi captions are key-idea summaries, not full Hindi narration or word-for-word translations. Teacher links and uploads remain supported. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. Videos were rendered locally with FFmpeg/Pillow/Flite, not an external generative-video API. There is no arbitrary code execution. Optional text drafting requires a backend OpenAI API key; it is disabled without that key. Student progress is per browser, without cross-device accounts.
 
 ## Local development
 
@@ -54,6 +56,8 @@ npm run test:ui
 npm run test:teacher
 # Chapter studio, practical journal and journey browser coverage:
 node tests/studio-browser.mjs
+# Built-app unit reader, captions, video playback, mobile and complete-book PDF:
+node tests/study-books-browser.mjs
 # Galaxy interaction checks with the dev server running:
 node tests/cosmic-browser.mjs
 # Optional bundled example execution checks (g++ and Python required):
@@ -89,8 +93,22 @@ Render's free service can sleep, so the first API request may be slow. The UI an
 - `api/proxy.js` — Vercel same-origin bridge to Render.
 - `tests/` — integration and browser checks.
 
-Next content work: obtain the official syllabus PDFs and the supplied shared-conversation contents; verify every course unit and practical requirement; expand missing lesson coverage; add institution-approved videos, chapter-specific diagrams and practical journal material. Teachers can now create and publish new chapters, edit worked examples and practical solutions, assign courses, and record syllabus mappings from the workspace. Official completeness and 50 finished pages per chapter remain content-authoring work, not claims made by this update.
+Next content work: obtain the official syllabus PDFs and the supplied shared-conversation contents; verify every course unit and practical requirement; expand missing lesson coverage; add institution-approved videos, chapter-specific diagrams and practical journal material. Teachers can now create and publish new chapters, edit worked examples and practical solutions, assign courses, and record syllabus mappings from the workspace. The 50-page books cover the current provisional teaching units, not every officially prescribed textbook chapter. Logical study pages vary in length, and their count does not establish official completeness or 50 dense A4 sheets.
 
 ## Optional lesson assistant
 
 Set `OPENAI_API_KEY` only on the backend and optionally `OPENAI_MODEL` (default `gpt-4.1-mini`). The teacher workspace explains what is sent, supports 1–5 page batches, and requires teacher review before adding generated pages to a draft. The route uses the OpenAI Responses API and `store: false`. No live provider call was made during development; integration was verified with a mocked response. See the teacher guide for configuration and limitations.
+
+## Rebuild the narrated videos
+
+The checked-in MP4s are served as static assets by Vite/Vercel; no video service or API key is needed to watch them. They use short original summaries, worked reasoning and a check/variation from each canonical lesson. Every original topic has an authored Hindi explanation in `shared/hindi-explanations.js`. They supplement the detailed notes rather than replace full-length teaching.
+
+To regenerate changed source videos, install FFmpeg with the `flite` filter and `libx264`, Python 3 with Pillow, and DejaVu fonts, then run:
+
+```bash
+python3 scripts/render-videos.py --limit 1  # preview
+python3 scripts/render-videos.py            # all changed topics
+npm run build
+```
+
+Rendering writes posters, MP4s and WebVTT tracks to `public/videos/`, and metadata to `shared/generated-videos.json`. It reuses unchanged source hashes. These optional rendering tools are not runtime dependencies of the website. Teacher edits do not run this local renderer automatically: the app hides an outdated bundled video when its source lesson changes, while teacher-uploaded videos and external links remain available. Rebuilding teacher-specific videos requires explicitly incorporating their reviewed content into the rendering input.

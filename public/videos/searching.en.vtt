@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.640
+Compare search strategies and follow every comparison.
+
+00:00:04.640 --> 00:00:09.090
+Check index 3: 17 is small, so keep the right side.
+
+00:00:09.090 --> 00:00:11.518
+Check index 5: 29 is large.
+
+00:00:11.518 --> 00:00:13.945
+Check index 4 and find 23.
+
+00:00:14.945 --> 00:00:18.952
+What must be true before binary search can discard half the values?
+
+00:00:18.952 --> 00:00:22.625
+Sorted order makes each middle comparison sufficient to choose a side.

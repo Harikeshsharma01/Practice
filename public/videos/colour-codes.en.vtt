@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.650
+Blend RGB light, read a hexadecimal colour and check text contrast.
+
+00:00:05.650 --> 00:00:14.735
+0 is 00, 128 is 80 and 255 is FF; write the channels in that order: #0080FF.
+
+00:00:15.735 --> 00:00:17.549
+What does #0000FF represent?
+
+00:00:17.549 --> 00:00:21.178
+CSS hex pairs are red, green and blue.
+
+00:00:21.178 --> 00:00:23.900
+FF is the highest channel value.

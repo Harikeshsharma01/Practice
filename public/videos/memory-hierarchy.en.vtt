@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.528
+Memory is organised as a hierarchy because speed, capacity, cost and persistence trade off.
+
+00:00:06.528 --> 00:00:14.455
+Registers hold immediate operands; caches retain recently used blocks; RAM holds active programs; secondary storage keeps files.
+
+00:00:14.455 --> 00:00:18.185
+These layers cooperate rather than replace each other.
+
+00:00:19.185 --> 00:00:23.428
+Recently accessed blocks may remain in cache, reducing slower RAM accesses.
+
+00:00:23.428 --> 00:00:29.214
+A larger array may exceed cache capacity, so the benefit depends on the working set.
+
+00:00:29.214 --> 00:00:32.685
+Cache presence alone does not guarantee a specific time.
+
+00:00:33.685 --> 00:00:36.475
+Which normally retains data without power?
+
+00:00:36.475 --> 00:00:42.055
+An SSD is non-volatile storage; registers and ordinary working RAM are volatile.

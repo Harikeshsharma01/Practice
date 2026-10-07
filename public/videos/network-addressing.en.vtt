@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.545
+Separate a network prefix from host addresses with a /24.
+
+00:00:05.545 --> 00:00:06.135
+Yes.
+
+00:00:06.135 --> 00:00:13.215
+Both share the three octets covered by the 24-bit network prefix: 192.168.10.0/24.
+
+00:00:14.215 --> 00:00:17.125
+How many leading network bits does /24 describe?
+
+00:00:17.125 --> 00:00:21.490
+The number after the slash gives the number of leading prefix bits.

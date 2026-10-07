@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.131
+A transaction groups operations into a logical unit of work.
+
+00:00:04.131 --> 00:00:13.219
+Atomicity means the group succeeds as a unit or is not partly applied; consistency, isolation and durability describe other important transaction properties.
+
+00:00:13.219 --> 00:00:17.350
+Their exact guarantees depend on the database and chosen settings.
+
+00:00:18.350 --> 00:00:25.635
+Applying only the debit loses money from the represented accounts; applying only the credit creates an inconsistent result.
+
+00:00:25.635 --> 00:00:28.064
+Atomic handling avoids this partial-update state.
+
+00:00:28.064 --> 00:00:33.325
+A real financial system needs additional validation and controls beyond this teaching example.
+
+00:00:34.325 --> 00:00:37.031
+Which property addresses all-or-nothing application?
+
+00:00:37.031 --> 00:00:41.360
+Atomicity is the all-or-nothing property of a transaction.

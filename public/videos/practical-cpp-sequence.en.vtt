@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.322
+while checks its condition before the body.
+
+00:00:02.322 --> 00:00:08.625
+do / while checks after the body, so it runs at least once unless an outer guard prevents entry.
+
+00:00:09.625 --> 00:00:11.947
+while checks its condition before the body.
+
+00:00:11.947 --> 00:00:18.250
+do / while checks after the body, so it runs at least once unless an outer guard prevents entry.
+
+00:00:19.250 --> 00:00:23.498
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:23.498 --> 00:00:25.976
+Do not copy only the final output.
+
+00:00:25.976 --> 00:00:29.870
+Record the input and explain the state changes that produced it.

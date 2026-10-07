@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.790
+A cell reference identifies data used by a formula.
+
+00:00:03.790 --> 00:00:10.949
+Relative references shift when a formula is copied; absolute references keep the specified row and column fixed.
+
+00:00:10.949 --> 00:00:13.054
+Mixed references fix one part.
+
+00:00:13.054 --> 00:00:17.265
+Understanding reference movement is essential when filling a worksheet accurately.
+
+00:00:18.265 --> 00:00:19.725
+It becomes =B3*$F$1.
+
+00:00:19.725 --> 00:00:26.536
+The relative price reference moves one row; the absolute tax-rate reference stays in F1.
+
+00:00:26.536 --> 00:00:32.375
+If F1 holds 0.18 and B3 holds 200, the tax is 36.
+
+00:00:33.375 --> 00:00:37.239
+Which reference fixes both column F and row 1?
+
+00:00:37.239 --> 00:00:39.815
+$F$1 is absolute in both dimensions.

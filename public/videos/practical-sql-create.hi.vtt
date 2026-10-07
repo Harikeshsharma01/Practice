@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:15.915
+Table बनाते समय types और constraints चुनें।
+
+00:00:15.915 --> 00:00:31.830
+INSERT में values सही columns से मिलाएँ और SELECT से inserted rows जाँचें।

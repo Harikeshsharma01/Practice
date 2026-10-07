@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.723
+A CSS box has content, padding, border and margin.
+
+00:00:03.723 --> 00:00:08.687
+Padding sits inside the border; margin separates the box from neighbouring layout.
+
+00:00:08.687 --> 00:00:15.720
+The box-sizing property determines whether a declared width refers only to content or includes padding and borders.
+
+00:00:16.720 --> 00:00:22.724
+The total is 200 + 10 + 10 + 2 + 2 = 224px.
+
+00:00:22.724 --> 00:00:29.585
+With border-box and the same declared width, the border box is 200px, leaving 176px for content.
+
+00:00:29.585 --> 00:00:31.300
+Margins would be additional.
+
+00:00:32.300 --> 00:00:35.354
+What is included in a border-box width?
+
+00:00:35.354 --> 00:00:39.280
+border-box includes content, padding and borders but excludes margins.

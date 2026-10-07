@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.981
+Each term after 0 and 1 is the sum of the preceding two.
+
+00:00:03.981 --> 00:00:07.655
+Updating the pair preserves the previous values needed by the next iteration.
+
+00:00:08.655 --> 00:00:12.636
+Each term after 0 and 1 is the sum of the preceding two.
+
+00:00:12.636 --> 00:00:16.310
+Updating the pair preserves the previous values needed by the next iteration.
+
+00:00:17.310 --> 00:00:21.558
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.558 --> 00:00:24.036
+Do not copy only the final output.
+
+00:00:24.036 --> 00:00:27.930
+Record the input and explain the state changes that produced it.

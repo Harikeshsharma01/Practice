@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.055
+Explore last-in-first-out stacks and first-in-first-out queues.
+
+00:00:05.055 --> 00:00:08.755
+The queue removes ticket A first, preserving the arrival order.
+
+00:00:09.755 --> 00:00:12.523
+Which item does a queue normally remove first?
+
+00:00:12.523 --> 00:00:16.675
+FIFO means first in, first out: the oldest item is removed first.

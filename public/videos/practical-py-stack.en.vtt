@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.996
+A stack is last-in, first-out.
+
+00:00:01.996 --> 00:00:04.791
+append pushes; pop removes the newest item.
+
+00:00:04.791 --> 00:00:07.585
+Check for an empty stack before popping.
+
+00:00:08.585 --> 00:00:10.581
+A stack is last-in, first-out.
+
+00:00:10.581 --> 00:00:13.376
+append pushes; pop removes the newest item.
+
+00:00:13.376 --> 00:00:16.170
+Check for an empty stack before popping.
+
+00:00:17.170 --> 00:00:21.418
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.418 --> 00:00:23.896
+Do not copy only the final output.
+
+00:00:23.896 --> 00:00:27.790
+Record the input and explain the state changes that produced it.

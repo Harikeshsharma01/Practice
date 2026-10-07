@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.595
+Find, filter and organise records using SQL.
+
+00:00:04.595 --> 00:00:08.495
+Filter with WHERE and sort the remaining rows with ORDER BY marks DESC.
+
+00:00:09.495 --> 00:00:12.347
+Which clause filters rows before grouping?
+
+00:00:12.347 --> 00:00:15.675
+WHERE filters individual rows; HAVING filters groups.

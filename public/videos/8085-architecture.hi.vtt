@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:19.130
+8085 में accumulator, registers, ALU और control unit मिलकर instruction चलाते हैं।
+
+00:00:19.130 --> 00:00:38.260
+Program counter अगले instruction का पता रखता है।

@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:15.430
+Constructor object बनते समय और destructor उसके जीवन के अंत में चलता है।
+
+00:00:15.430 --> 00:00:30.860
+Scope खत्म होने पर automatic objects का destruction देखें।

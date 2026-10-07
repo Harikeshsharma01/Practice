@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.431
+Cell references let one formula work across rows.
+
+00:00:03.431 --> 00:00:07.290
+Relative references move when filled; absolute references stay fixed.
+
+00:00:08.290 --> 00:00:11.721
+Cell references let one formula work across rows.
+
+00:00:11.721 --> 00:00:15.580
+Relative references move when filled; absolute references stay fixed.
+
+00:00:16.580 --> 00:00:20.828
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:20.828 --> 00:00:23.306
+Do not copy only the final output.
+
+00:00:23.306 --> 00:00:27.200
+Record the input and explain the state changes that produced it.

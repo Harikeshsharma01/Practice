@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.682
+pickle serialises Python objects into bytes and restores them.
+
+00:00:03.682 --> 00:00:09.000
+Only unpickle files you created and trust because pickle loading can execute code.
+
+00:00:10.000 --> 00:00:13.682
+pickle serialises Python objects into bytes and restores them.
+
+00:00:13.682 --> 00:00:19.000
+Only unpickle files you created and trust because pickle loading can execute code.
+
+00:00:20.000 --> 00:00:24.248
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:24.248 --> 00:00:26.726
+Do not copy only the final output.
+
+00:00:26.726 --> 00:00:30.620
+Record the input and explain the state changes that produced it.

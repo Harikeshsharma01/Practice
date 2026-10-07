@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.910
+Turn everyday numbers into binary and see every bit light up.
+
+00:00:04.910 --> 00:00:08.107
+42 = 32 + 8 + 2.
+
+00:00:08.107 --> 00:00:11.303
+Set those bit positions to 1: 00101010₂.
+
+00:00:11.303 --> 00:00:15.870
+Check by adding 32 + 8 + 2 = 42.
+
+00:00:16.870 --> 00:00:19.545
+What is the decimal value of 1010₂?
+
+00:00:19.545 --> 00:00:22.985
+1×8 + 0×4 + 1×2 + 0×1 = 10.

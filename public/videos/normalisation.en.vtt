@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.257
+Normalisation organises relational data to reduce certain forms of redundancy and update anomalies.
+
+00:00:05.257 --> 00:00:08.896
+It uses dependencies between attributes, not just visual neatness.
+
+00:00:08.896 --> 00:00:16.175
+A useful first step is to identify what each row represents and which attributes depend on its key.
+
+00:00:17.175 --> 00:00:21.948
+Changing only some rows creates contradictory teacher names for the same course.
+
+00:00:21.948 --> 00:00:27.516
+A separate Course record can store the teacher once, while Enrolment records reference C1.
+
+00:00:27.516 --> 00:00:29.505
+This addresses the demonstrated redundancy.
+
+00:00:30.505 --> 00:00:32.302
+What is an update anomaly?
+
+00:00:32.302 --> 00:00:35.895
+Repeated facts can disagree when only some copies are changed.

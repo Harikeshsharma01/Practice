@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:17.860
+Integer division दशमलव भाग हटा देती है।
+
+00:00:17.860 --> 00:00:35.720
+Division से पहले zero divisor जाँचें और decimal परिणाम के लिए सही numeric type चुनें।

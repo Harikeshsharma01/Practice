@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:07.255
+A deadlock is a situation in which tasks wait for resources held by one another and none can proceed.
+
+00:00:07.255 --> 00:00:13.747
+A classic resource model identifies mutual exclusion, hold-and-wait, no forced preemption and circular wait as necessary conditions.
+
+00:00:13.747 --> 00:00:16.420
+A slow task is not automatically deadlocked.
+
+00:00:17.420 --> 00:00:22.878
+A waits for B to release the scanner; B waits for A to release the printer.
+
+00:00:22.878 --> 00:00:25.607
+Neither voluntarily releases its held lock while waiting.
+
+00:00:25.607 --> 00:00:31.065
+The dependency graph contains A to B to A, indicating the cycle in this simple example.
+
+00:00:32.065 --> 00:00:35.073
+Which design breaks the example’s circular wait?
+
+00:00:35.073 --> 00:00:39.800
+A global resource order prevents a cycle of incompatible acquisition orders.

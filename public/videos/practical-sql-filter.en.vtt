@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.315
+WHERE filters records.
+
+00:00:01.315 --> 00:00:03.508
+ORDER BY determines display order.
+
+00:00:03.508 --> 00:00:07.015
+Without ORDER BY, row order is not guaranteed.
+
+00:00:08.015 --> 00:00:09.330
+WHERE filters records.
+
+00:00:09.330 --> 00:00:11.522
+ORDER BY determines display order.
+
+00:00:11.522 --> 00:00:15.030
+Without ORDER BY, row order is not guaranteed.
+
+00:00:16.030 --> 00:00:20.278
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:20.278 --> 00:00:22.756
+Do not copy only the final output.
+
+00:00:22.756 --> 00:00:26.650
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.283
+A tuple is an immutable sequence.
+
+00:00:02.283 --> 00:00:06.850
+Unpacking binds its elements to names, making a record easier to read.
+
+00:00:07.850 --> 00:00:10.133
+A tuple is an immutable sequence.
+
+00:00:10.133 --> 00:00:14.700
+Unpacking binds its elements to names, making a record easier to read.
+
+00:00:15.700 --> 00:00:19.948
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:19.948 --> 00:00:22.426
+Do not copy only the final output.
+
+00:00:22.426 --> 00:00:26.320
+Record the input and explain the state changes that produced it.

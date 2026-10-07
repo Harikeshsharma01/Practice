@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.171
+Normalisation decides which differences matter.
+
+00:00:02.171 --> 00:00:08.250
+Here spaces, punctuation and case are ignored before comparing the string with its reverse.
+
+00:00:09.250 --> 00:00:11.421
+Normalisation decides which differences matter.
+
+00:00:11.421 --> 00:00:17.500
+Here spaces, punctuation and case are ignored before comparing the string with its reverse.
+
+00:00:18.500 --> 00:00:22.748
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:22.748 --> 00:00:25.226
+Do not copy only the final output.
+
+00:00:25.226 --> 00:00:29.120
+Record the input and explain the state changes that produced it.

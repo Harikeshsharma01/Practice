@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.009
+Boolean algebra models values 0 and 1 using operations such as AND, OR and NOT.
+
+00:00:06.009 --> 00:00:10.816
+Algebraic laws let us transform an expression without changing its truth table.
+
+00:00:10.816 --> 00:00:16.825
+In Boolean notation, multiplication often means AND and addition often means OR, not ordinary arithmetic.
+
+00:00:17.825 --> 00:00:20.711
+A AND B is 0, so its complement is 1.
+
+00:00:20.711 --> 00:00:24.463
+NOT A is 0 and NOT B is 1; their OR is 1.
+
+00:00:24.463 --> 00:00:29.080
+Matching this row alone is not a full proof, so repeat for 00, 10 and 11.
+
+00:00:30.080 --> 00:00:32.456
+What is NOT(A OR B) equivalent to?
+
+00:00:32.456 --> 00:00:36.190
+De Morgan’s law exchanges OR with AND and complements both inputs.

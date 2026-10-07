@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.825
+A pointer stores an address.
+
+00:00:01.825 --> 00:00:05.475
+Incrementing an int pointer moves to the next int element.
+
+00:00:05.475 --> 00:00:09.490
+One-past-the-end is a valid boundary pointer but must not be dereferenced.
+
+00:00:10.490 --> 00:00:12.315
+A pointer stores an address.
+
+00:00:12.315 --> 00:00:15.965
+Incrementing an int pointer moves to the next int element.
+
+00:00:15.965 --> 00:00:19.980
+One-past-the-end is a valid boundary pointer but must not be dereferenced.
+
+00:00:20.980 --> 00:00:25.228
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:25.228 --> 00:00:27.706
+Do not copy only the final output.
+
+00:00:27.706 --> 00:00:31.600
+Record the input and explain the state changes that produced it.

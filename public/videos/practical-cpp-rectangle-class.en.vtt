@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.557
+A class combines data and behaviour.
+
+00:00:02.557 --> 00:00:08.950
+An object stores its own dimensions and exposes an area function without exposing its representation.
+
+00:00:09.950 --> 00:00:12.507
+A class combines data and behaviour.
+
+00:00:12.507 --> 00:00:18.900
+An object stores its own dimensions and exposes an area function without exposing its representation.
+
+00:00:19.900 --> 00:00:24.148
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:24.148 --> 00:00:26.626
+Do not copy only the final output.
+
+00:00:26.626 --> 00:00:30.520
+Record the input and explain the state changes that produced it.

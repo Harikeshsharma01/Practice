@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:15.205
+गलत numeric input ValueError और zero division ZeroDivisionError दे सकता है।
+
+00:00:15.205 --> 00:00:30.410
+संबंधित exception पकड़ें और उपयोगकर्ता को स्पष्ट संदेश दें।

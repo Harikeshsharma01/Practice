@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.190
+A decoder converts an encoded input into an active output line.
+
+00:00:04.190 --> 00:00:10.665
+In an ideal active-high 2-to-4 decoder, each two-bit input selects exactly one of four outputs when enabled.
+
+00:00:10.665 --> 00:00:16.760
+Real devices may use active-low outputs or additional enable pins, so read the chosen device’s datasheet.
+
+00:00:17.760 --> 00:00:22.613
+Y2 is 1 in the active-high enabled model; Y0, Y1 and Y3 are 0.
+
+00:00:22.613 --> 00:00:26.080
+This is a one-hot representation of the input value 2.
+
+00:00:27.080 --> 00:00:31.136
+In the stated model, input 11 activates which output?
+
+00:00:31.136 --> 00:00:33.840
+Binary 11 selects output number 3.

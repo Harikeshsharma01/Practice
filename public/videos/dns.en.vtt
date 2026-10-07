@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.215
+DNS is a distributed naming system.
+
+00:00:02.215 --> 00:00:07.753
+A browser often needs an address associated with a host name before contacting its server.
+
+00:00:07.753 --> 00:00:16.245
+DNS records have types and lifetimes; a domain name is not itself an IP address, and a name can have several relevant records.
+
+00:00:17.245 --> 00:00:17.632
+No.
+
+00:00:17.632 --> 00:00:21.888
+The failure occurs before a successful server connection in this scenario.
+
+00:00:21.888 --> 00:00:24.983
+Check the name, resolver response and network configuration.
+
+00:00:24.983 --> 00:00:30.400
+Styling can only affect a page after content is obtained or already cached locally.
+
+00:00:31.400 --> 00:00:33.204
+What does an A record contain?
+
+00:00:33.204 --> 00:00:36.210
+An A record maps a name to an IPv4 address.

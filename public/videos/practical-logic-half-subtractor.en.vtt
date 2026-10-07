@@ -1,0 +1,34 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.299
+Subtract B from A.
+
+00:00:01.299 --> 00:00:02.923
+Difference = A XOR B.
+
+00:00:02.923 --> 00:00:04.872
+Borrow = NOT A AND B.
+
+00:00:04.872 --> 00:00:08.445
+Borrow indicates that the next higher position must supply a unit.
+
+00:00:09.445 --> 00:00:10.744
+Subtract B from A.
+
+00:00:10.744 --> 00:00:12.368
+Difference = A XOR B.
+
+00:00:12.368 --> 00:00:14.317
+Borrow = NOT A AND B.
+
+00:00:14.317 --> 00:00:17.890
+Borrow indicates that the next higher position must supply a unit.
+
+00:00:18.890 --> 00:00:23.834
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:23.834 --> 00:00:25.894
+Do not leave inputs floating.
+
+00:00:25.894 --> 00:00:33.310
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.020
+Turn a repeated task into a clear, reusable Python function.
+
+00:00:05.020 --> 00:00:10.260
+Check that the maximum is positive and the score is in range, then return the calculation.
+
+00:00:11.260 --> 00:00:14.678
+Which statement sends a function's result to its caller?
+
+00:00:14.678 --> 00:00:18.855
+return provides a value to the calling expression; print displays text.

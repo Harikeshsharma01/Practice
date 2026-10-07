@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.907
+A function separates a reusable calculation from the caller.
+
+00:00:03.907 --> 00:00:07.380
+Return produces a value; printing only displays it.
+
+00:00:08.380 --> 00:00:12.287
+A function separates a reusable calculation from the caller.
+
+00:00:12.287 --> 00:00:15.760
+Return produces a value; printing only displays it.
+
+00:00:16.760 --> 00:00:21.008
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.008 --> 00:00:23.486
+Do not copy only the final output.
+
+00:00:23.486 --> 00:00:27.380
+Record the input and explain the state changes that produced it.

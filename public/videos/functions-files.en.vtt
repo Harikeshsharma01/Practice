@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.575
+Organise work into functions and save results to a text file.
+
+00:00:05.575 --> 00:00:09.775
+Return the greeting from a function, then write it with a context manager.
+
+00:00:10.775 --> 00:00:13.602
+Which file mode appends without truncating existing content?
+
+00:00:13.602 --> 00:00:17.490
+Mode a writes at the end, creating the file if needed.

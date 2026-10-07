@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.204
+Inspect elements from left to right.
+
+00:00:02.204 --> 00:00:04.409
+The first match gives its index.
+
+00:00:04.409 --> 00:00:07.715
+Unlike binary search, the list need not be sorted.
+
+00:00:08.715 --> 00:00:10.919
+Inspect elements from left to right.
+
+00:00:10.919 --> 00:00:13.124
+The first match gives its index.
+
+00:00:13.124 --> 00:00:16.430
+Unlike binary search, the list need not be sorted.
+
+00:00:17.430 --> 00:00:21.678
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.678 --> 00:00:24.156
+Do not copy only the final output.
+
+00:00:24.156 --> 00:00:28.050
+Record the input and explain the state changes that produced it.

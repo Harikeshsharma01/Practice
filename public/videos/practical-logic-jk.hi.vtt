@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:23.670
+J-K flip-flop में J और K दोनों one होने पर clock edge पर state toggle होती है।
+
+00:00:23.670 --> 00:00:47.340
+State केवल input से नहीं, पिछली state से भी तय होती है।

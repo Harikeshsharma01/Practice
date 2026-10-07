@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:11.817
+Ratio में numerator और denominator सँभालें।
+
+00:00:11.817 --> 00:00:23.633
+Denominator zero नहीं होना चाहिए।
+
+00:00:23.633 --> 00:00:35.450
+Invert करते समय numerator zero हो तो inverse valid नहीं होगा।

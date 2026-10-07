@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:21.505
+R-S latch एक bit याद रख सकता है।
+
+00:00:21.505 --> 00:00:43.010
+NOR और NAND implementations के active levels अलग होते हैं; forbidden combination सही circuit के अनुसार पहचानें।

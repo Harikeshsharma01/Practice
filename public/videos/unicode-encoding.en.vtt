@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.444
+Unicode assigns code points to characters.
+
+00:00:02.444 --> 00:00:06.925
+UTF-8 is one encoding that turns those code points into bytes.
+
+00:00:06.925 --> 00:00:14.666
+The number of characters, code points and bytes can differ; a visible character may also contain multiple code points.
+
+00:00:14.666 --> 00:00:17.110
+This matters when storing Indian-language text.
+
+00:00:18.110 --> 00:00:21.659
+Their code points can require different numbers of UTF-8 bytes.
+
+00:00:21.659 --> 00:00:26.272
+For example A uses one byte while the check mark ✓ uses three.
+
+00:00:26.272 --> 00:00:30.885
+Size limits should specify whether they count bytes, code points or displayed characters.
+
+00:00:31.885 --> 00:00:35.172
+Which converts a Python string to UTF-8 bytes?
+
+00:00:35.172 --> 00:00:38.870
+encode creates a byte representation using the selected encoding.

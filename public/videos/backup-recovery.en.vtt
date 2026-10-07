@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.209
+A backup is a separate recoverable copy, not merely another shortcut to the same file.
+
+00:00:06.209 --> 00:00:11.589
+Recovery plans must consider accidental deletion, corruption and loss of the original device.
+
+00:00:11.589 --> 00:00:16.970
+Version history helps recover earlier states, while synchronisation alone can propagate a deletion.
+
+00:00:17.970 --> 00:00:19.762
+Sync replicated the deletion.
+
+00:00:19.762 --> 00:00:24.691
+Recovery depends on separate version history, recycle-bin retention or a backup.
+
+00:00:24.691 --> 00:00:29.620
+Test restoration before relying on a service for important teaching material.
+
+00:00:30.620 --> 00:00:34.047
+Which is the strongest evidence that a backup is usable?
+
+00:00:34.047 --> 00:00:38.160
+A restoration check verifies that the saved data can actually be recovered.

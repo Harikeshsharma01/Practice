@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:22.692
+Virtual address को operating system और hardware physical memory से जोड़ते हैं।
+
+00:00:22.692 --> 00:00:45.385
+जरूरी page RAM में न हो तो page fault होता है।

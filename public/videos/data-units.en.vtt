@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.423
+A bit represents one binary choice.
+
+00:00:02.423 --> 00:00:04.442
+Eight bits form a byte.
+
+00:00:04.442 --> 00:00:11.306
+Capacity calculations must keep bits, bytes and prefixes separate: decimal kilo means 1000, while kibi means 1024.
+
+00:00:11.306 --> 00:00:18.170
+A transfer rate in megabits per second cannot be compared directly with a file size in megabytes.
+
+00:00:19.170 --> 00:00:21.477
+There are 307,200 pixels.
+
+00:00:21.477 --> 00:00:30.130
+Multiplying by 24 gives 7,372,800 bits; dividing by 8 gives 921,600 bytes, or 900 KiB.
+
+00:00:30.130 --> 00:00:36.475
+The file on disk may differ because of headers or compression.
+
+00:00:37.475 --> 00:00:39.815
+How many bytes are in 64 bits?
+
+00:00:39.815 --> 00:00:41.820
+Divide the bit count by eight.

@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.325
+A topology describes how nodes and links are arranged.
+
+00:00:04.325 --> 00:00:09.130
+Physical topology concerns actual connections; logical topology concerns communication relationships.
+
+00:00:09.130 --> 00:00:18.260
+Star, bus, ring and mesh models help compare cost, failure behaviour and manageability, but real deployments may combine them.
+
+00:00:19.260 --> 00:00:22.443
+A failed PC cable usually disconnects that PC.
+
+00:00:22.443 --> 00:00:26.820
+A failed central switch can disconnect every PC relying on it.
+
+00:00:26.820 --> 00:00:32.390
+Redundant design can reduce this dependency, but redundancy must be deliberately planned and tested.
+
+00:00:33.390 --> 00:00:37.676
+How many links connect four nodes in a full undirected mesh?
+
+00:00:37.676 --> 00:00:39.235
+Use n(n−1)/2, giving 6.

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.674
+Teamwork requires shared outcomes, clear responsibilities and visible handovers.
+
+00:00:03.674 --> 00:00:07.757
+Dividing work does not remove the need to integrate it.
+
+00:00:07.757 --> 00:00:15.105
+Constructive feedback describes an observable issue and its effect, then helps the receiver identify a useful next action.
+
+00:00:16.105 --> 00:00:22.335
+They should agree on request fields, endpoint, response shape, authentication behaviour and error messages.
+
+00:00:22.335 --> 00:00:27.675
+Both pieces can work separately yet fail together if those expectations differ.
+
+00:00:28.675 --> 00:00:31.045
+What belongs in a useful handover?
+
+00:00:31.045 --> 00:00:35.390
+A handover supports the next action with concrete status and context.

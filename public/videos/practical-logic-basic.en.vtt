@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.755
+AND requires both inputs high, OR needs at least one high, and NOT inverts a single input.
+
+00:00:06.755 --> 00:00:12.510
+AND requires both inputs high, OR needs at least one high, and NOT inverts a single input.
+
+00:00:13.510 --> 00:00:18.454
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:18.454 --> 00:00:20.514
+Do not leave inputs floating.
+
+00:00:20.514 --> 00:00:27.930
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

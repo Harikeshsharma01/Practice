@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.460
+A prime integer is greater than 1 and has no divisor other than 1 and itself.
+
+00:00:04.460 --> 00:00:08.920
+If a composite has a factor above its square root, its paired factor lies below it.
+
+00:00:09.920 --> 00:00:14.380
+A prime integer is greater than 1 and has no divisor other than 1 and itself.
+
+00:00:14.380 --> 00:00:18.840
+If a composite has a factor above its square root, its paired factor lies below it.
+
+00:00:19.840 --> 00:00:24.088
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:24.088 --> 00:00:26.566
+Do not copy only the final output.
+
+00:00:26.566 --> 00:00:30.460
+Record the input and explain the state changes that produced it.

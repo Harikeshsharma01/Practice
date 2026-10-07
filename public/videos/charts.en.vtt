@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.997
+A chart is a visual argument about data.
+
+00:00:02.997 --> 00:00:09.740
+Bar charts compare categories, line charts commonly show ordered change, and scatter plots show pairs of numeric measurements.
+
+00:00:09.740 --> 00:00:15.360
+The choice of chart, scale, labels and units affects how a reader interprets the evidence.
+
+00:00:16.360 --> 00:00:23.850
+A bar or column chart is a suitable starting point because the class names are categories and marks are numeric.
+
+00:00:23.850 --> 00:00:27.596
+Use a clearly labeled score axis and an appropriate baseline.
+
+00:00:27.596 --> 00:00:32.090
+A connecting line could misleadingly imply a continuous trend between unrelated categories.
+
+00:00:33.090 --> 00:00:35.415
+What usually suits ordered change over time?
+
+00:00:35.415 --> 00:00:40.730
+A line chart can show an ordered time series when its axes and units are clear.

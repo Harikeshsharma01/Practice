@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { courses, lessons, sources } from "../shared/catalog.js";
+import { generatedVideo } from "./video-library.js";
 import { practicals } from "../shared/practicals.js";
 const text = (max = 12000) => z.string().trim().max(max);
 export const studioLessonFields = {
@@ -148,6 +149,7 @@ export async function publicCatalog(store) {
         const content = { ...lesson, ...override };
         return {
           ...content,
+          generatedVideo: generatedVideo(content),
           mediaAttachments: await attachments(store, content.mediaIds),
         };
       }),

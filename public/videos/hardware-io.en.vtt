@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.327
+An input device converts an action or measurement into data.
+
+00:00:03.327 --> 00:00:05.323
+An output device presents the result.
+
+00:00:05.323 --> 00:00:15.970
+A feedback system measures the effect of an output and uses that measurement as a later input; input and output are roles in a process, not permanent labels on an entire machine.
+
+00:00:16.970 --> 00:00:23.116
+31°C is input data; comparing 31 with 28 is processing; turning on the fan is output.
+
+00:00:23.116 --> 00:00:28.109
+A later reading of 27°C causes the controller to turn the fan off.
+
+00:00:28.109 --> 00:00:31.950
+The program needs a clear boundary rule for exactly 28°C.
+
+00:00:32.950 --> 00:00:35.388
+Which reading turns this controller on?
+
+00:00:35.388 --> 00:00:39.045
+Only 29 is strictly greater than the threshold 28.

@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.030
+Toggle A, B and carry-in to see sum and carry change.
+
+00:00:05.030 --> 00:00:07.139
+1+1+1 is 3, or binary 11.
+
+00:00:07.139 --> 00:00:11.005
+The lower bit is S and the next bit is carry-out.
+
+00:00:12.005 --> 00:00:15.542
+A full adder combines three inputs to produce which two outputs?
+
+00:00:15.542 --> 00:00:19.080
+The sum bit and the carry-out represent a binary addition result.

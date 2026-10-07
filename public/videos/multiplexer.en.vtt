@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.449
+A multiplexer selects one of several data inputs and forwards it to an output.
+
+00:00:05.449 --> 00:00:08.174
+A 2-to-1 multiplexer needs one select bit.
+
+00:00:08.174 --> 00:00:15.180
+Selection is useful when multiple possible sources share a destination, such as operands entering a processor’s arithmetic unit.
+
+00:00:16.180 --> 00:00:17.671
+For S=0, Y=1.
+
+00:00:17.671 --> 00:00:19.163
+For S=1, Y=0.
+
+00:00:19.163 --> 00:00:25.128
+Changing S redirects the data path even though neither data input changes.
+
+00:00:25.128 --> 00:00:29.105
+A four-input multiplexer generally needs two select bits.
+
+00:00:30.105 --> 00:00:33.660
+How many select bits choose one of four inputs?
+
+00:00:33.660 --> 00:00:36.820
+Two binary select bits represent four possible choices.

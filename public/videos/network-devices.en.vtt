@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.425
+Network devices have different forwarding roles.
+
+00:00:02.425 --> 00:00:07.680
+An Ethernet switch forwards frames within a local network using learned link-layer addresses.
+
+00:00:07.680 --> 00:00:10.509
+A router forwards packets between IP networks.
+
+00:00:10.509 --> 00:00:17.785
+A wireless access point connects wireless clients to a local network; a home appliance may combine several roles.
+
+00:00:18.785 --> 00:00:24.153
+It often combines a router, Ethernet switch, wireless access point and other services.
+
+00:00:24.153 --> 00:00:30.760
+Calling the entire box a router is convenient, but separating its roles makes troubleshooting more precise.
+
+00:00:31.760 --> 00:00:34.748
+Which role forwards packets between IP networks?
+
+00:00:34.748 --> 00:00:37.310
+A router selects paths between networks.

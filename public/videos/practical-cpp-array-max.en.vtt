@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.775
+An array groups elements of the same type.
+
+00:00:02.775 --> 00:00:07.285
+Initialise the maximum from the first element so that negative inputs remain valid.
+
+00:00:08.285 --> 00:00:11.060
+An array groups elements of the same type.
+
+00:00:11.060 --> 00:00:15.570
+Initialise the maximum from the first element so that negative inputs remain valid.
+
+00:00:16.570 --> 00:00:20.818
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:20.818 --> 00:00:23.296
+Do not copy only the final output.
+
+00:00:23.296 --> 00:00:27.190
+Record the input and explain the state changes that produced it.

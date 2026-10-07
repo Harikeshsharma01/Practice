@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.755
+Choose between lists, tuples and dictionaries for real tasks.
+
+00:00:04.755 --> 00:00:08.535
+A dictionary provides an intuitive name-to-score mapping.
+
+00:00:09.535 --> 00:00:13.915
+Which operation removes the most recently added item from a list-based stack?
+
+00:00:13.915 --> 00:00:17.565
+pop() without an index removes and returns the last item.

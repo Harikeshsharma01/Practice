@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:11.193
+Database query में values parameters के रूप में भेजें।
+
+00:00:11.193 --> 00:00:22.387
+User input जोड़कर SQL string बनाना unsafe है।
+
+00:00:22.387 --> 00:00:33.580
+Connection और cursor बंद करना न भूलें।

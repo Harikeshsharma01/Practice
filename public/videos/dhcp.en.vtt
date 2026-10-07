@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.908
+A host needs compatible network configuration to communicate.
+
+00:00:02.908 --> 00:00:09.086
+DHCP can supply an address lease and other settings such as a default gateway and DNS servers.
+
+00:00:09.086 --> 00:00:15.265
+An address lease is time-limited and managed; it is not a permanent ownership claim over an address.
+
+00:00:16.265 --> 00:00:19.931
+Check DHCP reachability, available leases and client configuration.
+
+00:00:19.931 --> 00:00:23.597
+Link association and network-layer configuration are different stages.
+
+00:00:23.597 --> 00:00:30.470
+A device can show a wireless connection while still being unable to reach its gateway.
+
+00:00:31.470 --> 00:00:33.870
+What does DHCP commonly provide?
+
+00:00:33.870 --> 00:00:39.150
+DHCP automates host configuration such as address leases and related options.

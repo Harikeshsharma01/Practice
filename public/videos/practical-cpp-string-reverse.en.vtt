@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.238
+Reverse the sequence of characters without dropping spaces.
+
+00:00:03.238 --> 00:00:08.095
+getline reads the complete line rather than stopping at the first space.
+
+00:00:09.095 --> 00:00:12.333
+Reverse the sequence of characters without dropping spaces.
+
+00:00:12.333 --> 00:00:17.190
+getline reads the complete line rather than stopping at the first space.
+
+00:00:18.190 --> 00:00:22.438
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:22.438 --> 00:00:24.916
+Do not copy only the final output.
+
+00:00:24.916 --> 00:00:28.810
+Record the input and explain the state changes that produced it.

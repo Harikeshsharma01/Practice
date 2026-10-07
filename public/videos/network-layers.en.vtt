@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:07.062
+Layering separates networking responsibilities so that applications need not implement every detail of physical transmission.
+
+00:00:07.062 --> 00:00:13.182
+Encapsulation adds control information around data as it passes through a protocol stack.
+
+00:00:13.182 --> 00:00:18.360
+Different teaching models group these responsibilities into different numbers of layers.
+
+00:00:19.360 --> 00:00:21.476
+HTTP describes the application message.
+
+00:00:21.476 --> 00:00:25.707
+TCP supplies a reliable ordered byte stream for this example.
+
+00:00:25.707 --> 00:00:28.669
+IP supports addressing and routing across networks.
+
+00:00:28.669 --> 00:00:34.170
+A local link technology such as Ethernet or Wi-Fi carries the next-hop frame.
+
+00:00:34.170 --> 00:00:38.825
+Modern web traffic can also use other transports, such as QUIC.
+
+00:00:39.825 --> 00:00:42.762
+Which layer’s role includes routing IP packets?
+
+00:00:42.762 --> 00:00:45.700
+Routing across networks is a network-layer function.

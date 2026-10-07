@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.826
+A virtual function dispatches according to the actual object type when called through a base reference or pointer.
+
+00:00:06.826 --> 00:00:09.860
+override lets the compiler check the intended override.
+
+00:00:10.860 --> 00:00:17.686
+A virtual function dispatches according to the actual object type when called through a base reference or pointer.
+
+00:00:17.686 --> 00:00:20.720
+override lets the compiler check the intended override.
+
+00:00:21.720 --> 00:00:25.968
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:25.968 --> 00:00:28.446
+Do not copy only the final output.
+
+00:00:28.446 --> 00:00:32.340
+Record the input and explain the state changes that produced it.

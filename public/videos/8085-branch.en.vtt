@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:06.838
+Conditional branches use flag state to decide whether execution continues sequentially or jumps to another address.
+
+00:00:06.838 --> 00:00:14.103
+A comparison may set flags as if subtraction had occurred while leaving the compared accumulator value unchanged.
+
+00:00:14.103 --> 00:00:17.095
+Instruction-specific behaviour matters when predicting a branch.
+
+00:00:18.095 --> 00:00:23.952
+The comparison yields a zero difference, so Z is set and JZ transfers control to EQUAL.
+
+00:00:23.952 --> 00:00:25.050
+A remains 05H.
+
+00:00:25.050 --> 00:00:28.710
+The jump relies on the comparison’s flags still being current.
+
+00:00:29.710 --> 00:00:31.673
+Which flag is tested by JZ?
+
+00:00:31.673 --> 00:00:34.290
+JZ branches when the zero flag is set.

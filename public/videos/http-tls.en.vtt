@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.822
+HTTP describes requests and responses such as GET /notes and a status code.
+
+00:00:05.822 --> 00:00:10.301
+HTTPS carries HTTP through a protected connection, typically using TLS.
+
+00:00:10.301 --> 00:00:18.810
+Encryption protects data in transit, while server identity checks help the browser determine which endpoint it is communicating with.
+
+00:00:19.810 --> 00:00:20.292
+No.
+
+00:00:20.292 --> 00:00:26.074
+HTTPS protects the communication channel; the server must separately check publishing permissions.
+
+00:00:26.074 --> 00:00:31.375
+Encrypted delivery of an unauthorised action is still an authorisation failure.
+
+00:00:32.375 --> 00:00:36.685
+Which layer of protection does HTTPS primarily provide?
+
+00:00:36.685 --> 00:00:43.150
+TLS protects the channel and supports server authentication; application checks remain necessary.

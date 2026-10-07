@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.289
+A program is stored instructions; a process is an executing instance with state and resources.
+
+00:00:05.289 --> 00:00:09.873
+A process may contain multiple threads that share parts of its address space.
+
+00:00:09.873 --> 00:00:14.810
+Running, ready and blocked describe whether execution currently has CPU time or is waiting.
+
+00:00:15.810 --> 00:00:19.887
+The requesting thread can block while another ready task uses the CPU.
+
+00:00:19.887 --> 00:00:26.002
+When the data arrives, the waiting thread becomes ready; it may still wait for scheduling before running again.
+
+00:00:26.002 --> 00:00:28.040
+Ready does not mean currently running.
+
+00:00:29.040 --> 00:00:33.257
+An I/O completion usually moves a blocked task into which state?
+
+00:00:33.257 --> 00:00:38.625
+The task becomes eligible to run; the scheduler determines when it gets CPU time.

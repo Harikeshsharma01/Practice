@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:20.075
+DHCP device को सीमित समय के लिए IP configuration दे सकता है।
+
+00:00:20.075 --> 00:00:40.150
+Address, mask, gateway और DNS settings सही होने पर network का उपयोग आसान होता है।

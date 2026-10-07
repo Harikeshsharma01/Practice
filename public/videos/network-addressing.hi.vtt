@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:11.245
+IP address और subnet mask मिलकर बताते हैं कि कौन-से addresses एक network में हैं।
+
+00:00:11.245 --> 00:00:22.490
+उसी network के लिए local delivery और बाहर के लिए gateway काम आता है।

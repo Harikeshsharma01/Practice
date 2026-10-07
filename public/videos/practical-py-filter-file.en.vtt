@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.894
+Process a file one line at a time.
+
+00:00:02.894 --> 00:00:06.150
+A filtering condition decides which lines reach the destination.
+
+00:00:07.150 --> 00:00:10.044
+Process a file one line at a time.
+
+00:00:10.044 --> 00:00:13.300
+A filtering condition decides which lines reach the destination.
+
+00:00:14.300 --> 00:00:18.548
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:18.548 --> 00:00:21.026
+Do not copy only the final output.
+
+00:00:21.026 --> 00:00:24.920
+Record the input and explain the state changes that produced it.

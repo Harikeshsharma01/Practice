@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.508
+Permissions control which operations an account can perform.
+
+00:00:03.508 --> 00:00:08.331
+Authentication establishes an identity; authorisation decides what that identity may do.
+
+00:00:08.331 --> 00:00:15.785
+Least privilege means granting only the access necessary for a task and reviewing it when responsibilities change.
+
+00:00:16.785 --> 00:00:21.173
+The backend must reject the request when the session lacks teacher privileges.
+
+00:00:21.173 --> 00:00:27.755
+The interface is not a trusted enforcement boundary because a user can construct requests without using its buttons.
+
+00:00:28.755 --> 00:00:30.298
+What is authorisation?
+
+00:00:30.298 --> 00:00:33.385
+Authorisation checks permitted actions and resources.

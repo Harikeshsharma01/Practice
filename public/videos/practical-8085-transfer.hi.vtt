@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:15.210
+Register और memory transfer में address और value अलग समझें।
+
+00:00:15.210 --> 00:00:30.420
+MOV और MVI का काम एक जैसा नहीं है; instruction के अनुसार data trace करें।

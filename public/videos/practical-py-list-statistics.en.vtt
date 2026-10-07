@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.384
+A list preserves order and supports iteration.
+
+00:00:02.384 --> 00:00:06.130
+Guard the empty case before dividing or calling min and max.
+
+00:00:07.130 --> 00:00:09.514
+A list preserves order and supports iteration.
+
+00:00:09.514 --> 00:00:13.260
+Guard the empty case before dividing or calling min and max.
+
+00:00:14.260 --> 00:00:18.508
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:18.508 --> 00:00:20.986
+Do not copy only the final output.
+
+00:00:20.986 --> 00:00:24.880
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.828
+A form gathers data through named controls.
+
+00:00:02.828 --> 00:00:08.079
+Labels explain what to enter, and native input types can provide useful validation.
+
+00:00:08.079 --> 00:00:15.755
+Client-side validation improves feedback but cannot establish trust, because a request can be sent without using the page’s form.
+
+00:00:16.755 --> 00:00:17.161
+No.
+
+00:00:17.161 --> 00:00:20.000
+A caller can construct a request directly.
+
+00:00:20.000 --> 00:00:27.300
+The backend must enforce the same allowed range and reject values such as −1, 101 or a non-number.
+
+00:00:27.300 --> 00:00:30.545
+The browser constraints remain useful for ordinary users.
+
+00:00:31.545 --> 00:00:33.733
+Where must security-relevant validation run?
+
+00:00:33.733 --> 00:00:38.985
+The server must not rely on client-side controls as a security boundary.

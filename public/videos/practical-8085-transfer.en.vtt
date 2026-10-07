@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.600
+MOV copies a register value without erasing the source.
+
+00:00:03.600 --> 00:00:08.400
+STA stores the accumulator at the specified address; LDA loads it back.
+
+00:00:09.400 --> 00:00:13.000
+MOV copies a register value without erasing the source.
+
+00:00:13.000 --> 00:00:17.800
+STA stores the accumulator at the specified address; LDA loads it back.
+
+00:00:18.800 --> 00:00:23.048
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:23.048 --> 00:00:25.526
+Do not copy only the final output.
+
+00:00:25.526 --> 00:00:29.420
+Record the input and explain the state changes that produced it.

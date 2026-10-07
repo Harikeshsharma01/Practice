@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:14.480
+Python input से string मिलती है।
+
+00:00:14.480 --> 00:00:28.960
+Numeric calculation के लिए conversion करें और division से पहले denominator जाँचें।

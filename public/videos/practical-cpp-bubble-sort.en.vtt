@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.456
+Compare adjacent values and swap those that are out of order.
+
+00:00:03.456 --> 00:00:07.855
+Each pass places the largest remaining value at the end of the active range.
+
+00:00:08.855 --> 00:00:12.311
+Compare adjacent values and swap those that are out of order.
+
+00:00:12.311 --> 00:00:16.710
+Each pass places the largest remaining value at the end of the active range.
+
+00:00:17.710 --> 00:00:22.212
+Trace an already sorted array and count comparisons; explain the early-exit condition.
+
+00:00:22.212 --> 00:00:24.838
+Do not copy only the final output.
+
+00:00:24.838 --> 00:00:28.965
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.300
+A default constructor can be called without arguments.
+
+00:00:03.300 --> 00:00:07.425
+Member functions calculate area and circumference from the stored radius.
+
+00:00:08.425 --> 00:00:11.725
+A default constructor can be called without arguments.
+
+00:00:11.725 --> 00:00:15.850
+Member functions calculate area and circumference from the stored radius.
+
+00:00:16.850 --> 00:00:21.098
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.098 --> 00:00:23.576
+Do not copy only the final output.
+
+00:00:23.576 --> 00:00:27.470
+Record the input and explain the state changes that produced it.

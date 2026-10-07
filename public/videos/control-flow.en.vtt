@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.185
+Make programs choose a path and repeat useful work.
+
+00:00:04.185 --> 00:00:08.415
+Start total at zero and add each number produced by range(1, 8).
+
+00:00:08.415 --> 00:00:09.825
+The result is 28.
+
+00:00:10.825 --> 00:00:13.875
+How many values does range(2, 8, 2) produce?
+
+00:00:13.875 --> 00:00:16.163
+It produces 2, 4 and 6.
+
+00:00:16.163 --> 00:00:18.450
+The stop value 8 is excluded.

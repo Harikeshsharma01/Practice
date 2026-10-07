@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:01.958
+The outer loop chooses a row.
+
+00:00:01.958 --> 00:00:07.180
+The inner loop prints the number of symbols required for that row, followed by a newline.
+
+00:00:08.180 --> 00:00:10.138
+The outer loop chooses a row.
+
+00:00:10.138 --> 00:00:15.360
+The inner loop prints the number of symbols required for that row, followed by a newline.
+
+00:00:16.360 --> 00:00:20.608
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:20.608 --> 00:00:23.086
+Do not copy only the final output.
+
+00:00:23.086 --> 00:00:26.980
+Record the input and explain the state changes that produced it.

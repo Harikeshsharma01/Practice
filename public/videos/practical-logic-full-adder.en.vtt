@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.010
+A full adder includes an incoming carry.
+
+00:00:02.010 --> 00:00:04.020
+S = A XOR B XOR Cin.
+
+00:00:04.020 --> 00:00:06.605
+Cout = AB OR (Cin AND (A XOR B)).
+
+00:00:07.605 --> 00:00:09.615
+A full adder includes an incoming carry.
+
+00:00:09.615 --> 00:00:11.625
+S = A XOR B XOR Cin.
+
+00:00:11.625 --> 00:00:14.210
+Cout = AB OR (Cin AND (A XOR B)).
+
+00:00:15.210 --> 00:00:20.154
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:20.154 --> 00:00:22.214
+Do not leave inputs floating.
+
+00:00:22.214 --> 00:00:29.630
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

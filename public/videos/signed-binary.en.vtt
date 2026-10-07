@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.456
+A fixed-width bit pattern has meaning only under an interpretation.
+
+00:00:05.456 --> 00:00:09.275
+In eight-bit unsigned form, 11111111 represents 255.
+
+00:00:09.275 --> 00:00:13.094
+In eight-bit two’s complement, it represents −1.
+
+00:00:13.094 --> 00:00:19.095
+The representable range for n-bit two’s complement is −2^(n−1) through 2^(n−1)−1.
+
+00:00:20.095 --> 00:00:21.651
++5 is 00000101.
+
+00:00:21.651 --> 00:00:25.282
+Inversion gives 11111010; adding one gives 11111011.
+
+00:00:25.282 --> 00:00:38.250
+The high bit has weight −128, so the value is −128 + 64 + 32 + 16 + 8 + 2 + 1 = −5.
+
+00:00:39.250 --> 00:00:42.246
+What is the eight-bit signed range?
+
+00:00:42.246 --> 00:00:47.240
+Eight-bit two’s complement has 256 values, from −128 to 127.

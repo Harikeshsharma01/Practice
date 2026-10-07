@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.137
+Aggregate functions summarise rows.
+
+00:00:02.137 --> 00:00:07.480
+COUNT(*) counts records; AVG considers non-NULL values in its column.
+
+00:00:08.480 --> 00:00:10.617
+Aggregate functions summarise rows.
+
+00:00:10.617 --> 00:00:15.960
+COUNT(*) counts records; AVG considers non-NULL values in its column.
+
+00:00:16.960 --> 00:00:21.208
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.208 --> 00:00:23.686
+Do not copy only the final output.
+
+00:00:23.686 --> 00:00:27.580
+Record the input and explain the state changes that produced it.

@@ -2,7 +2,7 @@
 
 ## What was added on 7 October 2026
 
-The catalog has 87 lessons: the 26 foundation lessons plus 61 practical workshops. There are 592 note sections across the catalog and 21 interactive labs. Note sections are logical reading pages, not a claim of 592 full printed sheets or complete board coverage.
+The catalog now has 138 lessons: 77 explanatory lessons and 61 practical workshops. There are 847 note sections, 21 interactive labs, 33 unit books with 50 logical study pages each, and 138 short narrated videos. These counts describe the current teaching collection, not verified board coverage.
 
 35 practical entries were transcribed or interpreted from your two journal photographs:
 
@@ -43,7 +43,7 @@ New journeys cover a browser request, bubble-sort comparisons, compiled program 
 
 Duplicate a saved chapter when two classes need deliberately different explanations. Select a new course assignment for the duplicate. Duplication uses saved content, so save your changes first.
 
-This update provides capacity and authoring tools for 50-page chapters. It does not claim to have written 50 finished pages for every chapter of all eight syllabuses.
+The chapter studio is separate from the new 50-page unit books. Each current unit book assembles the published topic explanations, examples, investigations and checks into 50 reading sections. Shared topics are reused across classes. This is not a claim of 50 dense printed pages for every official textbook chapter.
 
 ## Map the official syllabus
 
@@ -70,3 +70,16 @@ The frontend requires Vercel `SERVER_API_URL` pointing to your Render backend. R
 The new galaxy theme includes a nebula sky, animated stars, pointer constellations, touch stardust, glowing course portals and an interactive planet. Tap **Touch to ignite** on the home planet; use **Discover** and **Explore** to open learning areas. **Magic on/off** in the top bar stores your effects preference. Reduced motion starts with effects off, animations pause in hidden browser tabs, and decorative canvases never intercept clicks.
 
 On your own computer, update your existing Practice checkout with `git pull origin main`, install the locked dependencies with `npm ci`, then run `npm run dev`. Open the address printed by Vite. Keep the terminal open while using the site. This starts both the React frontend and Express backend. If you have not created `.env`, copy `.env.example` without overwriting an existing configuration, then set your own teacher account credentials. Set `MONGODB_URI` when you want MongoDB storage; development otherwise uses the clearly labeled local file store. Production still requires MongoDB.
+
+## Read the new unit books
+
+1. Choose a course, then select **Open the unit study book** below a unit heading. All 33 current units have a book.
+2. Use the contents panel, previous/next buttons or page selector. Your last position is saved in this browser.
+3. Switch between handwriting-style and typed notes. Try investigations before revealing answers.
+4. Follow **Origin → Mechanism → Destination → Change it** in the concept map. It explains the specific example; the linked lab is a separate interactive model.
+5. Watch the topic video beneath the page, or open the lesson’s **Video** tab. Use video controls to choose English captions or the Hindi explanation summary. Expand the Hindi summary and English transcript for reading.
+6. Download the MP4, save the book as Markdown, or choose **Print / save PDF**. Printing includes every study page and all solutions, not just the visible page. Code-heavy study pages can occupy multiple sheets.
+
+The short films use a synthetic English voice and gentle slide motion. Hindi is supplied as written explanation captions; there is no Hindi voice in this edition. The bundled videos are supplemental concept explainers, not full classroom lectures or externally generated cinematic scenes.
+
+Edit the underlying lesson in the teacher workspace and publish it to update every linked unit book. Draft edits remain private. If lesson text changes, its old generated video is hidden to avoid presenting it as current. Upload a reviewed replacement or supply a video link. Removing topics can reduce the page count if too little published content remains; the reader does not invent empty filler pages.

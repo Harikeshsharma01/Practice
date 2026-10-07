@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.641
+A scheduler chooses among ready tasks.
+
+00:00:02.641 --> 00:00:07.922
+Different policies optimise different goals such as response time, throughput and fairness.
+
+00:00:07.922 --> 00:00:15.404
+Waiting time counts time spent ready but not running; turnaround time measures completion time minus arrival time.
+
+00:00:15.404 --> 00:00:18.045
+State all assumptions before comparing algorithms.
+
+00:00:19.045 --> 00:00:22.965
+A runs 0–4, B runs 4–6, C runs 6–9.
+
+00:00:22.965 --> 00:00:26.886
+Their waiting times are 0, 4 and 6 ms.
+
+00:00:26.886 --> 00:00:30.371
+Average waiting time is (0+4+6)/3 = 10/3 ms.
+
+00:00:30.371 --> 00:00:33.420
+No I/O or switching cost is assumed.
+
+00:00:34.420 --> 00:00:37.319
+For the original order, when does task C finish?
+
+00:00:37.319 --> 00:00:41.185
+C begins at 6 ms and needs 3 ms of CPU time.

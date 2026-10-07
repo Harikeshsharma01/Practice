@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.933
+The Document Object Model represents a page as a tree of objects.
+
+00:00:03.933 --> 00:00:06.555
+An event reports an interaction or other occurrence.
+
+00:00:06.555 --> 00:00:10.160
+Event handlers can update state and change what the browser displays.
+
+00:00:10.160 --> 00:00:14.420
+A displayed change does not automatically mean data was saved on the server.
+
+00:00:15.420 --> 00:00:17.167
+Activation is the input event.
+
+00:00:17.167 --> 00:00:21.010
+A state value such as answerVisible changes from false to true.
+
+00:00:21.010 --> 00:00:23.456
+The explanation appearing on screen is output.
+
+00:00:23.456 --> 00:00:29.395
+If the page refreshes and no persistence was used, the state may return to its initial value.
+
+00:00:30.395 --> 00:00:32.339
+What does an event handler do?
+
+00:00:32.339 --> 00:00:37.200
+A handler responds to an event; its actual effects depend on the code it runs.

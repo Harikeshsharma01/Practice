@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.056
+For an active-high NOR latch: S=1 sets Q, R=1 resets Q, and S=R=0 holds the stored bit.
+
+00:00:08.056 --> 00:00:09.478
+S=R=1 is forbidden.
+
+00:00:09.478 --> 00:00:12.795
+A clocked version additionally gates these inputs.
+
+00:00:13.795 --> 00:00:21.851
+For an active-high NOR latch: S=1 sets Q, R=1 resets Q, and S=R=0 holds the stored bit.
+
+00:00:21.851 --> 00:00:23.273
+S=R=1 is forbidden.
+
+00:00:23.273 --> 00:00:26.590
+A clocked version additionally gates these inputs.
+
+00:00:27.590 --> 00:00:32.534
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:32.534 --> 00:00:34.594
+Do not leave inputs floating.
+
+00:00:34.594 --> 00:00:42.010
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

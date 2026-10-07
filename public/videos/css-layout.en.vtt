@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.135
+Try responsive columns and watch a layout adapt to smaller screens.
+
+00:00:05.135 --> 00:00:11.585
+Use three flexible Grid columns, then change the grid to one column at a 640px breakpoint.
+
+00:00:12.585 --> 00:00:16.508
+Which CSS feature applies styles when a screen meets a condition?
+
+00:00:16.508 --> 00:00:21.145
+A media query lets CSS respond to viewport conditions such as its width.

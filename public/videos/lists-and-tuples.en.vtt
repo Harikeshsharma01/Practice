@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.940
+Trace sequence positions and choose a mutable or fixed collection.
+
+00:00:04.940 --> 00:00:10.230
+The first element is index 0 and a slice excludes the stop index; use [1:4].
+
+00:00:11.230 --> 00:00:13.851
+Which positions are selected by items[1:4]?
+
+00:00:13.851 --> 00:00:18.655
+A slice includes its starting position and excludes its ending position.

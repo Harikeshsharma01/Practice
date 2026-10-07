@@ -22,6 +22,8 @@ export const sources = [
 ];
 import { practicals, practicalLessons } from "./practicals.js";
 import { expandedLessons } from "./expanded-lessons.js";
+import { deepLessons } from "./deep-lessons.js";
+import { expandUnits } from "./unit-plan.js";
 export const lessons = [
   {
     id: "computer-systems",
@@ -837,6 +839,7 @@ export const lessons = [
     },
   },
   ...expandedLessons,
+  ...deepLessons,
   ...practicalLessons,
 ];
 const unit = (title, ids = [], pending = []) => ({
@@ -1069,7 +1072,7 @@ export const courses = [
   },
 ].map((c) => ({
   ...c,
-  units: [
+  units: expandUnits(c, [
     ...c.units,
     unit(
       "Practical workshop · source labels apply",
@@ -1077,7 +1080,7 @@ export const courses = [
         .filter((p) => p.courseIds.includes(c.id))
         .map((p) => `practical-${p.id}`),
     ),
-  ],
+  ]),
   syllabusStatus: "provisional",
   session: "2026–27 verification pending",
 }));

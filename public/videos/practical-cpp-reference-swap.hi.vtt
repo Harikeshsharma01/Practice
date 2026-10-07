@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:16.490
+Reference parameters caller की असली values से जुड़े होते हैं।
+
+00:00:16.490 --> 00:00:32.980
+Temporary variable से swap करने पर caller के दोनों variables बदलते हैं।

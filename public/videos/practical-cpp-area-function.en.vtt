@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.958
+A function receives parameters and returns a result.
+
+00:00:02.958 --> 00:00:07.765
+Keeping input and output separate from the calculation makes it easier to reuse.
+
+00:00:08.765 --> 00:00:11.723
+A function receives parameters and returns a result.
+
+00:00:11.723 --> 00:00:16.530
+Keeping input and output separate from the calculation makes it easier to reuse.
+
+00:00:17.530 --> 00:00:21.778
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.778 --> 00:00:24.256
+Do not copy only the final output.
+
+00:00:24.256 --> 00:00:28.150
+Record the input and explain the state changes that produced it.

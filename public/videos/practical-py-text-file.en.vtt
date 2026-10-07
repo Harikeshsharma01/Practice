@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.056
+A context manager closes the file even when an operation raises an error.
+
+00:00:05.056 --> 00:00:07.390
+UTF-8 encoding makes text handling explicit.
+
+00:00:08.390 --> 00:00:13.446
+A context manager closes the file even when an operation raises an error.
+
+00:00:13.446 --> 00:00:15.780
+UTF-8 encoding makes text handling explicit.
+
+00:00:16.780 --> 00:00:21.028
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.028 --> 00:00:23.506
+Do not copy only the final output.
+
+00:00:23.506 --> 00:00:27.400
+Record the input and explain the state changes that produced it.

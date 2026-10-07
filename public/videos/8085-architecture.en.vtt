@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.273
+The 8085 is an eight-bit microprocessor with an accumulator, general-purpose registers, flags, a program counter and a stack pointer.
+
+00:00:09.273 --> 00:00:17.082
+Register roles matter when reading assembly: instructions describe transfers and operations on these named storage locations.
+
+00:00:17.082 --> 00:00:20.010
+The model is historical and educational.
+
+00:00:21.010 --> 00:00:23.739
+A contains 2AH after the first instruction.
+
+00:00:23.739 --> 00:00:28.027
+MOV copies that value into B, so both registers contain 2AH.
+
+00:00:28.027 --> 00:00:31.535
+Copying a register value does not erase the source.
+
+00:00:32.535 --> 00:00:34.898
+Which register is the accumulator?
+
+00:00:34.898 --> 00:00:37.260
+The accumulator is register A.

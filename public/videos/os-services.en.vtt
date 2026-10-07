@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.742
+The OS manages resources and provides controlled services to programs.
+
+00:00:04.742 --> 00:00:11.381
+Applications request operations such as reading files, creating processes and communicating through system interfaces.
+
+00:00:11.381 --> 00:00:18.020
+Protection separates ordinary application code from privileged operations that could affect the whole machine.
+
+00:00:19.020 --> 00:00:20.693
+The program requests a read.
+
+00:00:20.693 --> 00:00:26.716
+The OS checks the handle and permissions, locates the data, and copies or maps the result as appropriate.
+
+00:00:26.716 --> 00:00:32.405
+The call reports how many bytes were read or an error; the application must handle that result.
+
+00:00:33.405 --> 00:00:36.786
+Which component normally enforces protected hardware access?
+
+00:00:36.786 --> 00:00:40.650
+The kernel provides controlled access to privileged resources.

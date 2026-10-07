@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.930
+GROUP BY collects rows with shared grouping values so aggregates can be computed for each group.
+
+00:00:05.930 --> 00:00:09.265
+WHERE filters rows before grouping; HAVING filters grouped results.
+
+00:00:09.265 --> 00:00:15.195
+Confusing these stages can produce an invalid query or a different answer from the intended question.
+
+00:00:16.195 --> 00:00:20.280
+Class A has average 85; class B has average 70.
+
+00:00:20.280 --> 00:00:22.322
+HAVING AVG(marks)>=80 keeps only A.
+
+00:00:22.322 --> 00:00:28.450
+A WHERE marks>=80 filter would remove B’s row before grouping, which is a different operation.
+
+00:00:29.450 --> 00:00:32.955
+Which clause can filter on COUNT(*) after grouping?
+
+00:00:32.955 --> 00:00:36.460
+HAVING can apply conditions to grouped aggregate results.

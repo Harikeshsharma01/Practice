@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:14.235
+Default constructor शुरुआती radius देता है।
+
+00:00:14.235 --> 00:00:28.470
+Area pi गुणा radius का square है और circumference 2 pi radius है।

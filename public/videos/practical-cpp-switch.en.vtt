@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.960
+switch chooses a branch by a discrete value.
+
+00:00:02.960 --> 00:00:06.290
+break prevents execution from falling into the next case.
+
+00:00:07.290 --> 00:00:10.250
+switch chooses a branch by a discrete value.
+
+00:00:10.250 --> 00:00:13.580
+break prevents execution from falling into the next case.
+
+00:00:14.580 --> 00:00:17.721
+Add a third menu item and test an invalid choice.
+
+00:00:17.721 --> 00:00:19.920
+Do not copy only the final output.
+
+00:00:19.920 --> 00:00:23.375
+Record the input and explain the state changes that produced it.

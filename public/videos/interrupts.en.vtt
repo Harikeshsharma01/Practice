@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.205
+An interrupt requests attention from the processor so that an event can be handled without continuously checking it in a tight polling loop.
+
+00:00:08.205 --> 00:00:14.270
+The processor transfers control to an interrupt service routine according to its architecture and current interrupt settings.
+
+00:00:15.270 --> 00:00:18.046
+The CPU can perform other work between events.
+
+00:00:18.046 --> 00:00:20.474
+When input arrives, the device requests service.
+
+00:00:20.474 --> 00:00:27.760
+Polling is simpler in some designs but can waste time or miss timing requirements if the polling interval is poorly chosen.
+
+00:00:28.760 --> 00:00:31.916
+What is the purpose of an interrupt service routine?
+
+00:00:31.916 --> 00:00:37.175
+It performs the work needed to service the interrupt and allows execution to continue appropriately.

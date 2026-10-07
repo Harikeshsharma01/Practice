@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.088
+Booting is the sequence that prepares hardware and loads an operating system.
+
+00:00:04.088 --> 00:00:07.154
+Firmware begins before the operating system exists in RAM.
+
+00:00:07.154 --> 00:00:12.265
+It identifies a boot target, and a boot loader arranges for a kernel to run.
+
+00:00:12.265 --> 00:00:14.990
+Exact details vary across devices and firmware designs.
+
+00:00:15.990 --> 00:00:16.422
+No.
+
+00:00:16.422 --> 00:00:21.601
+Showing firmware output proves at least part of the display path works.
+
+00:00:21.601 --> 00:00:27.212
+The next investigation concerns boot-device detection, boot order, boot-loader configuration or OS startup.
+
+00:00:27.212 --> 00:00:30.665
+A failed login is a different, later-stage problem.
+
+00:00:31.665 --> 00:00:33.576
+Which normally starts first?
+
+00:00:33.576 --> 00:00:36.920
+Firmware executes before loading the operating system.

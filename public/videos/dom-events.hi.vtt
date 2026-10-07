@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:19.100
+Browser HTML से DOM tree बनाता है।
+
+00:00:19.100 --> 00:00:38.200
+Event listener click जैसी घटना पर function चलाता है, जो page के दिखते content को बदल सकता है।

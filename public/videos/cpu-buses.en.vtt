@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.389
+A bus carries information between components.
+
+00:00:02.389 --> 00:00:10.752
+An address identifies a location, data carries the value being transferred, and control signals describe actions such as read or write.
+
+00:00:10.752 --> 00:00:15.530
+Bus width and addressable unit together determine what an address can identify.
+
+00:00:16.530 --> 00:00:21.156
+Sixteen address bits represent 2^16 = 65,536 distinct addresses.
+
+00:00:21.156 --> 00:00:28.866
+If each address selects one byte, the address space is 65,536 bytes or 64 KiB.
+
+00:00:28.866 --> 00:00:34.520
+An eight-bit data bus does not reduce the number of addresses.
+
+00:00:35.520 --> 00:00:39.498
+A 16-bit byte address space contains how many addresses?
+
+00:00:39.498 --> 00:00:42.150
+There are 2^16 possible address patterns.

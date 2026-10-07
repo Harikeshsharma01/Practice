@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.690
+Break a problem into steps and watch an algorithm come to life.
+
+00:00:04.690 --> 00:00:11.850
+Compare 7 and 3  to  [3,7,5,2]; compare 7 and 5  to  [3,5,7,2]; compare 7 and 2  to  [3,5,2,7].
+
+00:00:11.850 --> 00:00:14.635
+More passes are needed to finish sorting.
+
+00:00:15.635 --> 00:00:21.039
+After the first full pass of ascending bubble sort, which element is in its final position?
+
+00:00:21.039 --> 00:00:25.430
+Each comparison moves the larger value right, so the largest reaches the end.

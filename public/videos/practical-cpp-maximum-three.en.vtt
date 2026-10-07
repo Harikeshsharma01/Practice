@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.000
+Compare each candidate with the current greatest value.
+
+00:00:04.000 --> 00:00:06.500
+Independent comparisons handle equality correctly.
+
+00:00:07.500 --> 00:00:11.500
+Compare each candidate with the current greatest value.
+
+00:00:11.500 --> 00:00:14.000
+Independent comparisons handle equality correctly.
+
+00:00:15.000 --> 00:00:17.703
+Test all negative inputs and three equal values.
+
+00:00:17.703 --> 00:00:20.068
+Do not copy only the final output.
+
+00:00:20.068 --> 00:00:23.785
+Record the input and explain the state changes that produced it.

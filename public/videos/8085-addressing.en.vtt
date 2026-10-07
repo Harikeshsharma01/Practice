@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.237
+An addressing mode explains where an instruction obtains its operand.
+
+00:00:04.237 --> 00:00:16.100
+Immediate data is included in the instruction; register addressing names a register; direct addressing supplies a memory address; register-indirect addressing uses a register pair to identify a location.
+
+00:00:17.100 --> 00:00:20.379
+The first loads the literal value 25H into A.
+
+00:00:20.379 --> 00:00:25.114
+The second reads memory location 0025H and loads whatever byte is stored there.
+
+00:00:25.114 --> 00:00:29.850
+Without knowing that memory value, you cannot predict A for the second case.
+
+00:00:30.850 --> 00:00:33.562
+What does M represent in MOV A,M?
+
+00:00:33.562 --> 00:00:38.600
+M is the 8085 notation for the memory location pointed to by HL.

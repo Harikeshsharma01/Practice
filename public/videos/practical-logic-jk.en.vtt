@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:09.782
+At the active clock edge: J=K=0 holds Q, J=0 K=1 resets, J=1 K=0 sets, and J=K=1 toggles.
+
+00:00:09.782 --> 00:00:14.960
+Unlike an RS latch, the 11 input is defined.
+
+00:00:15.960 --> 00:00:25.742
+At the active clock edge: J=K=0 holds Q, J=0 K=1 resets, J=1 K=0 sets, and J=K=1 toggles.
+
+00:00:25.742 --> 00:00:30.920
+Unlike an RS latch, the 11 input is defined.
+
+00:00:31.920 --> 00:00:36.864
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:36.864 --> 00:00:38.924
+Do not leave inputs floating.
+
+00:00:38.924 --> 00:00:46.340
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

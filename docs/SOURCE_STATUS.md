@@ -43,3 +43,11 @@ These URLs are source-discovery attempts, not evidence that a particular PDF or 
 The two journal photographs supplied in chat were visually transcribed into 35 original worked practical entries. Photo 1 is assigned provisionally to Maharashtra XII CS–I (13 entries including the crossed-out reverse-string task and handwritten reference-swap addition). Photo 2 supplies 12 introductory C++ tasks assigned provisionally to XI CS–I and 10 explicitly headed FYJC CS–II experiments. The factorial wording, “any three circuits”, and RS circuit implementation require confirmation. Modern C++17 solutions are original teaching implementations, not transcribed textbook solutions.
 
 26 further practicals are supplementary suggestions for CBSE Python/SQL/IT and Maharashtra XII CS–II. They must not be represented as official lists. Per-entry source labels and review notes are stored in `shared/practicals.js`. A teacher can now attach authoritative PDFs and record reviewed mappings in the workspace, including source page references.
+
+## Unit-book and video edition — 7 October 2026
+
+51 additional original explanatory lessons cover computer systems, operating systems, digital logic, 8085, networks, web development, spreadsheets, documents/presentations, employability, digital citizenship and databases. No new official board documents were retrieved for this edition. The 33 unit groupings in `shared/unit-plan.js` are pedagogical groupings and may include preparatory or supplementary material. They are not verified reproductions of official unit boundaries.
+
+All current units contain 50 logical study pages assembled from canonical published content. The 1,650 page placements reuse shared topics; they are not 1,650 independently authored full A4 pages. The reader includes source qualifications and retains the journal-photo labels.
+
+138 original narrated videos were rendered locally from the canonical lessons using FFmpeg, Pillow and the Flite English voice. English caption timings are estimated within each spoken scene. Hindi tracks contain independently authored explanation summaries, not exact translations of every spoken sentence. Source hashes prevent a teacher-edited lesson from showing its old video as current. No external video-generation provider was used.

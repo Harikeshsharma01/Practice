@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.268
+A constructor initialises an object.
+
+00:00:02.268 --> 00:00:05.898
+Its destructor runs when the object leaves scope.
+
+00:00:05.898 --> 00:00:08.620
+Nested blocks make lifetime boundaries visible.
+
+00:00:09.620 --> 00:00:11.888
+A constructor initialises an object.
+
+00:00:11.888 --> 00:00:15.518
+Its destructor runs when the object leaves scope.
+
+00:00:15.518 --> 00:00:18.240
+Nested blocks make lifetime boundaries visible.
+
+00:00:19.240 --> 00:00:23.488
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:23.488 --> 00:00:25.966
+Do not copy only the final output.
+
+00:00:25.966 --> 00:00:29.860
+Record the input and explain the state changes that produced it.

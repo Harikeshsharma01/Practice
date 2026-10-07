@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.045
+input returns a string.
+
+00:00:02.045 --> 00:00:04.602
+Convert it before numeric calculation.
+
+00:00:04.602 --> 00:00:07.670
+f-strings interpolate expressions into readable output.
+
+00:00:08.670 --> 00:00:10.715
+input returns a string.
+
+00:00:10.715 --> 00:00:13.272
+Convert it before numeric calculation.
+
+00:00:13.272 --> 00:00:16.340
+f-strings interpolate expressions into readable output.
+
+00:00:17.340 --> 00:00:21.588
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.588 --> 00:00:24.066
+Do not copy only the final output.
+
+00:00:24.066 --> 00:00:27.960
+Record the input and explain the state changes that produced it.

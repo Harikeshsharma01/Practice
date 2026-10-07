@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.986
+A reference parameter aliases its caller’s variable.
+
+00:00:03.986 --> 00:00:09.680
+Assignments therefore change the original objects, unlike ordinary pass-by-value parameters.
+
+00:00:10.680 --> 00:00:14.666
+A reference parameter aliases its caller’s variable.
+
+00:00:14.666 --> 00:00:20.360
+Assignments therefore change the original objects, unlike ordinary pass-by-value parameters.
+
+00:00:21.360 --> 00:00:25.608
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:25.608 --> 00:00:28.086
+Do not copy only the final output.
+
+00:00:28.086 --> 00:00:31.980
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.400
+A constexpr expression can be evaluated during compilation.
+
+00:00:03.400 --> 00:00:08.500
+A value read through cin is available only while the program runs.
+
+00:00:08.500 --> 00:00:11.050
+Integer division discards the fractional part.
+
+00:00:12.050 --> 00:00:15.450
+A constexpr expression can be evaluated during compilation.
+
+00:00:15.450 --> 00:00:20.550
+A value read through cin is available only while the program runs.
+
+00:00:20.550 --> 00:00:23.100
+Integer division discards the fractional part.
+
+00:00:24.100 --> 00:00:28.348
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:28.348 --> 00:00:30.826
+Do not copy only the final output.
+
+00:00:30.826 --> 00:00:34.720
+Record the input and explain the state changes that produced it.

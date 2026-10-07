@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.160
+Three stored bits represent eight states.
+
+00:00:02.160 --> 00:00:05.400
+A rising edge increments the unsigned count modulo 8.
+
+00:00:05.400 --> 00:00:07.920
+Observe reset and the selected clock edge.
+
+00:00:08.920 --> 00:00:11.080
+Three stored bits represent eight states.
+
+00:00:11.080 --> 00:00:14.320
+A rising edge increments the unsigned count modulo 8.
+
+00:00:14.320 --> 00:00:16.840
+Observe reset and the selected clock edge.
+
+00:00:17.840 --> 00:00:22.784
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:22.784 --> 00:00:24.844
+Do not leave inputs floating.
+
+00:00:24.844 --> 00:00:32.260
+Actual IC pinouts and active-high/active-low signals depend on the selected device; ask the teacher to check physical connections.

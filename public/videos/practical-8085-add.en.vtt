@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.900
+ADD changes the accumulator and status flags.
+
+00:00:02.900 --> 00:00:07.871
+FFH + 01H wraps the eight-bit accumulator to 00H and sets carry.
+
+00:00:07.871 --> 00:00:11.600
+The carry flag is not an extra accumulator bit.
+
+00:00:12.600 --> 00:00:15.500
+ADD changes the accumulator and status flags.
+
+00:00:15.500 --> 00:00:20.471
+FFH + 01H wraps the eight-bit accumulator to 00H and sets carry.
+
+00:00:20.471 --> 00:00:24.200
+The carry flag is not an extra accumulator bit.
+
+00:00:25.200 --> 00:00:29.448
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:29.448 --> 00:00:31.926
+Do not copy only the final output.
+
+00:00:31.926 --> 00:00:35.820
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.625
+Functions such as SUM, AVERAGE, MIN and MAX summarise ranges.
+
+00:00:03.625 --> 00:00:09.425
+Their results depend on which cells are included and how text, blanks or errors are treated.
+
+00:00:09.425 --> 00:00:15.225
+A formula that calculates successfully can still answer the wrong question if the range is incorrect.
+
+00:00:16.225 --> 00:00:21.509
+The total is 80 and the average is 80/3, approximately 26.67.
+
+00:00:21.509 --> 00:00:29.675
+A display rounded to two decimals changes presentation, not necessarily the stored result used by later formulas.
+
+00:00:30.675 --> 00:00:33.577
+What is the average of 28,25,27,20?
+
+00:00:33.577 --> 00:00:37.930
+The sum 100 divided by four observations is 25.

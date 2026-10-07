@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.652
+Public inheritance allows a derived class to reuse the public interface of its base.
+
+00:00:05.652 --> 00:00:08.075
+Derived classes can add specialised behaviour.
+
+00:00:09.075 --> 00:00:14.728
+Public inheritance allows a derived class to reuse the public interface of its base.
+
+00:00:14.728 --> 00:00:17.150
+Derived classes can add specialised behaviour.
+
+00:00:18.150 --> 00:00:22.398
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:22.398 --> 00:00:24.876
+Do not copy only the final output.
+
+00:00:24.876 --> 00:00:28.770
+Record the input and explain the state changes that produced it.

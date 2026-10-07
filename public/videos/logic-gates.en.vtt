@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.305
+Build your intuition for AND, OR, NOT and XOR with live switches.
+
+00:00:05.305 --> 00:00:06.663
+Use an AND gate.
+
+00:00:06.663 --> 00:00:10.060
+Let A mean cover closed and B mean start pressed.
+
+00:00:10.060 --> 00:00:11.758
+Output = A AND B.
+
+00:00:11.758 --> 00:00:14.135
+Only A=1 and B=1 starts the machine.
+
+00:00:15.135 --> 00:00:18.130
+Which gate outputs 1 when its two inputs differ?
+
+00:00:18.130 --> 00:00:22.455
+XOR is true for 01 and 10, and false for 00 and 11.

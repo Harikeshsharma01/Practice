@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.725
+A filesystem organises persistent data and metadata.
+
+00:00:02.725 --> 00:00:08.176
+A file name identifies a directory entry; a path explains how to reach it.
+
+00:00:08.176 --> 00:00:13.627
+Absolute paths start from a root, while relative paths depend on a current directory.
+
+00:00:13.627 --> 00:00:17.520
+File extensions are naming conventions, not proof of content type.
+
+00:00:18.520 --> 00:00:26.020
+If the working directory is the project root, the file is inside notes and its relative path is notes/chapter1.txt.
+
+00:00:26.020 --> 00:00:29.178
+Opening only chapter1.txt looks in the current directory.
+
+00:00:29.178 --> 00:00:33.125
+The failure should be diagnosed before creating a duplicate file.
+
+00:00:34.125 --> 00:00:37.229
+A relative path is interpreted from what location?
+
+00:00:37.229 --> 00:00:39.945
+Its meaning depends on the working directory.

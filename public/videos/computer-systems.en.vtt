@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.590
+Follow a single instruction from memory to the processor.
+
+00:00:04.590 --> 00:00:06.267
+The keys provide input.
+
+00:00:06.267 --> 00:00:10.040
+The processor executes an addition instruction using the ALU.
+
+00:00:10.040 --> 00:00:12.975
+Working memory holds the operands and result.
+
+00:00:12.975 --> 00:00:15.490
+The display produces the output: 12.
+
+00:00:16.490 --> 00:00:19.067
+Which unit performs arithmetic operations?
+
+00:00:19.067 --> 00:00:23.705
+The arithmetic logic unit performs arithmetic and logical operations.

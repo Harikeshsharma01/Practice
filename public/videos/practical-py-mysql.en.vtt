@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.905
+A database connector sends a query and returns rows.
+
+00:00:03.905 --> 00:00:07.810
+Bind parameters instead of constructing SQL with input text.
+
+00:00:07.810 --> 00:00:09.980
+Keep credentials outside source code.
+
+00:00:10.980 --> 00:00:14.885
+A database connector sends a query and returns rows.
+
+00:00:14.885 --> 00:00:18.790
+Bind parameters instead of constructing SQL with input text.
+
+00:00:18.790 --> 00:00:20.960
+Keep credentials outside source code.
+
+00:00:21.960 --> 00:00:26.208
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:26.208 --> 00:00:28.686
+Do not copy only the final output.
+
+00:00:28.686 --> 00:00:32.580
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.627
+Total और count से mean मिलता है।
+
+00:00:08.627 --> 00:00:17.253
+Empty list पर division और min/max से बचें।
+
+00:00:17.253 --> 00:00:25.880
+Negative values वाला test भी करें।

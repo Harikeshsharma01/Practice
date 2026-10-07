@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.054
+An integer is even when its remainder after division by 2 is zero.
+
+00:00:04.054 --> 00:00:06.860
+This also works for zero and negative even integers.
+
+00:00:07.860 --> 00:00:11.914
+An integer is even when its remainder after division by 2 is zero.
+
+00:00:11.914 --> 00:00:14.720
+This also works for zero and negative even integers.
+
+00:00:15.720 --> 00:00:19.968
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:19.968 --> 00:00:22.446
+Do not copy only the final output.
+
+00:00:22.446 --> 00:00:26.340
+Record the input and explain the state changes that produced it.

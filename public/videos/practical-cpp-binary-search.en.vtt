@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.484
+Compare the target with the middle of a sorted range.
+
+00:00:03.484 --> 00:00:05.923
+Discard the half that cannot contain it.
+
+00:00:05.923 --> 00:00:07.665
+The sorted-input precondition is essential.
+
+00:00:08.665 --> 00:00:12.149
+Compare the target with the middle of a sorted range.
+
+00:00:12.149 --> 00:00:14.588
+Discard the half that cannot contain it.
+
+00:00:14.588 --> 00:00:16.330
+The sorted-input precondition is essential.
+
+00:00:17.330 --> 00:00:21.578
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:21.578 --> 00:00:24.056
+Do not copy only the final output.
+
+00:00:24.056 --> 00:00:27.950
+Record the input and explain the state changes that produced it.

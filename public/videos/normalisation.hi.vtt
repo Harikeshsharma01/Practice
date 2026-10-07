@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:18.448
+Normalization में dependencies देखकर tables बाँटे जाते हैं।
+
+00:00:18.448 --> 00:00:36.895
+उद्देश्य अनावश्यक duplication और update anomalies कम करना है, केवल ज्यादा tables बनाना नहीं।

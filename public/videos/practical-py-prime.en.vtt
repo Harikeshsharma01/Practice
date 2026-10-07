@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.588
+An inner divisor loop classifies each candidate.
+
+00:00:02.588 --> 00:00:06.655
+A loop else runs only when that loop completes without break.
+
+00:00:07.655 --> 00:00:10.243
+An inner divisor loop classifies each candidate.
+
+00:00:10.243 --> 00:00:14.310
+A loop else runs only when that loop completes without break.
+
+00:00:15.310 --> 00:00:19.558
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:19.558 --> 00:00:22.036
+Do not copy only the final output.
+
+00:00:22.036 --> 00:00:25.930
+Record the input and explain the state changes that produced it.

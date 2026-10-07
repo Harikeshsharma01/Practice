@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.485
+Watch recursive calls build up and return their results.
+
+00:00:04.485 --> 00:00:07.692
+Calls progress through 3, 2, 1 and 0.
+
+00:00:07.692 --> 00:00:10.900
+Zero stops recursion; the waiting calls then finish.
+
+00:00:11.900 --> 00:00:14.305
+What makes a recursive function stop safely?
+
+00:00:14.305 --> 00:00:19.115
+The base case ends the calls; the recursive step must move closer to it.

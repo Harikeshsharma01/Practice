@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.715
+Follow a web request through DNS, the network and a server.
+
+00:00:04.715 --> 00:00:15.865
+The browser resolves the hostname, connects to the server, negotiates TLS for HTTPS, sends an HTTP request, receives the response and renders the page.
+
+00:00:16.865 --> 00:00:19.696
+What is DNS primarily used for?
+
+00:00:19.696 --> 00:00:24.415
+DNS supplies records associated with names, including IP address records.

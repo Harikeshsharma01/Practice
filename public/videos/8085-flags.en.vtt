@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.742
+Status flags record properties of certain operation results.
+
+00:00:03.742 --> 00:00:09.824
+In the 8085, common flags include carry, zero, sign, parity and auxiliary carry.
+
+00:00:09.824 --> 00:00:15.905
+Each instruction’s flag effects must be checked; not every instruction changes every flag.
+
+00:00:16.905 --> 00:00:18.749
+The mathematical sum is 100H.
+
+00:00:18.749 --> 00:00:21.332
+A stores 00H and carry becomes 1.
+
+00:00:21.332 --> 00:00:27.234
+Zero becomes 1, sign becomes 0, and parity is even because zero has zero one bits.
+
+00:00:27.234 --> 00:00:30.185
+Auxiliary carry is also 1 for this addition.
+
+00:00:31.185 --> 00:00:35.269
+Is the number of one bits in 03H even?
+
+00:00:35.269 --> 00:00:38.900
+03H is 00000011, which has two set bits.

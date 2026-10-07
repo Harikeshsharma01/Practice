@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:18.960
+बिजली मिलने पर firmware hardware की शुरुआती जाँच करता है।
+
+00:00:18.960 --> 00:00:37.920
+Bootloader operating system का kernel load करता है, फिर services और login शुरू होते हैं।

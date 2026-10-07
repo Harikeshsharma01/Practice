@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.415
+Read, calculate and print using a compiled language.
+
+00:00:04.415 --> 00:00:08.330
+Use double for fractional dimensions and reject invalid input.
+
+00:00:09.330 --> 00:00:11.421
+Which header provides std::cout?
+
+00:00:11.421 --> 00:00:17.170
+The C++ iostream header declares standard stream objects such as std::cout.

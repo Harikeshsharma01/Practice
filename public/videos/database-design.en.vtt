@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.850
+Connect students, courses and marks without repeating each fact.
+
+00:00:04.850 --> 00:00:12.432
+Store students in students(student_id, name) and test results in results(result_id, student_id, assessment, marks).
+
+00:00:12.432 --> 00:00:16.515
+student_id in results refers to the student.
+
+00:00:17.515 --> 00:00:19.150
+What does a foreign key do?
+
+00:00:19.150 --> 00:00:22.420
+A foreign key refers to a row's key in a related table.

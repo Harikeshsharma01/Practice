@@ -1,0 +1,7 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:17.155
+Half subtractor में difference XOR से मिलता है।
+
+00:00:17.155 --> 00:00:34.310
+Borrow तब होता है जब A zero और B one हो।

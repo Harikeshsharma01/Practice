@@ -1,0 +1,25 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.924
+Semantic HTML describes the meaning of content, not only its visual appearance.
+
+00:00:04.924 --> 00:00:11.080
+Headings, navigation, main content, articles and buttons give browsers and assistive technologies a useful structure.
+
+00:00:11.080 --> 00:00:17.235
+A large bold paragraph does not become a heading merely because it looks like one.
+
+00:00:18.235 --> 00:00:21.610
+Use an anchor with a meaningful href for navigation.
+
+00:00:21.610 --> 00:00:24.610
+It supplies familiar link semantics and keyboard behaviour.
+
+00:00:24.610 --> 00:00:29.110
+A button is appropriate when the control performs an in-page action instead.
+
+00:00:30.110 --> 00:00:32.852
+Which element normally performs an in-page action?
+
+00:00:32.852 --> 00:00:36.770
+A button is the appropriate interactive control for an action.

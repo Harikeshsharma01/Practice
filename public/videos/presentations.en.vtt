@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.275
+A teaching slide should support an explanation rather than compete with it.
+
+00:00:04.275 --> 00:00:11.044
+One clear claim, a relevant diagram and a small example usually communicate more effectively than a dense copied paragraph.
+
+00:00:11.044 --> 00:00:15.675
+Speaker notes can preserve detail that does not need to occupy the screen.
+
+00:00:16.675 --> 00:00:25.448
+Use a sorted array and target, show the first middle comparison, show the retained half, show the next comparison, and explain the stopping condition.
+
+00:00:25.448 --> 00:00:30.565
+Keep the same array positions visually consistent so learners can follow what was eliminated.
+
+00:00:31.565 --> 00:00:34.823
+What is a useful reason to animate an explanation?
+
+00:00:34.823 --> 00:00:38.805
+Animation helps when it makes a meaningful change or sequence visible.

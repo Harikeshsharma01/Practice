@@ -1,0 +1,40 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:00.386
+n!
+
+00:00:00.386 --> 00:00:04.246
+is the product of integers 1 through n, and 0!
+
+00:00:04.246 --> 00:00:05.018
+= 1.
+
+00:00:05.018 --> 00:00:07.333
+A 64-bit unsigned integer fits 20!
+
+00:00:07.333 --> 00:00:10.035
+but not 21!, so validate the range.
+
+00:00:11.035 --> 00:00:11.421
+n!
+
+00:00:11.421 --> 00:00:15.281
+is the product of integers 1 through n, and 0!
+
+00:00:15.281 --> 00:00:16.053
+= 1.
+
+00:00:16.053 --> 00:00:18.368
+A 64-bit unsigned integer fits 20!
+
+00:00:18.368 --> 00:00:21.070
+but not 21!, so validate the range.
+
+00:00:22.070 --> 00:00:26.318
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:26.318 --> 00:00:28.796
+Do not copy only the final output.
+
+00:00:28.796 --> 00:00:32.690
+Record the input and explain the state changes that produced it.

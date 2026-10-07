@@ -75,6 +75,11 @@ import PracticalLibrary, { SyllabusPanel } from "./components/PracticalLibrary";
 import { lessonIds } from "../../shared/catalog";
 import "@fontsource/kalam/latin-400.css";
 import "./styles.css";
+import {
+  UnitBook,
+  GeneratedVideo,
+  TopicJourney,
+} from "./components/StudyBooks.jsx";
 const Context = createContext();
 const useApp = () => useContext(Context);
 async function api(path, options = {}) {
@@ -385,14 +390,16 @@ function Shell() {
             <span className="breadcrumb">
               Your universe <ChevronRight size={13} />{" "}
               <strong>
-                {location.pathname.startsWith("/lesson")
-                  ? "Learning room"
-                  : location.pathname.startsWith("/course/")
-                    ? "Course overview"
-                    : location.pathname.startsWith("/book/")
-                      ? "Course notebook"
-                      : nav.find((n) => n[0] === location.pathname)?.[1] ||
-                        "Teacher workspace"}
+                {location.pathname.startsWith("/unit/")
+                  ? "Unit study book"
+                  : location.pathname.startsWith("/lesson")
+                    ? "Learning room"
+                    : location.pathname.startsWith("/course/")
+                      ? "Course overview"
+                      : location.pathname.startsWith("/book/")
+                        ? "Course notebook"
+                        : nav.find((n) => n[0] === location.pathname)?.[1] ||
+                          "Teacher workspace"}
               </strong>
             </span>
           </div>
@@ -429,6 +436,7 @@ function Shell() {
             <Route path="/course/:id" element={<Course />} />
             <Route path="/notes" element={<Notes />} />
             <Route path="/book/:id" element={<CourseBook />} />
+            <Route path="/unit/:id" element={<UnitBookRoute />} />
             <Route path="/lesson/:id" element={<Lesson />} />
             <Route path="/animations" element={<LabPage visual />} />
             <Route path="/labs" element={<LabPage />} />
@@ -811,6 +819,10 @@ function PageIntro({ eyebrow, title, description, children }) {
     </div>
   );
 }
+function UnitBookRoute() {
+  const { courses, lessons } = useApp();
+  return <UnitBook courses={courses} lessons={lessons} />;
+}
 function Course() {
   const { id } = useParams(),
     { courses, lessons, completed, setCourseId, courseId } = useApp();
@@ -879,6 +891,13 @@ function Course() {
                   <h3>{u.title}</h3>
                   <small>{u.lessons.length} lessons</small>
                 </div>
+                {u.bookId && (
+                  <Link className="unit-book-link" to={`/unit/${u.bookId}`}>
+                    <span>✦ Open the unit study book</span>
+                    <small>Handwriting-style notes · visuals · videos</small>
+                    <ArrowRight size={16} />
+                  </Link>
+                )}
                 {u.lessons.map((id) => {
                   const l = lessons.find((l) => l.id === id);
                   return (
@@ -1592,6 +1611,8 @@ function VideoPanel({ lesson }) {
     <div className="content-panel">
       <span className="pill green">ANOTHER WAY TO UNDERSTAND</span>
       <h2>See the lesson unfold.</h2>
+      <TopicJourney lesson={lesson} />
+      <GeneratedVideo lesson={lesson} />
       {embed ? (
         <iframe
           className="video-frame"
@@ -1600,7 +1621,7 @@ function VideoPanel({ lesson }) {
           allow="fullscreen; picture-in-picture"
           allowFullScreen
         />
-      ) : (
+      ) : !lesson.generatedVideo ? (
         <div className="empty-state">
           <Video size={40} />
           <h3>Your teacher’s video belongs here.</h3>
@@ -1630,7 +1651,7 @@ function VideoPanel({ lesson }) {
             </Link>
           )}
         </div>
-      )}
+      ) : null}
       <MediaAttachments
         attachments={(lesson.mediaAttachments || []).filter((file) =>
           file.type.startsWith("video/"),

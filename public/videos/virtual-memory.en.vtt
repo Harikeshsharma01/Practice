@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.541
+Virtual memory gives a process an address space whose addresses are translated to physical memory.
+
+00:00:05.541 --> 00:00:10.342
+Paging divides that address space into equal-sized pages and physical memory into frames.
+
+00:00:10.342 --> 00:00:13.298
+A page table records mappings and access permissions.
+
+00:00:13.298 --> 00:00:17.730
+Virtual memory is more than a synonym for a disk swap file.
+
+00:00:18.730 --> 00:00:26.414
+2500 = 2×1024 + 452, so the page is 2 and the offset is 452.
+
+00:00:26.414 --> 00:00:31.025
+The physical address is 7×1024 + 452 = 7620.
+
+00:00:31.025 --> 00:00:36.660
+This example assumes the entry is present and permits the access.
+
+00:00:37.660 --> 00:00:40.429
+Which part is unchanged by this translation?
+
+00:00:40.429 --> 00:00:44.385
+The offset identifies the same position within the selected frame.

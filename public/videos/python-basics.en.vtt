@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.465
+Use variables, expressions and input to solve a familiar problem.
+
+00:00:05.465 --> 00:00:10.720
+Convert each input to a numeric type, add the three marks and divide the total by 3.
+
+00:00:11.720 --> 00:00:13.731
+What type does input() return?
+
+00:00:13.731 --> 00:00:17.350
+input() returns text, even when the user types digits.

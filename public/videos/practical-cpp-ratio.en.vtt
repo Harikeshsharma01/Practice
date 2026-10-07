@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.322
+A ratio stores a numerator and denominator.
+
+00:00:03.322 --> 00:00:05.220
+Conversion uses floating-point division.
+
+00:00:05.220 --> 00:00:10.915
+Inversion exchanges numerator and denominator but is invalid for a zero ratio.
+
+00:00:11.915 --> 00:00:15.237
+A ratio stores a numerator and denominator.
+
+00:00:15.237 --> 00:00:17.135
+Conversion uses floating-point division.
+
+00:00:17.135 --> 00:00:22.830
+Inversion exchanges numerator and denominator but is invalid for a zero ratio.
+
+00:00:23.830 --> 00:00:28.078
+Modify one input or condition, predict the output, then check your prediction.
+
+00:00:28.078 --> 00:00:30.556
+Do not copy only the final output.
+
+00:00:30.556 --> 00:00:34.450
+Record the input and explain the state changes that produced it.

@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.140
+Turn a marks sheet into useful totals, averages and decisions.
+
+00:00:05.140 --> 00:00:09.205
+Put the average in E2, then use IF on E2 to determine the label.
+
+00:00:10.205 --> 00:00:13.201
+Which reference keeps both its row and column fixed?
+
+00:00:13.201 --> 00:00:16.530
+The dollar signs fix the column B and row 1.
