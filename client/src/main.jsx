@@ -69,6 +69,9 @@ import "@fontsource/space-grotesk/latin-500.css";
 import "@fontsource/space-grotesk/latin-600.css";
 import "@fontsource/space-grotesk/latin-700.css";
 import { Lab, labInfo } from "./components/Labs";
+import CosmicScene from "./components/CosmicScene";
+import TeacherStudio from "./components/TeacherStudio";
+import PracticalLibrary, { SyllabusPanel } from "./components/PracticalLibrary";
 import { lessonIds } from "../../shared/catalog";
 import "@fontsource/kalam/latin-400.css";
 import "./styles.css";
@@ -111,10 +114,13 @@ function Logo({ small = false }) {
   );
 }
 function OrbitalArt({ mini = false }) {
+  const [charged, setCharged] = useState(false);
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
   return (
     <div
-      className={mini ? "orbital-art mini" : "orbital-art"}
-      aria-hidden="true"
+      className={`${mini ? "orbital-art mini" : "orbital-art"} ${charged ? "portal-awake" : ""}`}
+      aria-hidden={mini ? true : undefined}
     >
       <div className="planet-glow" />
       <div className="orbit-ring orbit-one" />
@@ -133,6 +139,45 @@ function OrbitalArt({ mini = false }) {
       <span className="art-star star-three">+</span>
       {!mini && (
         <>
+          <button
+            className="planet-ignite"
+            aria-label="Ignite the learning galaxy"
+            aria-pressed={charged}
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              window.dispatchEvent(
+                new CustomEvent("sewestian-portal", {
+                  detail: {
+                    x: rect.x + rect.width / 2,
+                    y: rect.y + rect.height / 2,
+                  },
+                }),
+              );
+              setCharged(true);
+              clearTimeout(timer.current);
+              timer.current = setTimeout(() => setCharged(false), 5000);
+            }}
+          >
+            <span>
+              {charged ? "Your universe is awake ✦" : "Touch to ignite ✦"}
+            </span>
+          </button>
+          <Link
+            className="orbit-destination orbit-notes"
+            to="/notes"
+            aria-label="Travel to the notes library"
+          >
+            <BookOpen size={17} />
+            <span>Discover</span>
+          </Link>
+          <Link
+            className="orbit-destination orbit-labs"
+            to="/labs?lab=journey-web"
+            aria-label="Travel into a live simulation"
+          >
+            <Orbit size={17} />
+            <span>Explore</span>
+          </Link>
           <div className="art-label">
             <span /> curiosity is your superpower
           </div>
@@ -145,33 +190,14 @@ function OrbitalArt({ mini = false }) {
     </div>
   );
 }
-function SparkField() {
-  const [sparks, setSparks] = useState([]);
-  useEffect(() => {
-    const click = (e) => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const id = Date.now() + Math.random();
-      setSparks((s) => [...s.slice(-5), { id, x: e.clientX, y: e.clientY }]);
-      setTimeout(() => setSparks((s) => s.filter((x) => x.id !== id)), 700);
-    };
-    window.addEventListener("pointerdown", click);
-    return () => window.removeEventListener("pointerdown", click);
-  }, []);
-  return (
-    <div className="spark-field" aria-hidden="true">
-      {sparks.map((s) => (
-        <span key={s.id} style={{ left: s.x, top: s.y }}>
-          {Array.from({ length: 6 }, (_, i) => (
-            <i key={i} style={{ "--a": `${i * 60}deg` }} />
-          ))}
-        </span>
-      ))}
-    </div>
-  );
-}
 function App() {
   const [catalog, setCatalog] = useState(null),
     [error, setError] = useState(""),
+    [effectsEnabled, setEffectsEnabled] = useState(
+      () =>
+        readLocal("sewestian-effects", true) &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    ),
     [courseId, setCourseId] = useState(() =>
       readLocal("sewestian-course", "mh-11-cs1"),
     ),
@@ -208,8 +234,21 @@ function App() {
       return () => clearTimeout(id);
     }
   }, [toast]);
+  useEffect(() => {
+    localStorage.setItem("sewestian-effects", JSON.stringify(effectsEnabled));
+  }, [effectsEnabled]);
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const change = () => {
+      if (media.matches) setEffectsEnabled(false);
+    };
+    media.addEventListener("change", change);
+    return () => media.removeEventListener("change", change);
+  }, []);
   const value = {
     ...catalog,
+    effectsEnabled,
+    setEffectsEnabled,
     courseId,
     setCourseId,
     completed,
@@ -222,7 +261,7 @@ function App() {
   return (
     <Context.Provider value={value}>
       <BrowserRouter>
-        <SparkField />
+        <CosmicScene enabled={effectsEnabled} />
         {catalog ? (
           <Shell />
         ) : (
@@ -247,7 +286,7 @@ function App() {
   );
 }
 function Shell() {
-  const { courses, courseId } = useApp(),
+  const { courses, courseId, effectsEnabled, setEffectsEnabled } = useApp(),
     [search, setSearch] = useState(false),
     [mobile, setMobile] = useState(false),
     location = useLocation();
@@ -255,6 +294,7 @@ function Shell() {
   useEffect(() => {
     setMobile(false);
     window.scrollTo(0, 0);
+    window.dispatchEvent(new CustomEvent("sewestian-portal"));
   }, [location.pathname]);
   useEffect(() => {
     const key = (e) => {
@@ -276,6 +316,7 @@ function Shell() {
     ["/notes", "Notes library", NotebookPen],
     ["/animations", "Visual learning", Orbit],
     ["/labs", "Practice lab", FlaskConical],
+    ["/practicals", "Practical journal", FileText],
   ];
   return (
     <div className="app-shell">
@@ -361,13 +402,27 @@ function Shell() {
               <span>Find something to learn</span>
               <kbd>⌘ K</kbd>
             </button>
+            <button
+              className={`effects-toggle ${effectsEnabled ? "active" : ""}`}
+              aria-label="Cosmic effects"
+              aria-pressed={effectsEnabled}
+              title={
+                effectsEnabled
+                  ? "Turn off cosmic motion and touch effects"
+                  : "Turn on cosmic motion and touch effects"
+              }
+              onClick={() => setEffectsEnabled((value) => !value)}
+            >
+              <Sparkles size={17} />
+              <span>{effectsEnabled ? "Magic on" : "Magic off"}</span>
+            </button>
             <span className="topbar-divider" />
             <div className="avatar" title="Your local learner profile">
               S<span />
             </div>
           </div>
         </header>
-        <main id="main-content">
+        <main id="main-content" key={location.pathname} className="portal-page">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
@@ -378,6 +433,7 @@ function Shell() {
             <Route path="/animations" element={<LabPage visual />} />
             <Route path="/labs" element={<LabPage />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/practicals" element={<PracticalPage />} />
             <Route
               path="*"
               element={
@@ -433,19 +489,19 @@ function Home() {
       <section className="hero">
         <div className="hero-copy">
           <div className="hero-tag">
-            <span /> YOUR UNIVERSE OF LEARNING
+            <span /> OPEN A PORTAL. FOLLOW YOUR CURIOSITY.
           </div>
           <h2>
             Don’t just study it.
             <br />
-            <span>See it. Feel it.</span>
+            <span>Make discovery magic.</span>
             <br />
             Understand it.
           </h2>
           <p>
             From your first line of code to your next big idea.
             <br className="desktop" /> Notes, visuals, and hands-on experiments
-            — all in one orbit.
+            — now inside your own learning galaxy.
           </p>
           <div className="hero-buttons">
             <Link className="button primary" to="/courses">
@@ -739,6 +795,10 @@ function Courses() {
     </div>
   );
 }
+function PracticalPage() {
+  const { courses, practicals } = useApp();
+  return <PracticalLibrary courses={courses} practicals={practicals} />;
+}
 function PageIntro({ eyebrow, title, description, children }) {
   return (
     <div className="page-intro">
@@ -798,12 +858,16 @@ function Course() {
               <FileText size={16} />
               Open course book
             </Link>
+            <Link className="button" to={`/practicals?course=${c.id}`}>
+              Practical journal
+            </Link>
           </div>
         </div>
         <div className="course-banner-icon">
           <GraduationCap size={70} />
         </div>
       </div>
+      <SyllabusPanel course={c} lessons={lessons} />
       <div className="course-detail-grid">
         <div>
           <SectionHeading title="Your learning roadmap" />
@@ -1144,6 +1208,10 @@ async function exportImage(lesson) {
     }
     lines.push({ text: line }, { text: "" });
   }
+  if (lines.length > 350)
+    throw new Error(
+      "This page is too long for a PNG. Split it into shorter pages or print the course book as PDF.",
+    );
   canvas.height = 360 + lines.length * 42;
   ctx.fillStyle = "#f4f1e8";
   ctx.fillRect(0, 0, 1400, canvas.height);
@@ -1186,13 +1254,16 @@ function Lesson() {
     [answer, setAnswer] = useState(null),
     [solution, setSolution] = useState(false),
     [exporting, setExporting] = useState(false),
-    [handwriting, setHandwriting] = useState(true);
+    [handwriting, setHandwriting] = useState(true),
+    [notePage, setNotePage] = useState(0);
   const l = lessons.find((l) => l.id === id);
   useEffect(() => {
     setTab("Notes");
     setAnswer(null);
     setSolution(false);
-  }, [id]);
+    setNotePage(0);
+    setHandwriting(l?.appearance?.font !== "standard");
+  }, [id, l?.appearance?.font]);
   if (!l) return <Missing />;
   const saved = bookmarks.includes(id),
     done = completed.includes(id);
@@ -1200,20 +1271,22 @@ function Lesson() {
     setExporting(true);
     try {
       if (type === "ppt") await exportSlides(l);
-      else await exportImage(l);
+      else await exportImage({ ...l, notes: [l.notes[notePage]] });
       toast(
         type === "ppt"
           ? "Your lesson slides are ready."
           : "Your note image is ready.",
       );
-    } catch {
-      toast("The export failed. Please try again.");
+    } catch (error) {
+      toast(error.message || "The export failed. Please try again.");
     } finally {
       setExporting(false);
     }
   }
   return (
-    <div className="page lesson-page">
+    <div
+      className={`page lesson-page chapter-accent-${l.appearance?.accent || "mint"}`}
+    >
       <Link className="back-link" to="/notes">
         <ArrowLeft size={15} />
         Notes library
@@ -1273,10 +1346,39 @@ function Lesson() {
               <p className="handwritten">
                 A little understanding goes a long way ↗
               </p>
-              {l.notes.map(([title, body], i) => (
+              <div className="chapter-pagination">
+                <button
+                  className="button"
+                  disabled={notePage === 0}
+                  onClick={() => setNotePage((p) => p - 1)}
+                >
+                  Previous page
+                </button>
+                <label>
+                  Page
+                  <select
+                    value={notePage}
+                    onChange={(e) => setNotePage(Number(e.target.value))}
+                  >
+                    {l.notes.map(([heading], i) => (
+                      <option key={i} value={i}>
+                        {i + 1}. {heading}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  className="button"
+                  disabled={notePage >= l.notes.length - 1}
+                  onClick={() => setNotePage((p) => p + 1)}
+                >
+                  Next page
+                </button>
+              </div>
+              {l.notes.slice(notePage, notePage + 1).map(([title, body], i) => (
                 <section className="note-section" key={i}>
                   <span className="note-number">
-                    {String(i + 1).padStart(2, "0")}
+                    {String(notePage + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <h3>{title}</h3>
@@ -1421,7 +1523,7 @@ function Lesson() {
             </button>
             <button disabled={exporting} onClick={() => exportFile("image")}>
               <Image size={17} />
-              Download note image
+              Download current page image
               <Download size={14} />
             </button>
             <button disabled={exporting} onClick={() => exportFile("ppt")}>
@@ -1565,6 +1667,20 @@ function LabPage({ visual = false }) {
             : "Flip switches, follow instructions and test an idea. There’s no wrong way to be curious."
         }
       />
+      <label className="mobile-lab-picker">
+        Choose a simulation
+        <select
+          aria-label="Choose a simulation"
+          value={selected}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          {Object.entries(labInfo).map(([id, l]) => (
+            <option key={id} value={id}>
+              {l.title}
+            </option>
+          ))}
+        </select>
+      </label>
       <div className="lab-layout">
         <div className="lab-picker">
           {Object.entries(labInfo).map(([id, l]) => (
@@ -1608,8 +1724,9 @@ function LabPage({ visual = false }) {
       </div>
       <div className="callout">
         <Info size={18} />
-        Five original interactive labs are available. Additional topic
-        simulations can be added as the course material is verified.
+        {Object.keys(labInfo).length} interactive labs are available. Journey
+        simulations show input, intermediate state and output; use the controls
+        to test what changes.
       </div>
     </div>
   );
@@ -1722,7 +1839,8 @@ function SearchModal({ close }) {
   );
 }
 function Admin() {
-  const { toast, refresh } = useApp(),
+  const { toast, refresh, courses } = useApp(),
+    [workspaceTab, setWorkspaceTab] = useState("studio"),
     [status, setStatus] = useState(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -1738,12 +1856,13 @@ function Admin() {
       if (s.authenticated) {
         const data = await api("/admin/lessons");
         setItems(data);
-        if (!selected) {
-          setSelected(data[0].id);
+        const target = data.find((l) => l.id === selected) || data[0];
+        if (target) {
+          setSelected(target.id);
           setForm({
-            ...data[0],
-            videoUrl: data[0].videoUrl || "",
-            mediaIds: data[0].mediaIds || [],
+            ...target,
+            videoUrl: target.videoUrl || "",
+            mediaIds: target.mediaIds || [],
           });
         }
       }
@@ -1899,314 +2018,353 @@ function Admin() {
         </div>
       ) : (
         <>
-          <div className="admin-status">
-            <span className="pill green">TEACHER WORKSPACE</span>
-            <span>{items.length} lessons</span>
-            <span>
-              {items.filter((l) => l.status === "draft").length} drafts
-            </span>
-            <span>
-              {items.filter((l) => l.status === "published").length} published
-              updates
-            </span>
+          <div className="segmented workspace-switch">
+            <button
+              className={workspaceTab === "studio" ? "selected" : ""}
+              onClick={() => setWorkspaceTab("studio")}
+            >
+              Chapter studio
+            </button>
+            <button
+              className={workspaceTab === "quick" ? "selected" : ""}
+              onClick={() => {
+                setWorkspaceTab("quick");
+                load();
+              }}
+            >
+              Quick lesson editor
+            </button>
           </div>
-          <div className="editor-layout">
-            <aside className="editor-list">
-              {items.map((l) => (
-                <button
-                  key={l.id}
-                  className={selected === l.id ? "active" : ""}
-                  onClick={() => {
-                    setSelected(l.id);
-                    setForm({
-                      ...l,
-                      videoUrl: l.videoUrl || "",
-                      mediaIds: l.mediaIds || [],
-                    });
-                    setError("");
-                  }}
-                >
-                  <BookOpen size={16} />
-                  <span>
-                    {l.title}
-                    <small>
-                      {l.status === "original"
-                        ? "Original lesson"
-                        : l.status === "draft"
-                          ? "Draft changes"
-                          : "Published"}
-                    </small>
-                  </span>
-                </button>
-              ))}
-            </aside>
-            {form && (
-              <form
-                className="editor-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  save(false);
-                }}
-              >
-                <div className="editor-heading">
-                  <h2>Make the next “aha!” moment.</h2>
-                  <Link to={`/lesson/${selected}`} className="text-button">
-                    Student view
-                    <ArrowUpRight size={15} />
-                  </Link>
-                </div>
-                <label>
-                  Lesson title
-                  <input
-                    required
-                    minLength={3}
-                    maxLength={140}
-                    value={form.title}
-                    onChange={(e) =>
-                      setForm({ ...form, title: e.target.value })
-                    }
-                  />
-                </label>
-                <label>
-                  A short introduction
-                  <textarea
-                    required
-                    minLength={10}
-                    maxLength={400}
-                    rows={2}
-                    value={form.summary}
-                    onChange={(e) =>
-                      setForm({ ...form, summary: e.target.value })
-                    }
-                  />
-                </label>
-                <span className="overline">NOTEBOOK SECTIONS</span>
-                {form.notes.map(([heading, body], i) => (
-                  <fieldset key={i}>
-                    <legend>Section {i + 1}</legend>
+          {workspaceTab === "studio" ? (
+            <TeacherStudio
+              api={api}
+              courses={courses}
+              toast={toast}
+              refresh={refresh}
+            />
+          ) : (
+            <>
+              <div className="admin-status">
+                <span className="pill green">TEACHER WORKSPACE</span>
+                <span>{items.length} lessons</span>
+                <span>
+                  {items.filter((l) => l.status === "draft").length} drafts
+                </span>
+                <span>
+                  {items.filter((l) => l.status === "published").length}{" "}
+                  published updates
+                </span>
+              </div>
+              <div className="editor-layout">
+                <aside className="editor-list">
+                  {items.map((l) => (
+                    <button
+                      key={l.id}
+                      className={selected === l.id ? "active" : ""}
+                      onClick={() => {
+                        setSelected(l.id);
+                        setForm({
+                          ...l,
+                          videoUrl: l.videoUrl || "",
+                          mediaIds: l.mediaIds || [],
+                        });
+                        setError("");
+                      }}
+                    >
+                      <BookOpen size={16} />
+                      <span>
+                        {l.title}
+                        <small>
+                          {l.status === "original"
+                            ? "Original lesson"
+                            : l.status === "draft"
+                              ? "Draft changes"
+                              : "Published"}
+                        </small>
+                      </span>
+                    </button>
+                  ))}
+                </aside>
+                {form && (
+                  <form
+                    className="editor-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      save(false);
+                    }}
+                  >
+                    <div className="editor-heading">
+                      <h2>Make the next “aha!” moment.</h2>
+                      <Link to={`/lesson/${selected}`} className="text-button">
+                        Student view
+                        <ArrowUpRight size={15} />
+                      </Link>
+                    </div>
                     <label>
-                      Heading
+                      Lesson title
                       <input
                         required
-                        maxLength={120}
-                        value={heading}
+                        minLength={3}
+                        maxLength={140}
+                        value={form.title}
                         onChange={(e) =>
-                          setForm({
-                            ...form,
-                            notes: form.notes.map((n, j) =>
-                              j === i ? [e.target.value, n[1]] : n,
-                            ),
-                          })
+                          setForm({ ...form, title: e.target.value })
                         }
                       />
                     </label>
                     <label>
-                      Explanation
+                      A short introduction
                       <textarea
                         required
-                        maxLength={5000}
-                        rows={4}
-                        value={body}
+                        minLength={10}
+                        maxLength={400}
+                        rows={2}
+                        value={form.summary}
                         onChange={(e) =>
-                          setForm({
-                            ...form,
-                            notes: form.notes.map((n, j) =>
-                              j === i ? [n[0], e.target.value] : n,
-                            ),
-                          })
+                          setForm({ ...form, summary: e.target.value })
                         }
                       />
                     </label>
-                  </fieldset>
-                ))}
-                <button
-                  type="button"
-                  className="button"
-                  disabled={form.notes.length >= 20}
-                  onClick={() =>
-                    setForm({
-                      ...form,
-                      notes: [
-                        ...form.notes,
-                        ["New idea", "Explain the concept here."],
-                      ],
-                    })
-                  }
-                >
-                  Add notebook section
-                </button>
-                <label>
-                  Lesson video · optional
-                  <input
-                    type="url"
-                    value={form.videoUrl}
-                    onChange={(e) =>
-                      setForm({ ...form, videoUrl: e.target.value })
-                    }
-                    placeholder="https://www.youtube.com/watch?v=…"
-                  />
-                  <small>
-                    A YouTube or Vimeo video you have permission to share.
-                  </small>
-                </label>
-                <section className="teacher-uploads">
-                  <span className="overline">YOUR TEACHING MATERIALS</span>
-                  <p>
-                    Attach an image, short video or PDF to this lesson. Import a
-                    Markdown or text file to turn its headings into notebook
-                    sections.
-                  </p>
-                  <div className="upload-controls">
-                    <label>
-                      Upload an image, video or PDF
-                      <input
-                        type="file"
-                        accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/webm,application/pdf"
-                        disabled={busy}
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          setBusy(true);
-                          setError("");
-                          try {
-                            const data = new FormData();
-                            data.append("file", file);
-                            const response = await fetch("/api/admin/uploads", {
-                              method: "POST",
-                              body: data,
-                            });
-                            const result = await response.json();
-                            if (!response.ok)
-                              throw new Error(result.error || "Upload failed.");
-                            setForm((current) => ({
-                              ...current,
-                              mediaIds: [
-                                ...(current.mediaIds || []),
-                                result.id,
-                              ],
-                              mediaAttachments: [
-                                ...(current.mediaAttachments || []),
-                                result,
-                              ],
-                            }));
-                            toast(
-                              "File attached. Save your lesson draft to keep it.",
-                            );
-                          } catch (error) {
-                            setError(error.message);
-                          } finally {
-                            setBusy(false);
-                            e.target.value = "";
-                          }
-                        }}
-                      />
-                    </label>
-                    <label>
-                      Import Markdown or text notes
-                      <input
-                        type="file"
-                        accept=".md,.markdown,.txt,text/plain,text/markdown"
-                        disabled={busy}
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          setBusy(true);
-                          setError("");
-                          try {
-                            const data = new FormData();
-                            data.append("file", file);
-                            const response = await fetch(
-                              "/api/admin/import-notes",
-                              { method: "POST", body: data },
-                            );
-                            const result = await response.json();
-                            if (!response.ok)
-                              throw new Error(
-                                result.error || "Notes import failed.",
-                              );
-                            if (form.notes.length + result.notes.length > 20)
-                              throw new Error(
-                                "This lesson has room for 20 notebook sections. Shorten the import first.",
-                              );
-                            setForm((current) => ({
-                              ...current,
-                              notes: [...current.notes, ...result.notes],
-                            }));
-                            toast(
-                              `${result.notes.length} sections imported. Save your draft to keep them.`,
-                            );
-                          } catch (error) {
-                            setError(error.message);
-                          } finally {
-                            setBusy(false);
-                            e.target.value = "";
-                          }
-                        }}
-                      />
-                    </label>
-                  </div>
-                  <small>
-                    Uploads are limited to 4 MB each. Students can view images,
-                    PDFs and short video clips after you publish. Use the video
-                    link above for longer lessons.
-                  </small>
-                  {!!form.mediaAttachments?.length && (
-                    <div className="upload-list">
-                      {form.mediaAttachments.map((file) => (
-                        <div key={file.id}>
-                          <FileText size={15} />
-                          <span>
-                            {file.name}
-                            <small>{(file.size / 1024).toFixed(0)} KB</small>
-                          </span>
-                          <button
-                            type="button"
-                            className="icon-button"
-                            aria-label={`Remove ${file.name}`}
-                            onClick={() =>
+                    <span className="overline">NOTEBOOK SECTIONS</span>
+                    {form.notes.map(([heading, body], i) => (
+                      <fieldset key={i}>
+                        <legend>Section {i + 1}</legend>
+                        <label>
+                          Heading
+                          <input
+                            required
+                            maxLength={120}
+                            value={heading}
+                            onChange={(e) =>
                               setForm({
                                 ...form,
-                                mediaIds: (form.mediaIds || []).filter(
-                                  (id) => id !== file.id,
-                                ),
-                                mediaAttachments: form.mediaAttachments.filter(
-                                  (item) => item.id !== file.id,
+                                notes: form.notes.map((n, j) =>
+                                  j === i ? [e.target.value, n[1]] : n,
                                 ),
                               })
                             }
-                          >
-                            <X size={16} />
-                          </button>
+                          />
+                        </label>
+                        <label>
+                          Explanation
+                          <textarea
+                            required
+                            maxLength={12000}
+                            rows={4}
+                            value={body}
+                            onChange={(e) =>
+                              setForm({
+                                ...form,
+                                notes: form.notes.map((n, j) =>
+                                  j === i ? [n[0], e.target.value] : n,
+                                ),
+                              })
+                            }
+                          />
+                        </label>
+                      </fieldset>
+                    ))}
+                    <button
+                      type="button"
+                      className="button"
+                      disabled={form.notes.length >= 100}
+                      onClick={() =>
+                        setForm({
+                          ...form,
+                          notes: [
+                            ...form.notes,
+                            ["New idea", "Explain the concept here."],
+                          ],
+                        })
+                      }
+                    >
+                      Add notebook section
+                    </button>
+                    <label>
+                      Lesson video · optional
+                      <input
+                        type="url"
+                        value={form.videoUrl}
+                        onChange={(e) =>
+                          setForm({ ...form, videoUrl: e.target.value })
+                        }
+                        placeholder="https://www.youtube.com/watch?v=…"
+                      />
+                      <small>
+                        A YouTube or Vimeo video you have permission to share.
+                      </small>
+                    </label>
+                    <section className="teacher-uploads">
+                      <span className="overline">YOUR TEACHING MATERIALS</span>
+                      <p>
+                        Attach an image, short video or PDF to this lesson.
+                        Import a Markdown or text file to turn its headings into
+                        notebook sections.
+                      </p>
+                      <div className="upload-controls">
+                        <label>
+                          Upload an image, video or PDF
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/webm,application/pdf"
+                            disabled={busy}
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              setBusy(true);
+                              setError("");
+                              try {
+                                const data = new FormData();
+                                data.append("file", file);
+                                const response = await fetch(
+                                  "/api/admin/uploads",
+                                  {
+                                    method: "POST",
+                                    body: data,
+                                  },
+                                );
+                                const result = await response.json();
+                                if (!response.ok)
+                                  throw new Error(
+                                    result.error || "Upload failed.",
+                                  );
+                                setForm((current) => ({
+                                  ...current,
+                                  mediaIds: [
+                                    ...(current.mediaIds || []),
+                                    result.id,
+                                  ],
+                                  mediaAttachments: [
+                                    ...(current.mediaAttachments || []),
+                                    result,
+                                  ],
+                                }));
+                                toast(
+                                  "File attached. Save your lesson draft to keep it.",
+                                );
+                              } catch (error) {
+                                setError(error.message);
+                              } finally {
+                                setBusy(false);
+                                e.target.value = "";
+                              }
+                            }}
+                          />
+                        </label>
+                        <label>
+                          Import Markdown or text notes
+                          <input
+                            type="file"
+                            accept=".md,.markdown,.txt,text/plain,text/markdown"
+                            disabled={busy}
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              setBusy(true);
+                              setError("");
+                              try {
+                                const data = new FormData();
+                                data.append("file", file);
+                                const response = await fetch(
+                                  "/api/admin/import-notes",
+                                  { method: "POST", body: data },
+                                );
+                                const result = await response.json();
+                                if (!response.ok)
+                                  throw new Error(
+                                    result.error || "Notes import failed.",
+                                  );
+                                if (
+                                  form.notes.length + result.notes.length >
+                                  100
+                                )
+                                  throw new Error(
+                                    "This lesson has room for 100 notebook pages. Shorten the import first.",
+                                  );
+                                setForm((current) => ({
+                                  ...current,
+                                  notes: [...current.notes, ...result.notes],
+                                }));
+                                toast(
+                                  `${result.notes.length} sections imported. Save your draft to keep them.`,
+                                );
+                              } catch (error) {
+                                setError(error.message);
+                              } finally {
+                                setBusy(false);
+                                e.target.value = "";
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                      <small>
+                        Uploads are limited to 4 MB each. Students can view
+                        images, PDFs and short video clips after you publish.
+                        Use the video link above for longer lessons.
+                      </small>
+                      {!!form.mediaAttachments?.length && (
+                        <div className="upload-list">
+                          {form.mediaAttachments.map((file) => (
+                            <div key={file.id}>
+                              <FileText size={15} />
+                              <span>
+                                {file.name}
+                                <small>
+                                  {(file.size / 1024).toFixed(0)} KB
+                                </small>
+                              </span>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Remove ${file.name}`}
+                                onClick={() =>
+                                  setForm({
+                                    ...form,
+                                    mediaIds: (form.mediaIds || []).filter(
+                                      (id) => id !== file.id,
+                                    ),
+                                    mediaAttachments:
+                                      form.mediaAttachments.filter(
+                                        (item) => item.id !== file.id,
+                                      ),
+                                  })
+                                }
+                              >
+                                <X size={16} />
+                              </button>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      )}
+                    </section>
+                    {error && (
+                      <p className="form-error" role="alert">
+                        {error}
+                      </p>
+                    )}
+                    <div className="editor-actions">
+                      <button className="button" disabled={busy}>
+                        <Save size={16} />
+                        Save draft
+                      </button>
+                      <button
+                        type="button"
+                        className="button primary"
+                        disabled={busy}
+                        onClick={(e) => {
+                          if (e.currentTarget.form.reportValidity()) save(true);
+                        }}
+                      >
+                        <Send size={16} />
+                        Publish to students
+                      </button>
                     </div>
-                  )}
-                </section>
-                {error && (
-                  <p className="form-error" role="alert">
-                    {error}
-                  </p>
+                  </form>
                 )}
-                <div className="editor-actions">
-                  <button className="button" disabled={busy}>
-                    <Save size={16} />
-                    Save draft
-                  </button>
-                  <button
-                    type="button"
-                    className="button primary"
-                    disabled={busy}
-                    onClick={(e) => {
-                      if (e.currentTarget.form.reportValidity()) save(true);
-                    }}
-                  >
-                    <Send size={16} />
-                    Publish to students
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
@@ -2278,7 +2436,11 @@ function CourseBook() {
           </ul>
         </section>
         {chapters.map((l, i) => (
-          <section id={`book-${l.id}`} key={l.id} className="book-chapter">
+          <section
+            id={`book-${l.id}`}
+            key={l.id}
+            className={`book-chapter ${l.appearance?.pageBreaks ? "print-separate-pages" : ""}`}
+          >
             <span className="overline">
               CHAPTER {String(i + 1).padStart(2, "0")} ·{" "}
               {l.category.toUpperCase()}
@@ -2287,7 +2449,7 @@ function CourseBook() {
             <p className="chapter-summary">{l.summary}</p>
             <MediaAttachments attachments={l.mediaAttachments} />
             {l.notes.map(([title, body], j) => (
-              <div key={j}>
+              <div className="book-note-page" key={j}>
                 <h3>{title}</h3>
                 <p>{body}</p>
               </div>

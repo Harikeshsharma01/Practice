@@ -1,23 +1,28 @@
 # Sewestian
 
-A responsive learning portal for Maharashtra and CBSE classes XI and XII, built with React, Express, Node.js and a MongoDB persistence adapter. The visual experience includes an animated Sewestian planet and logo, pointer sparks, course roadmaps, handwritten-style notebooks, examples, quizzes and interactive simulations.
+A responsive learning portal for Maharashtra and CBSE classes XI and XII, built with React, Express, Node.js and a MongoDB persistence adapter. The galaxy visual experience includes a nebula backdrop, animated starfield, touch stardust, glowing course portals, an interactive Sewestian planet, a saved effects toggle and reduced-motion support, course roadmaps, handwritten-style notebooks, examples, quizzes and interactive simulations.
 
 ## What is available
 
 - Eight provisional board/class pathways: Maharashtra XI/XII CS–I and CS–II; CBSE XI/XII Computer Science (083) and Information Technology (802).
-- Twenty-six original foundation lessons. One canonical lesson can belong to several courses without duplication.
-- Fourteen interactive simulations: binary and hex, six logic gates, a simplified CPU cycle, bubble sort, networking, full addition, recursive call stacks, binary search, Python list indices, stacks and queues, a safe sample SQL filter, subnet calculation, colour contrast and CSS layouts.
+- Eighty-seven lessons: 26 foundation lessons and 61 practical workshops, with 592 logical note sections. One canonical lesson can belong to several courses without duplication.
+- Twenty-one interactive simulations, including seven step-by-step journeys from input to output: binary and hex, six logic gates, a simplified CPU cycle, bubble sort, networking, full addition, recursive call stacks, binary search, Python list indices, stacks and queues, a safe sample SQL filter, subnet calculation, colour contrast and CSS layouts.
 - Search, board/class filters, bookmarks and learning progress saved in the student's browser.
 - Worked examples, practical tasks with solutions, self-check questions, notebook-style PNG exports and editable PPTX exports.
 - Printable course books combining available notes, examples, exercises and solutions. Browser printing can save these as PDFs.
-- Teacher authentication with a salted scrypt password hash and an eight-hour HttpOnly session cookie. Drafts remain private; publishing changes the public lesson. Teachers can add YouTube/Vimeo links, upload 4 MB images, short videos and PDFs, and import headings from Markdown/text notes.
+- Teacher authentication with a salted scrypt password hash and an eight-hour HttpOnly session cookie. Drafts remain private; publishing changes the public lesson. Teachers can add YouTube/Vimeo links, upload 4 MB images, short videos and PDFs, and import headings from Markdown/text notes. The chapter studio supports new chapters, duplication, up to 100 logical pages per chapter, a 50-page outline planner, course assignments, page ordering, editable examples/solutions/quizzes, and appearance controls.
+- Practical journal filters, worked solutions, viva prompts and observations saved in the student’s browser.
+- Syllabus evidence uploads and teacher-reviewed topic mappings, with source page references.
+- Optional OpenAI API drafting in batches of up to five pages, teacher review before applying, and prompt export for Codex/ChatGPT. No embedded Codex session or autonomous publishing.
 - Responsive layouts, keyboard navigation, reduced-motion support and locally served fonts.
+
+See [the teacher guide](docs/TEACHER_GUIDE.md) for the complete workflow and photo transcription notes.
 
 ## Content status — please read before classroom use
 
-This is a foundation edition, **not a completed or officially verified curriculum**. The supplied ChatGPT share links, CBSE academic website, Maharashtra board website and eBalbharati were blocked by the workspace's network proxy (403). Their contents were not imported. Course maps are explicitly provisional and show pending areas. The 2026–27 curriculum, unit allocation, marking scheme, practical counts, prescribed programming environments and institutional requirements must be checked against official documents before claiming syllabus coverage. Provide the official PDFs and shared notes for exact alignment; references and access results are in `docs/SOURCE_STATUS.md`.
+This is a foundation edition, **not a completed or officially verified curriculum**. The two supplied journal photos were transcribed into 35 labeled practical entries; their ambiguous or inferred items are flagged for teacher review. The supplied ChatGPT share links, CBSE academic website, Maharashtra board website and eBalbharati were blocked by the workspace's network proxy (403). Their contents were not imported. Course maps are explicitly provisional and show pending areas. The 2026–27 curriculum, unit allocation, marking scheme, practical counts, prescribed programming environments and institutional requirements must be checked against official documents before claiming syllabus coverage. Provide the official PDFs and shared notes for exact alignment; references and access results are in `docs/SOURCE_STATUS.md`.
 
-CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. Videos are empty until a teacher adds a link or uploads a permitted short clip. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. There is no AI image/video service or arbitrary code execution. Student progress is per browser, without cross-device accounts.
+CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. Videos are empty until a teacher adds a link or uploads a permitted short clip. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. There is no AI image/video service or arbitrary code execution. Optional text drafting requires a backend OpenAI API key; it is disabled without that key. Student progress is per browser, without cross-device accounts.
 
 ## Local development
 
@@ -47,6 +52,12 @@ npm run build
 npm run test:ui
 # After building, exercises an isolated teacher account against the built app:
 npm run test:teacher
+# Chapter studio, practical journal and journey browser coverage:
+node tests/studio-browser.mjs
+# Galaxy interaction checks with the dev server running:
+node tests/cosmic-browser.mjs
+# Optional bundled example execution checks (g++ and Python required):
+node tests/practical-solutions.mjs
 ```
 
 `npm test` exercises canonical mappings, authentication, private drafts, publishing, session invalidation, payload validation, untrusted origins, and persistence of the development store. Browser tests cover desktop/mobile navigation, search, quizzes, bookmarks/progress, PNG/PPTX downloads, course filters and simulations. `CHROMIUM_PATH` overrides the default `/usr/bin/chromium`; `TEST_BASE_URL` overrides the local test URL. Screenshots and downloaded exports go to `/tmp/sewestian-screenshots`.
@@ -78,4 +89,8 @@ Render's free service can sleep, so the first API request may be slow. The UI an
 - `api/proxy.js` — Vercel same-origin bridge to Render.
 - `tests/` — integration and browser checks.
 
-Next content work: obtain the official syllabus PDFs and the supplied shared-conversation contents; verify every course unit and practical requirement; expand missing lesson coverage; add institution-approved videos, chapter-specific diagrams and practical journal material. Teacher edits currently cover existing lesson titles, introductions, notebook sections and videos; adding new canonical lessons, editing worked exercises and changing course mappings requires editing `shared/catalog.js`.
+Next content work: obtain the official syllabus PDFs and the supplied shared-conversation contents; verify every course unit and practical requirement; expand missing lesson coverage; add institution-approved videos, chapter-specific diagrams and practical journal material. Teachers can now create and publish new chapters, edit worked examples and practical solutions, assign courses, and record syllabus mappings from the workspace. Official completeness and 50 finished pages per chapter remain content-authoring work, not claims made by this update.
+
+## Optional lesson assistant
+
+Set `OPENAI_API_KEY` only on the backend and optionally `OPENAI_MODEL` (default `gpt-4.1-mini`). The teacher workspace explains what is sent, supports 1–5 page batches, and requires teacher review before adding generated pages to a draft. The route uses the OpenAI Responses API and `store: false`. No live provider call was made during development; integration was verified with a mocked response. See the teacher guide for configuration and limitations.

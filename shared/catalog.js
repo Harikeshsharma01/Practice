@@ -20,6 +20,7 @@ export const sources = [
     note: "Use the applicable official textbook and your institution’s approved practical list.",
   },
 ];
+import { practicals, practicalLessons } from "./practicals.js";
 import { expandedLessons } from "./expanded-lessons.js";
 export const lessons = [
   {
@@ -836,6 +837,7 @@ export const lessons = [
     },
   },
   ...expandedLessons,
+  ...practicalLessons,
 ];
 const unit = (title, ids = [], pending = []) => ({
   title,
@@ -1067,6 +1069,15 @@ export const courses = [
   },
 ].map((c) => ({
   ...c,
+  units: [
+    ...c.units,
+    unit(
+      "Practical workshop · source labels apply",
+      practicals
+        .filter((p) => p.courseIds.includes(c.id))
+        .map((p) => `practical-${p.id}`),
+    ),
+  ],
   syllabusStatus: "provisional",
   session: "2026–27 verification pending",
 }));

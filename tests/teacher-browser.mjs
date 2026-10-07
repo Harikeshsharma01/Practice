@@ -35,6 +35,9 @@ try {
   const loginError = await page.locator(".form-error").allTextContents();
   if (loginError.length) throw new Error(loginError.join(" "));
   await page
+    .getByRole("button", { name: "Quick lesson editor", exact: true })
+    .click();
+  await page
     .getByLabel("Lesson title")
     .fill("A teacher-reviewed computer lesson");
   await page.getByRole("button", { name: "Save draft", exact: true }).click();
@@ -60,7 +63,11 @@ try {
   await page.goto(base + "/course/cbse-11-cs");
   await page.getByRole("link", { name: "Open course book" }).click();
   await page.locator(".book-chapter").first().waitFor();
-  assert.equal(await page.locator(".book-chapter").count(), 8);
+  const course = catalog.courses.find((c) => c.id === "cbse-11-cs");
+  assert.equal(
+    await page.locator(".book-chapter").count(),
+    new Set(course.units.flatMap((u) => u.lessons)).size,
+  );
   await page.pdf({
     path: "/tmp/sewestian-screenshots/course-book.pdf",
     format: "A4",
@@ -75,7 +82,7 @@ try {
   assert.equal(await page.locator(".handwritten-notes").count(), 1);
   assert.deepEqual(errors, []);
   console.log(
-    "PASS: built-app teacher sign-in, private draft, publish, sign-out, eight-chapter printable course book, PDF generation, handwriting toggle, and browser errors.",
+    "PASS: built-app teacher sign-in, private draft, publish, sign-out, expanded printable course book, PDF generation, handwriting toggle, and browser errors.",
   );
 } finally {
   await browser.close();

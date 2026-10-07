@@ -14,7 +14,14 @@ import { existsSync } from "node:fs";
 import multer from "multer";
 import { readFile, unlink } from "node:fs/promises";
 import { pipeline } from "node:stream/promises";
-import { courses, lessons, sources } from "../shared/catalog.js";
+import {
+  allLessons,
+  mediaIsPublished,
+  publicCatalog,
+  teacherLessons,
+  registerTeachingRoutes,
+  studioLessonFields,
+} from "./teaching.js";
 export const hashPassword = (password) => {
   const salt = randomBytes(16).toString("hex");
   return `${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
@@ -44,12 +51,13 @@ function websiteOrigin(value) {
   }
 }
 const lessonSchema = z.object({
+  ...studioLessonFields,
   title: z.string().trim().min(3).max(140),
   summary: z.string().trim().min(10).max(400),
   notes: z
-    .array(z.tuple([z.string().min(1).max(120), z.string().min(1).max(5000)]))
+    .array(z.tuple([z.string().min(1).max(120), z.string().min(1).max(12000)]))
     .min(1)
-    .max(20),
+    .max(100),
   videoUrl: z
     .string()
     .max(500)
@@ -83,7 +91,7 @@ const lessonSchema = z.object({
 });
 export function createApp(
   store,
-  { production = false, clientOrigin = "" } = {},
+  { production = false, clientOrigin = "", ...teachingOptions } = {},
 ) {
   const configuredOrigin = websiteOrigin(clientOrigin);
   if (clientOrigin && !configuredOrigin) {
@@ -113,7 +121,7 @@ export function createApp(
       },
     }),
   );
-  app.use(express.json({ limit: "160kb" }), cookieParser());
+  app.use(express.json({ limit: "2mb" }), cookieParser());
   app.use("/api", (req, res, next) => {
     if (
       !["GET", "HEAD", "OPTIONS"].includes(req.method) &&
@@ -161,6 +169,11 @@ export function createApp(
     dest: path.resolve(".data/uploads"),
     limits: { fileSize: 4_000_000, files: 1 },
     fileFilter: (_req, file, done) => {
+      if (!file.mimetype || file.mimetype === "application/octet-stream") {
+        const ext = path.extname(file.originalname).toLowerCase();
+        if ([".md", ".markdown"].includes(ext)) file.mimetype = "text/markdown";
+        if (ext === ".txt") file.mimetype = "text/plain";
+      }
       if (
         [
           "image/jpeg",
@@ -214,26 +227,7 @@ export function createApp(
     res.json({ status: "ok", storage: store.mode }),
   );
   app.get("/api/catalog", async (_req, res) => {
-    const published = [];
-    for (const lesson of lessons) {
-      const override = await store.get("published-" + lesson.id);
-      const attachments = [];
-      for (const id of override?.mediaIds ?? []) {
-        const saved = await store.get(`upload-${id}`);
-        if (saved)
-          attachments.push({
-            id: saved.id,
-            name: saved.name,
-            type: saved.type,
-            size: saved.size,
-          });
-      }
-      published.push({
-        ...(override ? { ...lesson, ...override } : lesson),
-        mediaAttachments: attachments,
-      });
-    }
-    res.json({ courses, lessons: published, sources });
+    res.set("Cache-Control", "no-store").json(await publicCatalog(store));
   });
   app.get("/api/auth/status", async (req, res) => {
     const admin = await store.get("admin");
@@ -303,28 +297,44 @@ export function createApp(
           });
         await inspectUpload(req.file);
         const text = await readFile(req.file.path, "utf8");
-        if (Buffer.byteLength(text) > 30_000)
+        if (Buffer.byteLength(text) > 1_500_000)
           return res
             .status(413)
-            .json({ error: "Notes import is limited to 30 KB." });
+            .json({ error: "Notes import is limited to 1.5 MB." });
         const chunks = text
           .trim()
           .split(/\n(?=#{1,3}\s)/)
           .filter(Boolean);
+        if (chunks.length > 100 || chunks.some((chunk) => chunk.length > 12120))
+          return res.status(400).json({
+            error:
+              "Split the notes into at most 100 pages with up to 12,000 characters per page.",
+          });
         const notes = chunks
-          .slice(0, 20)
           .map((chunk, i) => {
             const lines = chunk.split(/\r?\n/);
-            const heading =
-              lines[0].replace(/^#{1,3}\s*/, "").trim() ||
-              `Imported notes ${i + 1}`;
+            const hasHeading = /^#{1,3}\s/.test(lines[0]);
+            const heading = hasHeading
+              ? lines
+                  .shift()
+                  .replace(/^#{1,3}\s*/, "")
+                  .trim()
+              : `Imported page ${i + 1}`;
             return [
-              heading.slice(0, 120),
-              lines.slice(1).join("\n").trim().slice(0, 5000) ||
-                chunk.slice(0, 5000),
+              heading || `Imported page ${i + 1}`,
+              lines.join("\n").trim(),
             ];
           })
           .filter(([, body]) => body);
+        if (
+          notes.some(
+            ([heading, body]) => heading.length > 120 || body.length > 12000,
+          )
+        )
+          return res.status(400).json({
+            error:
+              "Use page headings up to 120 characters and page text up to 12,000 characters. No content has been imported.",
+          });
         if (!notes.length)
           return res
             .status(400)
@@ -339,14 +349,7 @@ export function createApp(
     try {
       const file = await store.getFile(req.params.id);
       if (!file) return res.status(404).json({ error: "Media not found." });
-      let isPublished = false;
-      for (const lesson of lessons) {
-        const published = await store.get(`published-${lesson.id}`);
-        if (published?.mediaIds?.includes(file.metadata.id)) {
-          isPublished = true;
-          break;
-        }
-      }
+      const isPublished = await mediaIsPublished(store, file.metadata.id);
       if (!isPublished) {
         const token = req.cookies.sewestian_session;
         const session =
@@ -355,16 +358,16 @@ export function createApp(
                 "session-" + createHash("sha256").update(token).digest("hex"),
               )
             : null;
-        if (!session || session.expires < Date.now())
+        if (!session || session.expires < Date.now()) {
+          file.stream.destroy();
           return res.status(404).json({ error: "Media not found." });
+        }
       }
       res.set({
         "Content-Type": file.metadata.type,
         "X-Content-Type-Options": "nosniff",
         "Content-Disposition": "inline",
-        "Cache-Control": isPublished
-          ? "public, max-age=3600"
-          : "private, no-store",
+        "Cache-Control": isPublished ? "no-store" : "private, no-store",
       });
       await pipeline(file.stream, res);
     } catch (error) {
@@ -421,34 +424,22 @@ export function createApp(
     res.clearCookie("sewestian_session", { path: "/" });
     res.json({ ok: true });
   });
-  app.get("/api/admin/lessons", protect, async (_req, res) => {
-    const result = [];
-    for (const lesson of lessons) {
-      const draft = await store.get("draft-" + lesson.id),
-        published = await store.get("published-" + lesson.id);
-      const mediaAttachments = [];
-      for (const id of (draft ?? published)?.mediaIds ?? []) {
-        const file = await store.get(`upload-${id}`);
-        if (file) mediaAttachments.push(file);
-      }
-      result.push({
-        ...lesson,
-        ...published,
-        ...draft,
-        status: draft ? "draft" : published ? "published" : "original",
-        publishedAt: published?.publishedAt ?? null,
-        mediaAttachments,
-      });
-    }
-    res.json(result);
-  });
+  registerTeachingRoutes(app, store, protect, teachingOptions);
+  app.get("/api/admin/lessons", protect, async (_req, res) =>
+    res.json(await teacherLessons(store)),
+  );
   app.put("/api/admin/lessons/:id", protect, async (req, res) => {
-    if (!lessons.some((l) => l.id === req.params.id))
+    if (!(await allLessons(store)).some((l) => l.id === req.params.id))
       return res.status(404).json({ error: "Lesson not found." });
     const parsed = lessonSchema.safeParse(req.body);
     if (!parsed.success)
       return res.status(400).json({ error: parsed.error.issues[0].message });
-    const { status, ...content } = parsed.data;
+    const { status, ...changes } = parsed.data;
+    const existing =
+      (await store.get("draft-" + req.params.id)) ||
+      (await store.get("published-" + req.params.id)) ||
+      {};
+    const content = { ...existing, ...changes };
     for (const id of content.mediaIds)
       if (!(await store.get(`upload-${id}`)))
         return res.status(400).json({
@@ -458,6 +449,7 @@ export function createApp(
     if (status === "published") {
       content.publishedAt = content.updatedAt;
       await store.set("published-" + req.params.id, content);
+      await store.delete("hidden-" + req.params.id);
       await store.delete("draft-" + req.params.id);
     } else await store.set("draft-" + req.params.id, content);
     res.json({ ok: true, status });
@@ -476,18 +468,20 @@ export function createApp(
     console.error(err.message);
     const mediaTypeError = err.message?.startsWith("Choose a JPG");
     const status =
-      err.code === "LIMIT_FILE_SIZE"
+      err.code === "LIMIT_FILE_SIZE" || err.status === 413
         ? 413
         : err.status === 400 || mediaTypeError
           ? 400
           : 500;
     res.status(status).json({
       error:
-        err.code === "LIMIT_FILE_SIZE"
-          ? "That file is too large. Upload a file smaller than 4 MB."
-          : err.status === 400 || mediaTypeError
-            ? err.message
-            : "Something went wrong. Please try again.",
+        err.status === 413
+          ? "This chapter is too large for one request. Split it into smaller chapters."
+          : err.code === "LIMIT_FILE_SIZE"
+            ? "That file is too large. Upload a file smaller than 4 MB."
+            : err.status === 400 || mediaTypeError
+              ? err.message
+              : "Something went wrong. Please try again.",
     });
   });
   return app;

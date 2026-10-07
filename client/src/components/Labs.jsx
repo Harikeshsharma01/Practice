@@ -1,3 +1,4 @@
+import JourneyLab, { journeyInfo } from "./JourneyLab";
 import React, { useState, useEffect } from "react";
 import {
   Play,
@@ -11,6 +12,7 @@ import {
   Check,
 } from "lucide-react";
 export const labInfo = {
+  ...journeyInfo,
   binary: {
     title: "Binary playground",
     category: "Number systems",
@@ -1117,6 +1119,7 @@ export function LayoutLab() {
 }
 
 export function Lab({ id }) {
+  if (journeyInfo[id]) return <JourneyLab key={id} id={id} />;
   return (
     {
       binary: <BinaryLab />,

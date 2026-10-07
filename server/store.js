@@ -6,7 +6,7 @@ import {
   rename,
   copyFile,
   unlink,
-  createReadStream,
+  readdir,
   stat,
 } from "node:fs/promises";
 import { createReadStream as readStream } from "node:fs";
@@ -29,6 +29,12 @@ export async function createStore({
     });
     return {
       mode: "mongodb",
+      async list(prefix) {
+        const safe = prefix.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return Document.find({ key: { $regex: "^" + safe } })
+          .select("key value -_id")
+          .lean();
+      },
       async get(key) {
         return (await Document.findOne({ key }).lean())?.value ?? null;
       },
@@ -89,6 +95,17 @@ export async function createStore({
   const file = (key) => path.join(directory, `${encodeURIComponent(key)}.json`);
   return {
     mode: "local-development",
+    async list(prefix) {
+      const names = (await readdir(directory)).filter(
+        (name) => name.startsWith(prefix) && name.endsWith(".json"),
+      );
+      return Promise.all(
+        names.map(async (name) => ({
+          key: name.slice(0, -5),
+          value: JSON.parse(await readFile(path.join(directory, name), "utf8")),
+        })),
+      );
+    },
     async get(key) {
       try {
         return JSON.parse(await readFile(file(key), "utf8"));

@@ -1,3 +1,4 @@
+import { request as httpRequest } from "node:http";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -152,8 +153,39 @@ test("local login accepts the actual website origin while production requires it
     const server = createApp(store, options).listen(0, "127.0.0.1");
     await new Promise((resolve) => server.once("listening", resolve));
     const base = `http://127.0.0.1:${server.address().port}`;
-    const login = (origin, headers = {}) =>
-      fetch(base + "/api/auth/login", {
+    const login = (origin, headers = {}) => {
+      // Node's fetch normalises Host to the URL's host; raw HTTP preserves
+      // the browser host exactly as Vite's proxy forwards it.
+      if (headers.Host)
+        return new Promise((resolve, reject) => {
+          const request = httpRequest(
+            base + "/api/auth/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Origin: origin,
+                ...headers,
+              },
+            },
+            (response) => {
+              const chunks = [];
+              response.on("data", (chunk) => chunks.push(chunk));
+              response.on("end", () =>
+                resolve(
+                  new Response(Buffer.concat(chunks), {
+                    status: response.statusCode,
+                  }),
+                ),
+              );
+            },
+          );
+          request.on("error", reject);
+          request.end(
+            JSON.stringify({ email: "teacher@example.test", password }),
+          );
+        });
+      return fetch(base + "/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -162,6 +194,7 @@ test("local login accepts the actual website origin while production requires it
         },
         body: JSON.stringify({ email: "teacher@example.test", password }),
       });
+    };
     try {
       await run(login, base);
     } finally {

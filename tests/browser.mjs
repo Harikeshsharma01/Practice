@@ -48,7 +48,9 @@ try {
     .click();
   assert.equal(await page.locator(".lab-readout strong").textContent(), "170");
   const imageDownload = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Download note image" }).click();
+  await page
+    .getByRole("button", { name: "Download current page image" })
+    .click();
   const img = await imageDownload;
   assert.match(img.suggestedFilename(), /\.png$/);
   await img.saveAs("/tmp/sewestian-screenshots/notes.png");

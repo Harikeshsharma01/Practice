@@ -1,4 +1,5 @@
 // Vercel's same-origin API bridge keeps secure teacher cookies first-party.
+export const maxDuration = 60;
 export const config = { api: { bodyParser: false } };
 
 export default async function handler(req, res) {
@@ -54,7 +55,9 @@ export default async function handler(req, res) {
           ? body
           : JSON.stringify(body),
       redirect: "error",
-      signal: AbortSignal.timeout(25000),
+      signal: AbortSignal.timeout(
+        endpoint === "admin/assistant/draft" ? 58000 : 25000,
+      ),
     });
     res.status(response.status);
     res.setHeader("Cache-Control", "no-store");
