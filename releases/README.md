@@ -21,6 +21,6 @@ Signing secrets are not included in Git. Retain `.android-private/` privately to
 - Ten MERN integration tests, the Vite production build, classroom browser checks and study-book/video/export browser checks passed.
 - Classroom browser checks include intentional-print backgrounding versus ordinary privacy locking.
 - Installed and launched in an Android 15/API 35 x86_64 emulator with WebView 124. Android window inspection confirmed `FLAG_SECURE`; accessibility inspection confirmed the native connection chooser.
-- The software-only emulator was too slow to complete reliable end-to-end lesson navigation and native upload/download/PDF checks. These remain on-device acceptance checks; the browser tests above do not substitute for them.
+- The software-only emulator reported both system and app “not responding” timeouts during further interaction. End-to-end lesson navigation and native upload/download/PDF checks could not be completed reliably. The cause has not been isolated on physical hardware; this remains a preview requiring on-device acceptance checks. The browser tests above do not substitute for them.
 
 Physical phones, iOS, a live hosted backend, Bluetooth tethering and a real classroom router were not tested. Native file-picker, PDF printer and media behavior can vary by device. Keep the WebView updated and test your teaching workflow on the phones you plan to use.
