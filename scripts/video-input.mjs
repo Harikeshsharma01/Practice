@@ -1,6 +1,6 @@
 import { lessons } from "../shared/catalog.js";
 import { hindiExplanations } from "../shared/hindi-explanations.js";
-import { createHash } from "node:crypto";
+import { videoHash } from "../shared/video-fingerprint.js";
 import { writeFileSync } from "node:fs";
 const brief = (s, max = 450) => {
   const text = String(s || "")
@@ -13,22 +13,6 @@ const brief = (s, max = 450) => {
     ? prefix.slice(0, stop + 1)
     : prefix.slice(0, prefix.lastIndexOf(" ")) + "…";
 };
-export const videoHash = (l) =>
-  createHash("sha256")
-    .update(
-      JSON.stringify([
-        l.title,
-        l.summary,
-        l.notes,
-        l.example,
-        l.practical,
-        l.quiz,
-        l.practicalDetails,
-        hindiExplanations[l.id],
-      ]),
-    )
-    .digest("hex")
-    .slice(0, 16);
 writeFileSync(
   "/tmp/sewestian-video-input.json",
   JSON.stringify(

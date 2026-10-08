@@ -83,3 +83,11 @@ On your own computer, update your existing Practice checkout with `git pull orig
 The short films use a synthetic English voice and gentle slide motion. Hindi is supplied as written explanation captions; there is no Hindi voice in this edition. The bundled videos are supplemental concept explainers, not full classroom lectures or externally generated cinematic scenes.
 
 Edit the underlying lesson in the teacher workspace and publish it to update every linked unit book. Draft edits remain private. If lesson text changes, its old generated video is hidden to avoid presenting it as current. Upload a reviewed replacement or supply a video link. Removing topics can reduce the page count if too little published content remains; the reader does not invent empty filler pages.
+
+## Same-Wi-Fi classroom — 8 October 2026
+
+Run `npm run classroom` on the teaching computer, sign in, and open **Classroom access**. Start a class, share the displayed local address and code, then approve each student's browser badge. You can close admissions, remove a browser, or end the class to remove all access. See [the classroom guide](CLASSROOM_ACCESS.md) for setup and network troubleshooting.
+
+The phone preference is based on browser information. The privacy screen and watermark discourage sharing, but websites cannot guarantee screenshot blocking. Bluetooth pairing alone is not an access mechanism. This local mode does not restrict an independently hosted public copy.
+
+The remaining green theme accents have been changed to violet and blue, including teacher forms, lab controls, notebook accents, PNG/PPTX exports and the generated video headers. Colours that are the actual subject of the RGB learning simulation still follow the selected RGB values.

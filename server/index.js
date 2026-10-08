@@ -24,6 +24,7 @@ if (
 }
 const app = createApp(store, {
   production,
+  classroomLan: process.env.CLASSROOM_LAN === "1",
   clientOrigin: process.env.CLIENT_ORIGIN,
 });
 const port = Number(process.env.PORT) || 4000;

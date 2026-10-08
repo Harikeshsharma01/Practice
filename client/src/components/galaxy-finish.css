@@ -1,0 +1,83 @@
+/* Consistent readable controls and focus states across student and teacher screens. */
+:root {
+  --accent: #c5a7f4;
+  --lime: #c5a7f4;
+  --muted: #adb5d0;
+  color-scheme: dark;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #d1b3ff;
+  outline-offset: 4px;
+}
+input,
+textarea,
+select {
+  accent-color: #b793ec;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #20223a inset;
+  -webkit-text-fill-color: #f0eaff;
+  caret-color: #e5ceff;
+}
+.button.primary {
+  background: linear-gradient(120deg, #d0b9ff, #abbeff);
+  color: #201a35;
+  border-color: #c0a2ed;
+}
+.button.primary:hover {
+  background: linear-gradient(120deg, #e0ceff, #bfd0ff);
+  box-shadow: 0 0 22px #ba96f533;
+}
+.handwritten-notes,
+.study-paper,
+.book-chapter {
+  color-scheme: light;
+}
+.studio-grid > *,
+.course-detail-grid > *,
+.lesson-layout > *,
+.unit-reader-grid > * {
+  min-width: 0;
+}
+.classroom-manager button {
+  min-height: 42px;
+}
+.classroom-card input:focus {
+  border-color: #d2b3ff;
+}
+.classroom-roster-tools .button {
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .editor-layout,
+  .studio-layout,
+  .studio-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .button-row {
+    flex-wrap: wrap;
+  }
+  .admin-status {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .classroom-card .button {
+    min-height: 46px;
+  }
+  .study-pager label {
+    min-width: 0;
+  }
+  .study-pager select {
+    max-width: 160px;
+  }
+}

@@ -1,4 +1,5 @@
 import express from "express";
+import { registerClassroom } from "./classroom.js";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { rateLimit } from "express-rate-limit";
@@ -91,8 +92,18 @@ const lessonSchema = z.object({
 });
 export function createApp(
   store,
-  { production = false, clientOrigin = "", ...teachingOptions } = {},
+  {
+    production = false,
+    clientOrigin = "",
+    classroomLan = false,
+    interfaces,
+    ...teachingOptions
+  } = {},
 ) {
+  if (classroomLan && production)
+    throw new Error(
+      "Local classroom mode must run directly on the teaching computer, not behind production hosting.",
+    );
   const configuredOrigin = websiteOrigin(clientOrigin);
   if (clientOrigin && !configuredOrigin) {
     throw new Error(
@@ -101,11 +112,13 @@ export function createApp(
   }
   const app = express();
   app.disable("x-powered-by");
-  app.set("trust proxy", 1);
+  app.set("trust proxy", classroomLan ? false : 1);
   app.use(
     helmet({
+      strictTransportSecurity: production ? undefined : false,
       contentSecurityPolicy: {
         directives: {
+          upgradeInsecureRequests: production ? [] : null,
           defaultSrc: ["'self'"],
           scriptSrc: ["'self'"],
           styleSrc: ["'self'", "'unsafe-inline'"],
@@ -165,6 +178,11 @@ export function createApp(
     req.sessionKey = key;
     next();
   };
+  registerClassroom(app, store, protect, {
+    classroomLan,
+    production,
+    interfaces,
+  });
   const mediaUpload = multer({
     dest: path.resolve(".data/uploads"),
     limits: { fileSize: 4_000_000, files: 1 },

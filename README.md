@@ -16,7 +16,8 @@ A responsive learning portal for Maharashtra and CBSE classes XI and XII, built 
 - Practical journal filters, worked solutions, viva prompts and observations saved in the student’s browser.
 - Syllabus evidence uploads and teacher-reviewed topic mappings, with source page references.
 - Optional OpenAI API drafting in batches of up to five pages, teacher review before applying, and prompt export for Codex/ChatGPT. No embedded Codex session or autonomous publishing.
-- Responsive layouts, keyboard navigation, reduced-motion support and locally served fonts.
+- Local classroom mode with a code-based waiting room, teacher approval/removal, phone-browser preference, four-hour sessions, a student watermark and privacy screen. Run `npm run classroom`; see [classroom setup](docs/CLASSROOM_ACCESS.md).
+- Consistent violet/blue galaxy styling across student screens, teacher controls, notes exports, slides and video accents; responsive layouts, keyboard navigation and reduced-motion support.
 
 See [the teacher guide](docs/TEACHER_GUIDE.md) for the complete workflow and photo transcription notes.
 
@@ -58,6 +59,8 @@ npm run test:teacher
 node tests/studio-browser.mjs
 # Built-app unit reader, captions, video playback, mobile and complete-book PDF:
 node tests/study-books-browser.mjs
+# Isolated teacher + emulated-phone approval/revocation flow:
+node tests/classroom-browser.mjs
 # Galaxy interaction checks with the dev server running:
 node tests/cosmic-browser.mjs
 # Optional bundled example execution checks (g++ and Python required):

@@ -72,7 +72,14 @@ import { Lab, labInfo } from "./components/Labs";
 import CosmicScene from "./components/CosmicScene";
 import TeacherStudio from "./components/TeacherStudio";
 import PracticalLibrary, { SyllabusPanel } from "./components/PracticalLibrary";
-import { lessonIds } from "../../shared/catalog";
+const lessonIds = (course) => [
+  ...new Set(course.units.flatMap((unit) => unit.lessons)),
+];
+import {
+  ClassroomEntry,
+  ClassroomManager,
+  StudentPrivacy,
+} from "./components/Classroom.jsx";
 import "@fontsource/kalam/latin-400.css";
 import "./styles.css";
 import {
@@ -80,6 +87,7 @@ import {
   GeneratedVideo,
   TopicJourney,
 } from "./components/StudyBooks.jsx";
+import "./components/galaxy-finish.css";
 const Context = createContext();
 const useApp = () => useContext(Context);
 async function api(path, options = {}) {
@@ -196,6 +204,7 @@ function OrbitalArt({ mini = false }) {
   );
 }
 function App() {
+  const [access, setAccess] = useState(null);
   const [catalog, setCatalog] = useState(null),
     [error, setError] = useState(""),
     [effectsEnabled, setEffectsEnabled] = useState(
@@ -215,15 +224,34 @@ function App() {
     [toast, setToast] = useState("");
   async function refresh() {
     try {
-      setCatalog(await api("/catalog"));
+      const state = await api("/classroom/status");
+      setAccess(state);
+      if (state.allowed) setCatalog(await api("/catalog"));
+      else setCatalog(null);
       setError("");
     } catch (e) {
+      setCatalog(null);
       setError(e.message);
     }
   }
   useEffect(() => {
     refresh();
   }, []);
+  useEffect(() => {
+    if (!access?.enabled) return;
+    const timer = setInterval(async () => {
+      try {
+        const state = await api("/classroom/status");
+        setAccess(state);
+        if (!state.allowed) setCatalog(null);
+        else if (!catalog) refresh();
+      } catch {
+        setCatalog(null);
+        setError("Reconnect to your classroom network.");
+      }
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [access?.enabled, !!catalog]);
   useEffect(() => {
     localStorage.setItem("sewestian-course", JSON.stringify(courseId));
   }, [courseId]);
@@ -252,6 +280,7 @@ function App() {
   }, []);
   const value = {
     ...catalog,
+    access,
     effectsEnabled,
     setEffectsEnabled,
     courseId,
@@ -269,6 +298,8 @@ function App() {
         <CosmicScene enabled={effectsEnabled} />
         {catalog ? (
           <Shell />
+        ) : access?.enabled && !access.allowed ? (
+          <ClassroomEntry access={access} api={api} refresh={refresh} />
         ) : (
           <div className="boot">
             <Logo />
@@ -280,6 +311,7 @@ function App() {
             )}
           </div>
         )}
+        <StudentPrivacy access={access} api={api} refresh={refresh} />
         {toast && (
           <div className="toast" role="status">
             <CheckCircle2 size={18} />
@@ -1172,14 +1204,14 @@ async function exportSlides(lesson) {
     ],
   ].entries()) {
     const s = pptx.addSlide();
-    s.background = { color: "141A16" };
+    s.background = { color: "14162B" };
     s.addText("SEWESTIAN / " + lesson.category.toUpperCase(), {
       x: 0.7,
       y: 0.45,
       w: 11.8,
       h: 0.3,
       fontSize: 11,
-      color: "C8E996",
+      color: "CDB5FF",
     });
     s.addText(title, {
       x: 0.7,
@@ -1197,13 +1229,13 @@ async function exportSlides(lesson) {
       w: 11.6,
       h: 3.65,
       fontSize: 20,
-      color: "D8DDD6",
+      color: "DDDDF0",
       valign: "top",
       fit: "shrink",
     });
     s.addText(
       `Original foundation notes · syllabus alignment pending     ${i + 1}`,
-      { x: 0.7, y: 7, w: 11.6, h: 0.2, fontSize: 10, color: "909C91" },
+      { x: 0.7, y: 7, w: 11.6, h: 0.2, fontSize: 10, color: "ABA9C8" },
     );
   }
   await pptx.writeFile({ fileName: `sewestian-${lesson.id}.pptx` });
@@ -1234,17 +1266,17 @@ async function exportImage(lesson) {
   canvas.height = 360 + lines.length * 42;
   ctx.fillStyle = "#f4f1e8";
   ctx.fillRect(0, 0, 1400, canvas.height);
-  ctx.strokeStyle = "#d5ddd8";
+  ctx.strokeStyle = "#d7d5e5";
   for (let y = 315; y < canvas.height; y += 42) {
     ctx.beginPath();
     ctx.moveTo(70, y);
     ctx.lineTo(1330, y);
     ctx.stroke();
   }
-  ctx.fillStyle = "#416444";
+  ctx.fillStyle = "#64517e";
   ctx.font = "bold 22px sans-serif";
   ctx.fillText("SEWESTIAN / THE VISUAL NOTEBOOK", 85, 75);
-  ctx.fillStyle = "#222f26";
+  ctx.fillStyle = "#30283f";
   ctx.font = "bold 44px sans-serif";
   ctx.fillText(lesson.title, 85, 160, 1230);
   ctx.font = "20px sans-serif";
@@ -1256,7 +1288,7 @@ async function exportImage(lesson) {
   let y = 295;
   for (const line of lines) {
     ctx.font = line.title ? "bold 27px sans-serif" : "25px Kalam";
-    ctx.fillStyle = line.title ? "#315b39" : "#28392e";
+    ctx.fillStyle = line.title ? "#644783" : "#3a304d";
     ctx.fillText(line.text, 85, y);
     y += 42;
   }
@@ -1860,7 +1892,7 @@ function SearchModal({ close }) {
   );
 }
 function Admin() {
-  const { toast, refresh, courses } = useApp(),
+  const { toast, refresh, courses, practicals } = useApp(),
     [workspaceTab, setWorkspaceTab] = useState("studio"),
     [status, setStatus] = useState(null),
     [error, setError] = useState(""),
@@ -2033,13 +2065,20 @@ function Admin() {
             </button>
             <small>
               <LockKeyhole size={13} />
-              Protected access. Student learning stays public.
+              Protected teacher access. Classroom mode supports student
+              approval.
             </small>
           </form>
         </div>
       ) : (
         <>
           <div className="segmented workspace-switch">
+            <button
+              className={workspaceTab === "classroom" ? "selected" : ""}
+              onClick={() => setWorkspaceTab("classroom")}
+            >
+              Classroom access
+            </button>
             <button
               className={workspaceTab === "studio" ? "selected" : ""}
               onClick={() => setWorkspaceTab("studio")}
@@ -2056,8 +2095,11 @@ function Admin() {
               Quick lesson editor
             </button>
           </div>
-          {workspaceTab === "studio" ? (
+          {workspaceTab === "classroom" ? (
+            <ClassroomManager api={api} toast={toast} />
+          ) : workspaceTab === "studio" ? (
             <TeacherStudio
+              practicals={practicals}
               api={api}
               courses={courses}
               toast={toast}

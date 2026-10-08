@@ -42,7 +42,7 @@ def render(item):
    for k in range(48):
     x=(k*137+43)%960;y=(k*83+21)%540;d.ellipse((x,y,x+1,y+1),fill=(70,85,125))
    d.rounded_rectangle((35,32,925,505),radius=22,fill=(18,23,43),outline=(66,75,112),width=2)
-   d.text((60,49),'SEWESTIAN  /  '+scene['heading'],font=font(15,True),fill=(186,235,139))
+   d.text((60,49),'SEWESTIAN  /  '+scene['heading'],font=font(15,True),fill=(204,177,255))
    y=86
    for row in lines(item['title'],font(27,True),825)[:2]:d.text((60,y),row,font=font(27,True),fill=(240,243,255));y+=35
    y+=12
@@ -53,7 +53,7 @@ def render(item):
     for row in scene['code'].split('\n')[:max(0,min(6,(448-y)//21))]:d.text((66,y),row[:87],font=ImageFont.truetype(font_dir+'DejaVuSansMono.ttf',15),fill=(145,204,241));y+=21
    d.line((60,460,897,460),fill=(66,75,112),width=2)
    for j,label in enumerate(['Understand','Work through','Check & apply']):
-    d.rounded_rectangle((60+j*280,478, 78+j*280,496),radius=9,fill=(186,235,139) if j==i else (67,77,110))
+    d.rounded_rectangle((60+j*280,478, 78+j*280,496),radius=9,fill=(204,177,255) if j==i else (67,77,110))
     d.text((87+j*280,478),label,font=font(13),fill=(220,228,249))
    png=tmp/f'slide{i}.png';im.save(png)
    if i==0:im.resize((480,270)).save(out/(id+'.jpg'),quality=82)

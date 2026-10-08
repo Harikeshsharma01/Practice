@@ -1,0 +1,331 @@
+.classroom-entry {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: radial-gradient(ellipse at 75% 20%, #43276d80, transparent 60%);
+}
+.classroom-card {
+  width: min(100%, 560px);
+  padding: clamp(24px, 5vw, 48px);
+  border: 1px solid #65517f;
+  border-radius: 28px;
+  background: #14162bea;
+  box-shadow: 0 30px 100px #0005;
+}
+.classroom-brand {
+  font:
+    700 30px "Space Grotesk",
+    sans-serif;
+  color: #d8c4ff;
+  margin-bottom: 38px;
+}
+.classroom-card h1 {
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.2;
+}
+.classroom-card p,
+.classroom-manager p {
+  line-height: 1.8;
+  color: #b8bfd9;
+}
+.classroom-card form {
+  display: grid;
+  gap: 20px;
+  margin: 24px 0;
+}
+.classroom-card label {
+  display: grid;
+  gap: 10px;
+  font-size: 13px;
+  color: #dedbf3;
+}
+.classroom-card input,
+.classroom-roster-tools select {
+  background: #0c1226;
+  color: #f1eaff;
+  border: 1px solid #62567c;
+  border-radius: 10px;
+  padding: 14px;
+  width: 100%;
+  min-height: 46px;
+}
+.classroom-card .caption {
+  font-size: 12px;
+  margin-top: 24px;
+}
+.join-ticket {
+  display: grid;
+  gap: 12px;
+  border: 1px dashed #b79cdf;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  color: #d9c8ff;
+}
+.join-ticket strong {
+  font-size: 24px;
+}
+.join-ticket small {
+  color: #b5bddb;
+}
+.classroom-manager {
+  padding-top: 20px;
+}
+.classroom-manager header {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+.classroom-manager header h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  margin: 14px 0;
+}
+.classroom-setup,
+.classroom-controls,
+.classroom-roster {
+  border: 1px solid #453b60;
+  border-radius: 20px;
+  background: #17192de6;
+  padding: 26px;
+  margin: 20px 0;
+}
+.classroom-setup {
+  max-width: 840px;
+}
+.classroom-setup > svg {
+  color: #c1a4f2;
+}
+.classroom-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.classroom-stats > div {
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  border: 1px solid #534665;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #31234099, #13233c99);
+}
+.classroom-stats svg {
+  color: #c3a8f1;
+}
+.classroom-stats strong {
+  font:
+    600 32px "Space Grotesk",
+    sans-serif;
+}
+.classroom-stats span {
+  color: #bfc3dc;
+  font-size: 12px;
+}
+.classroom-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.classroom-controls h3,
+.classroom-roster h3 {
+  font-size: 20px;
+  margin: 0 0 18px;
+}
+.classroom-code {
+  font: 600 clamp(32px, 5vw, 50px)/1.4 monospace !important;
+  letter-spacing: 8px;
+  color: #decbff !important;
+}
+.classroom-address {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+.classroom-address code {
+  color: #bbdcff;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.classroom-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #dfdaee;
+}
+.classroom-option input {
+  width: 19px;
+  height: 19px;
+  accent-color: #b493ed;
+}
+.classroom-controls .button {
+  margin: 6px 6px 6px 0;
+}
+.classroom-controls .caption {
+  font-size: 12px;
+}
+.classroom-roster-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.classroom-roster-tools h3 {
+  margin: 0;
+  flex: 1;
+}
+.classroom-roster-tools select {
+  width: auto;
+  max-width: 100%;
+}
+.classroom-member {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 0;
+  border-top: 1px solid #3d3856;
+}
+.classroom-member > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.classroom-member strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.classroom-member small {
+  display: block;
+  font-size: 11px;
+  color: #aab3d0;
+  margin-top: 8px;
+  line-height: 1.7;
+}
+.classroom-member > div:last-child {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.member-state {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: #39334e;
+  color: #d5c1f2;
+}
+.member-state.approved {
+  background: #293b5c;
+  color: #bddeff;
+}
+.member-state.revoked {
+  background: #4e303e;
+  color: #f3bece;
+}
+.student-watermark {
+  position: fixed;
+  z-index: 90;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90vw;
+  background: #15152be8;
+  border: 1px solid #aa8fe3;
+  color: #e3d3ff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 11px;
+  pointer-events: none;
+  text-align: center;
+}
+.privacy-lock {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px;
+  background: #0e1022;
+  color: #f0eaff;
+  text-align: center;
+}
+.privacy-lock > p {
+  max-width: 540px;
+  line-height: 1.8;
+  color: #bac0da;
+}
+.privacy-lock > svg {
+  color: #c6a4f7;
+}
+html[data-classroom-locked="true"] .app-shell {
+  visibility: hidden;
+  pointer-events: none;
+}
+html[data-classroom-locked="true"] {
+  overflow: hidden;
+}
+@media (max-width: 750px) {
+  .classroom-controls {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .classroom-stats {
+    gap: 8px;
+  }
+  .classroom-stats > div {
+    padding: 15px 10px;
+  }
+  .classroom-stats strong {
+    font-size: 25px;
+  }
+  .classroom-stats span {
+    font-size: 10px;
+  }
+  .classroom-member {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .classroom-member > div:last-child {
+    width: 100%;
+  }
+  .classroom-roster {
+    padding: 20px;
+  }
+  .workspace-switch {
+    display: flex;
+    overflow-x: auto;
+    justify-content: flex-start;
+    max-width: 100%;
+    gap: 4px;
+  }
+  .workspace-switch > button {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .classroom-entry {
+    padding: 16px;
+  }
+}
+@media print {
+  .privacy-lock {
+    display: none;
+  }
+  html[data-classroom-locked="true"] body > * {
+    display: none !important;
+  }
+  .student-watermark {
+    position: fixed;
+    color: #483668;
+    background: white;
+    border-color: #483668;
+  }
+}

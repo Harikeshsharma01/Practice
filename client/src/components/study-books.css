@@ -56,7 +56,7 @@
   font-size: 11px;
 }
 .unit-book-toc > button.active {
-  color: #e9ffd7;
+  color: #e7ddf9;
   background: #313346;
   border-radius: 8px;
 }
@@ -87,7 +87,7 @@
   background: repeating-linear-gradient(
     #fffcf3 0,
     #fffcf3 33px,
-    #e8e9e1 34px,
+    #e4e1e9 34px,
     #fffcf3 35px
   );
   border-radius: 4px 18px 18px 4px;
@@ -211,7 +211,7 @@
   top: 22px;
   left: 12.5%;
   right: 12.5%;
-  background: linear-gradient(90deg, #b9c8ff, #cf8af5, #d0efa0);
+  background: linear-gradient(90deg, #b9c8ff, #cf8af5, #bda2ed);
 }
 .study-journey-orbit button {
   position: relative;
@@ -245,9 +245,9 @@
   z-index: 3;
   top: -13px;
   left: calc(12.5% + var(--station) * 25%);
-  color: #e5ffc0;
+  color: #dacaf5;
   transition: left 1s ease;
-  text-shadow: 0 0 15px #e7ffb8;
+  text-shadow: 0 0 15px #d5c3f4;
   font-size: 21px;
   pointer-events: none;
 }
@@ -317,7 +317,7 @@
   font-size: 13px;
 }
 .unit-book-link small {
-  color: #b4c1b2;
+  color: #b8b2c1;
 }
 .study-book-header .caption {
   font-size: 12px;

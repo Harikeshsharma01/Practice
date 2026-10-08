@@ -15,7 +15,7 @@ import {
   Download,
 } from "lucide-react";
 import { labInfo } from "./Labs";
-import { practicals } from "../../../shared/practicals.js";
+
 const emptyMapping = {
   session: "2026–27",
   sourceTitle: "",
@@ -75,7 +75,13 @@ const lines = (value) =>
     .split("\n")
     .map((s) => s.trim())
     .filter(Boolean);
-export default function TeacherStudio({ api, courses, toast, refresh }) {
+export default function TeacherStudio({
+  api,
+  courses,
+  toast,
+  refresh,
+  practicals = [],
+}) {
   const [items, setItems] = useState([]),
     [form, setForm] = useState(null),
     [page, setPage] = useState(0),
@@ -496,7 +502,9 @@ export default function TeacherStudio({ api, courses, toast, refresh }) {
                         }
                       >
                         {["mint", "blue", "lavender", "peach"].map((a) => (
-                          <option key={a}>{a}</option>
+                          <option key={a} value={a}>
+                            {a === "mint" ? "violet" : a}
+                          </option>
                         ))}
                       </select>
                     </label>
