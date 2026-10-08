@@ -1,4 +1,5 @@
 plugins { id 'com.android.application' }
+def appRelease = new groovy.json.JsonSlurper().parse(file('../../shared/android-release.json'))
 android {
     namespace 'com.sewestian.learning'
     compileSdk 36
@@ -6,8 +7,8 @@ android {
         applicationId 'com.sewestian.learning'
         minSdk 26
         targetSdk 36
-        versionCode 1
-        versionName '1.0-preview'
+        versionCode appRelease.versionCode
+        versionName appRelease.version
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
     buildTypes { release { minifyEnabled false } }

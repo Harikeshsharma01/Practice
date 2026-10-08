@@ -6,6 +6,8 @@ Built on 8 October 2026. Package `com.sewestian.learning`, version code 1. Andro
 
 The app connects to your existing MERN service through a saved hosted HTTPS address or a private IPv4 classroom address. It includes native connection controls, Android Back, file picking, downloads up to 12 MB, print/PDF integration, full-screen video support and Android secure-window protection. Lessons and videos are loaded from the server; the small APK is not an offline content bundle.
 
+The shared website now includes **Doubts & feedback**, cross-device inbox linking and teacher replies. These appear in this APK after the connected website/backend is updated and reloaded. The website serves the same signed APK from **Get Android app**. The release was rebuilt and its metadata/checksum synchronized; native behavior and version remain unchanged. See [shared platform instructions](../docs/SHARED_PLATFORM.md).
+
 The preview certificate's SHA-256 fingerprint is:
 
 ```

@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Build an installable preview using official Android SDK tools on Linux x86_64.
 
-Requires Python 3.9+ and Java 17+ (jdk.compiler and keytool). Signing material
+Requires Node.js, Python 3.9+ and Java 17+ (jdk.compiler and keytool). Signing material
 stays in ignored .android-private; retain it privately for subsequent updates.
 """
 from pathlib import Path
 import hashlib
+import json
+import re
 import os
 import platform
 import secrets
@@ -19,7 +21,11 @@ ROOT = Path(__file__).resolve().parents[1]
 SDK = Path(os.environ.get("SEWESTIAN_ANDROID_SDK", ROOT / ".android-sdk")).resolve()
 BUILD = ROOT / "android/.build"
 PRIVATE = ROOT / ".android-private"
-OUTPUT = ROOT / "releases/Sewestian-1.0-preview.apk"
+RELEASE_PATH = ROOT / "shared/android-release.json"
+RELEASE = json.loads(RELEASE_PATH.read_text())
+if not re.fullmatch(r"[a-zA-Z0-9.-]+", RELEASE["version"]) or not isinstance(RELEASE["versionCode"], int) or RELEASE["versionCode"] < 1:
+    raise SystemExit("Invalid Android release version")
+OUTPUT = ROOT / ("releases/Sewestian-" + RELEASE["version"] + ".apk")
 PACKAGES = [
     ("platform-36_r02.zip", "2c1a80dd4d9f7d0e6dd336ec603d9b5c55a6f576",
      "platforms", "platforms/android-36/android.jar"),
@@ -82,7 +88,7 @@ run([TOOLS / "aapt2", "compile", "--dir", APP / "res", "-o", BUILD / "resources.
 run([TOOLS / "aapt2", "link", "-o", BUILD / "resources.apk", "-I", JAR,
      "--manifest", BUILD / "AndroidManifest.xml", "--java", BUILD / "generated",
      "--min-sdk-version", "26", "--target-sdk-version", "36",
-     "--version-code", "1", "--version-name", "1.0-preview", BUILD / "resources.zip"])
+     "--version-code", str(RELEASE["versionCode"]), "--version-name", RELEASE["version"], BUILD / "resources.zip"])
 sources = list((APP / "java").rglob("*.java")) + list((BUILD / "generated").rglob("*.java"))
 run([*compiler, "-source", "8", "-target", "8", "-encoding", "UTF-8",
      "-classpath", JAR, "-d", BUILD / "classes", *sources])
@@ -120,5 +126,8 @@ run(["java", "-jar", TOOLS / "lib/apksigner.jar", "verify", "--verbose", OUTPUT]
 run([TOOLS / "zipalign", "-c", "-p", "4", OUTPUT])
 sha = hashlib.sha256(OUTPUT.read_bytes()).hexdigest()
 OUTPUT.with_suffix(".apk.sha256").write_text(sha + "  " + OUTPUT.name + "\n")
+RELEASE.update(file=OUTPUT.name, sha256=sha, minimumAndroid="8.0")
+RELEASE_PATH.write_text(json.dumps(RELEASE, indent=2) + "\n")
+run(["node", ROOT / "scripts/sync-android.mjs"])
 print(f"Built {OUTPUT.name}: {OUTPUT.stat().st_size:,} bytes; SHA-256 {sha}")
 print("Signing key retained only in ignored .android-private/. Back it up privately before replacing the workspace.")

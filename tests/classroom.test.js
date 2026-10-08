@@ -94,6 +94,9 @@ test("local classroom requires code plus approval; protects media, supports remo
     );
     assert.equal((await request("/catalog")).status, 403);
     assert.equal((await request("/media/unknown")).status, 403);
+    assert.equal((await request("/support")).status, 403);
+    assert.equal((await request("/support/session", { body: {} })).status, 403);
+    assert.equal((await fetch(base + "/api/%73upport")).status, 403);
     assert.equal(
       (await fetch(base + "/videos/computer-systems.mp4")).status,
       403,
@@ -148,6 +151,7 @@ test("local classroom requires code plus approval; protects media, supports remo
       "pending",
     );
     assert.equal((await request("/catalog", { cookie: student })).status, 403);
+    assert.equal((await request("/support", { cookie: student })).status, 403);
     room = await request("/admin/classroom", { cookie: teacher }).then((r) =>
       r.json(),
     );
@@ -171,6 +175,7 @@ test("local classroom requires code plus approval; protects media, supports remo
       200,
     );
     assert.equal((await request("/catalog", { cookie: student })).status, 200);
+    assert.equal((await request("/support", { cookie: student })).status, 200);
     const video = await fetch(base + "/videos/computer-systems.mp4", {
       headers: { cookie: student, "user-agent": phone, Range: "bytes=0-99" },
     });
@@ -202,6 +207,7 @@ test("local classroom requires code plus approval; protects media, supports remo
       body: { status: "revoked" },
     });
     assert.equal((await request("/catalog", { cookie: student })).status, 403);
+    assert.equal((await request("/support", { cookie: student })).status, 403);
     await request("/admin/classroom/members/" + id, {
       cookie: teacher,
       body: { status: "approved" },

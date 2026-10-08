@@ -12,3 +12,4 @@ android/local.properties
 android/app/build/
 android/build/
 releases/*.idsig
+public/downloads/

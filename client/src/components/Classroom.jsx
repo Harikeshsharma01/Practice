@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import {
   Wifi,
@@ -162,6 +162,9 @@ export function ClassroomEntry({ access, api, refresh }) {
           Screenshot blocking is not supported by web browsers; a visible
           student watermark and privacy screen help discourage sharing.
         </p>
+        <Link className="button" to="/mobile">
+          Get the Android app
+        </Link>
       </div>
     </main>
   );

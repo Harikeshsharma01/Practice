@@ -4,6 +4,8 @@ The installable preview connects to the same MERN website you use in a browser. 
 
 ## Install on an Android phone
 
+The website now has **Get Android app** at `/mobile`, with the APK hosted directly at `/downloads/Sewestian.apk`. Student questions, feedback and teacher replies are shared through the same backend; see [the shared platform guide](SHARED_PLATFORM.md). Connect both clients to the same server and use your private inbox code to carry a conversation across devices.
+
 1. Download [Sewestian-1.0-preview.apk](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.0-preview.apk) on your phone.
 2. Open the downloaded file. If Android asks, allow **Install unknown apps** for the browser or file manager you used, then install Sewestian. You can turn that permission off afterwards. This is a directly distributed preview, not a Google Play listing.
 3. Open **Sewestian** and choose **Hosted website** or **Classroom Wi-Fi**.
@@ -46,7 +48,7 @@ App sign-ins are separate from Chrome/browser sign-ins. **Clear saved connection
 
 ## Build the APK
 
-The Linux x86_64 standalone builder uses Python 3.9+, Java 17+ with `jdk.compiler` and `keytool`, and official Google Android SDK platform/build tools. It downloads the pinned SDK archives on first use and checks Google's published SHA-1 archive checksums. No npm dependencies or Gradle download are required for the native build itself.
+The Linux x86_64 standalone builder uses Node.js, Python 3.9+, Java 17+ with `jdk.compiler` and `keytool`, and official Google Android SDK platform/build tools. It downloads the pinned SDK archives on first use and checks Google's published SHA-1 archive checksums. No npm dependencies or Gradle download are required for the native build itself.
 
 ```bash
 npm run android:apk

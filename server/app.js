@@ -1,4 +1,5 @@
 import express from "express";
+import { registerSupport } from "./support.js";
 import { registerClassroom } from "./classroom.js";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -183,6 +184,7 @@ export function createApp(
     production,
     interfaces,
   });
+  registerSupport(app, store, protect, { production });
   const mediaUpload = multer({
     dest: path.resolve(".data/uploads"),
     limits: { fileSize: 4_000_000, files: 1 },

@@ -71,6 +71,7 @@ import "@fontsource/space-grotesk/latin-700.css";
 import { Lab, labInfo } from "./components/Labs";
 import CosmicScene from "./components/CosmicScene";
 import TeacherStudio from "./components/TeacherStudio";
+import { AppDownload, SupportInbox } from "./components/Support";
 import PracticalLibrary, { SyllabusPanel } from "./components/PracticalLibrary";
 const lessonIds = (course) => [
   ...new Set(course.units.flatMap((unit) => unit.lessons)),
@@ -296,21 +297,12 @@ function App() {
     <Context.Provider value={value}>
       <BrowserRouter>
         <CosmicScene enabled={effectsEnabled} />
-        {catalog ? (
-          <Shell />
-        ) : access?.enabled && !access.allowed ? (
-          <ClassroomEntry access={access} api={api} refresh={refresh} />
-        ) : (
-          <div className="boot">
-            <Logo />
-            <p>{error || "Opening your learning universe…"}</p>
-            {error && (
-              <button className="button primary" onClick={refresh}>
-                Try again
-              </button>
-            )}
-          </div>
-        )}
+        <PortalGate
+          catalog={catalog}
+          access={access}
+          error={error}
+          refresh={refresh}
+        />
         <StudentPrivacy access={access} api={api} refresh={refresh} />
         {toast && (
           <div className="toast" role="status">
@@ -320,6 +312,37 @@ function App() {
         )}
       </BrowserRouter>
     </Context.Provider>
+  );
+}
+function PortalGate({ catalog, access, error, refresh }) {
+  const location = useLocation();
+  if (location.pathname === "/mobile") return <AppDownload />;
+  return catalog ? (
+    <Shell />
+  ) : access?.enabled && !access.allowed ? (
+    <ClassroomEntry access={access} api={api} refresh={refresh} />
+  ) : (
+    <div className="boot">
+      <Logo />
+      <p>{error || "Opening your learning universe…"}</p>
+      {error && (
+        <button className="button primary" onClick={refresh}>
+          Try again
+        </button>
+      )}
+    </div>
+  );
+}
+function StudentSupport() {
+  const { courses, courseId } = useApp();
+  const course = courses.find((c) => c.id === courseId);
+  return (
+    <SupportInbox
+      api={api}
+      defaultContext={
+        course ? `${course.board} ${course.grade} ${course.code}` : ""
+      }
+    />
   );
 }
 function Shell() {
@@ -354,6 +377,8 @@ function Shell() {
     ["/animations", "Visual learning", Orbit],
     ["/labs", "Practice lab", FlaskConical],
     ["/practicals", "Practical journal", FileText],
+    ["/support", "Doubts & feedback", Mail],
+    ["/mobile", "Get Android app", Download],
   ];
   return (
     <div className="app-shell">
@@ -473,6 +498,7 @@ function Shell() {
             <Route path="/animations" element={<LabPage visual />} />
             <Route path="/labs" element={<LabPage />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/support" element={<StudentSupport />} />
             <Route path="/practicals" element={<PracticalPage />} />
             <Route
               path="*"
@@ -494,6 +520,7 @@ function Shell() {
           <Link to="/courses">
             Explore your syllabus <ArrowUpRight size={12} />
           </Link>
+          <Link to="/mobile">Download Android APK</Link>
           <span>© {new Date().getFullYear()} Sewestian</span>
         </footer>
       </div>
@@ -1362,6 +1389,12 @@ function Lesson() {
           <Bookmark fill={saved ? "currentColor" : "none"} size={22} />
         </button>
       </div>
+      <Link
+        className="button"
+        to={`/support?topic=${encodeURIComponent(l.title)}`}
+      >
+        Ask your teacher about this lesson
+      </Link>
       <div className="lesson-tabs">
         {[
           "Notes",
@@ -2074,6 +2107,12 @@ function Admin() {
         <>
           <div className="segmented workspace-switch">
             <button
+              className={workspaceTab === "support" ? "selected" : ""}
+              onClick={() => setWorkspaceTab("support")}
+            >
+              Student inbox
+            </button>
+            <button
               className={workspaceTab === "classroom" ? "selected" : ""}
               onClick={() => setWorkspaceTab("classroom")}
             >
@@ -2095,7 +2134,9 @@ function Admin() {
               Quick lesson editor
             </button>
           </div>
-          {workspaceTab === "classroom" ? (
+          {workspaceTab === "support" ? (
+            <SupportInbox api={api} teacher />
+          ) : workspaceTab === "classroom" ? (
             <ClassroomManager api={api} toast={toast} />
           ) : workspaceTab === "studio" ? (
             <TeacherStudio

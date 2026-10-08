@@ -11,7 +11,9 @@
     "test:ui": "node tests/browser.mjs",
     "test:teacher": "node tests/teacher-browser.mjs",
     "classroom": "npm run build && node scripts/start-classroom.mjs",
-    "android:apk": "python3 scripts/build-android.py"
+    "android:apk": "python3 scripts/build-android.py",
+    "prebuild": "node scripts/sync-android.mjs",
+    "predev": "node scripts/sync-android.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

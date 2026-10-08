@@ -324,7 +324,11 @@ export function registerClassroom(
     } catch {
       return res.status(400).json({ error: "Invalid resource path." });
     }
-    if (!/^\/(?:api\/(?:catalog|media)(?:\/|$)|videos(?:\/|$))/i.test(pathname))
+    if (
+      !/^\/(?:api\/(?:catalog|media|support)(?:\/|$)|videos(?:\/|$))/i.test(
+        pathname,
+      )
+    )
       return next();
     res.set("Cache-Control", "private, no-store");
     if (!(await state(req)).allowed)
