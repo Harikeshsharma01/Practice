@@ -88,6 +88,32 @@ try {
     200,
   );
   await phone.locator(".student-watermark").waitFor();
+  // The Android print dialog temporarily hides the WebView. An intentional
+  // export must remain printable, while ordinary backgrounding still locks it.
+  await phone.evaluate(() => {
+    window.dispatchEvent(new Event("beforeprint"));
+    Object.defineProperty(document, "hidden", {
+      configurable: true,
+      value: true,
+    });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  assert.equal(
+    await phone
+      .getByRole("dialog", { name: "Classroom privacy screen" })
+      .count(),
+    0,
+  );
+  await phone.evaluate(() => {
+    window.dispatchEvent(new Event("afterprint"));
+    document.dispatchEvent(new Event("visibilitychange"));
+    delete document.hidden;
+  });
+  await phone
+    .getByRole("dialog", { name: "Classroom privacy screen" })
+    .waitFor();
+  await phone.getByRole("button", { name: "Resume my lesson" }).click();
+  await phone.getByRole("heading", { name: /Hey, curious mind/ }).waitFor();
   await teacher.screenshot({
     path: "/tmp/sewestian-screenshots/classroom-teacher.png",
     fullPage: true,

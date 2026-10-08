@@ -1,0 +1,14 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.sewestian.learning'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'com.sewestian.learning'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0-preview'
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
+    buildTypes { release { minifyEnabled false } }
+}

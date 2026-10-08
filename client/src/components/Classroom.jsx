@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Wifi,
   ShieldCheck,
@@ -408,6 +408,7 @@ export function ClassroomManager({ api, toast }) {
   );
 }
 export function StudentPrivacy({ access, api, refresh }) {
+  const printing = useRef(false);
   const [locked, setLocked] = useState(false),
     [error, setError] = useState("");
   const active =
@@ -418,7 +419,7 @@ export function StudentPrivacy({ access, api, refresh }) {
       return;
     }
     const hide = () => {
-      if (document.hidden) {
+      if (document.hidden && !printing.current) {
         setLocked(true);
         document.querySelectorAll("video,audio").forEach((v) => v.pause());
       }
@@ -433,10 +434,20 @@ export function StudentPrivacy({ access, api, refresh }) {
         setLocked(true);
       }
     };
+    const beforePrint = () => {
+      printing.current = true;
+    };
+    const afterPrint = () => {
+      printing.current = false;
+    };
+    window.addEventListener("beforeprint", beforePrint);
+    window.addEventListener("afterprint", afterPrint);
     document.addEventListener("visibilitychange", hide);
     window.addEventListener("keyup", key);
     window.addEventListener("keydown", key);
     return () => {
+      window.removeEventListener("beforeprint", beforePrint);
+      window.removeEventListener("afterprint", afterPrint);
       document.removeEventListener("visibilitychange", hide);
       window.removeEventListener("keyup", key);
       window.removeEventListener("keydown", key);

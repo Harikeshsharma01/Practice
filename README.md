@@ -27,6 +27,10 @@ This is a foundation edition, **not a completed or officially verified curriculu
 
 CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. The bundled short videos are narrated slide explainers with a synthetic English voice. Hindi captions are key-idea summaries, not full Hindi narration or word-for-word translations. Teacher links and uploads remain supported. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. Videos were rendered locally with FFmpeg/Pillow/Flite, not an external generative-video API. There is no arbitrary code execution. Optional text drafting requires a backend OpenAI API key; it is disabled without that key. Student progress is per browser, without cross-device accounts.
 
+## Android APK
+
+Download the [Sewestian Android preview](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.0-preview.apk) for Android 8.0+. It lets you choose a hosted HTTPS website or a classroom Wi-Fi server, with saved connections, Android file picking/downloads and secure-window screenshot protection. A running MERN server is required; this is not an offline lesson bundle or an iPhone app. See [installation and building instructions](docs/ANDROID_APP.md).
+
 ## Local development
 
 Use the existing checkout at `/workspace/Sewestian`. This task already has an isolated workspace; do not create an additional Git worktree unless asked.

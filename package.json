@@ -10,7 +10,8 @@
     "test": "node --test tests/*.test.js",
     "test:ui": "node tests/browser.mjs",
     "test:teacher": "node tests/teacher-browser.mjs",
-    "classroom": "npm run build && node scripts/start-classroom.mjs"
+    "classroom": "npm run build && node scripts/start-classroom.mjs",
+    "android:apk": "python3 scripts/build-android.py"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",
