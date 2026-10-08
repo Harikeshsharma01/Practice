@@ -15,7 +15,7 @@ Requires Android 8.0 or newer and an up-to-date Android System WebView. There ar
 
 ## Hosted website
 
-Enter your actual HTTPS frontend address, without `/admin` or another page path. The Vercel site's `/api` bridge and Render/MongoDB backend must already work. A “learning server has not been connected” message is a website/backend configuration problem; installing the APK does not fix hosting. See the deployment section of the main README.
+Enter your actual HTTPS frontend address, without `/admin` or another page path. On Netlify (for example `https://sewestian.netlify.app`) the API and storage are built in. On Vercel, the `/api` bridge and Render/MongoDB backend must already work. Each hosting setup keeps its own data, so every student and teacher must use the same address. A “learning server has not been connected” message is a website/backend configuration problem; installing the APK does not fix hosting. See the deployment section of the main README.
 
 The app requires a valid HTTPS certificate. It does not bypass certificate errors. External website links open in the phone's browser, where the app's screenshot protection does not apply.
 

@@ -28,6 +28,18 @@ export const hashPassword = (password) => {
   const salt = randomBytes(16).toString("hex");
   return `${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
 };
+// Creates the teacher account once from ADMIN_EMAIL/ADMIN_PASSWORD.
+export async function ensureAdmin(store, env = process.env) {
+  if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD || (await store.get("admin")))
+    return false;
+  if (env.ADMIN_PASSWORD.length < 12)
+    throw new Error("ADMIN_PASSWORD must contain at least 12 characters.");
+  await store.set("admin", {
+    email: env.ADMIN_EMAIL.toLowerCase(),
+    passwordHash: hashPassword(env.ADMIN_PASSWORD),
+  });
+  return true;
+}
 function verifyPassword(password, stored) {
   const [salt, hash] = stored.split(":");
   const actual = scryptSync(password, salt, 64),
@@ -98,6 +110,7 @@ export function createApp(
     clientOrigin = "",
     classroomLan = false,
     interfaces,
+    uploadDirectory = path.resolve(".data/uploads"),
     ...teachingOptions
   } = {},
 ) {
@@ -186,7 +199,7 @@ export function createApp(
   });
   registerSupport(app, store, protect, { production });
   const mediaUpload = multer({
-    dest: path.resolve(".data/uploads"),
+    dest: uploadDirectory,
     limits: { fileSize: 4_000_000, files: 1 },
     fileFilter: (_req, file, done) => {
       if (!file.mimetype || file.mimetype === "application/octet-stream") {
