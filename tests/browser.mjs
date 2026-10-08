@@ -1,3 +1,4 @@
+import { ensureStudent } from "./helpers/signin.mjs";
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -15,6 +16,7 @@ page.on("pageerror", (e) => errors.push(e.message));
 const base = process.env.TEST_BASE_URL || "http://127.0.0.1:5173";
 await mkdir("/tmp/sewestian-screenshots", { recursive: true });
 try {
+  await ensureStudent(page, base);
   await page.goto(base);
   await page.getByRole("heading", { name: /Hey, curious mind/ }).waitFor();
   await page.screenshot({

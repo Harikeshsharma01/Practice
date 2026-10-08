@@ -1,3 +1,6 @@
+import { offline, setUserScope, storageKey } from "./auth/runtime";
+import Login from "./auth/Login";
+import OfflineHelp from "./auth/OfflineHelp";
 import React, {
   useState,
   useEffect,
@@ -92,6 +95,8 @@ import "./components/galaxy-finish.css";
 const Context = createContext();
 const useApp = () => useContext(Context);
 async function api(path, options = {}) {
+  if (offline)
+    return (await import("./auth/offline")).offlineApi(path, options);
   const res = await fetch(`/api${path}`, {
     ...options,
     headers: { "Content-Type": "application/json", ...options.headers },
@@ -107,7 +112,7 @@ async function api(path, options = {}) {
 }
 function readLocal(key, fallback) {
   try {
-    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+    return JSON.parse(localStorage.getItem(storageKey(key))) ?? fallback;
   } catch {
     return fallback;
   }
@@ -206,6 +211,7 @@ function OrbitalArt({ mini = false }) {
 }
 function App() {
   const [access, setAccess] = useState(null);
+  const [account, setAccount] = useState(null);
   const [catalog, setCatalog] = useState(null),
     [error, setError] = useState(""),
     [effectsEnabled, setEffectsEnabled] = useState(
@@ -225,6 +231,24 @@ function App() {
     [toast, setToast] = useState("");
   async function refresh() {
     try {
+      const identity = await api("/student/status");
+      setAccount(identity);
+      if (identity.required && !identity.authenticated) {
+        setCatalog(null);
+        setAccess(null);
+        setError("");
+        return;
+      }
+      setUserScope(
+        identity.user?.id || (identity.teacher ? "teacher" : "guest"),
+      );
+      setCourseId(readLocal("sewestian-course", "mh-11-cs1"));
+      setEffectsEnabled(
+        readLocal("sewestian-effects", true) &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      );
+      setCompleted(readLocal("sewestian-progress", []));
+      setBookmarks(readLocal("sewestian-bookmarks", []));
       const state = await api("/classroom/status");
       setAccess(state);
       if (state.allowed) setCatalog(await api("/catalog"));
@@ -254,13 +278,22 @@ function App() {
     return () => clearInterval(timer);
   }, [access?.enabled, !!catalog]);
   useEffect(() => {
-    localStorage.setItem("sewestian-course", JSON.stringify(courseId));
+    localStorage.setItem(
+      storageKey("sewestian-course"),
+      JSON.stringify(courseId),
+    );
   }, [courseId]);
   useEffect(() => {
-    localStorage.setItem("sewestian-progress", JSON.stringify(completed));
+    localStorage.setItem(
+      storageKey("sewestian-progress"),
+      JSON.stringify(completed),
+    );
   }, [completed]);
   useEffect(() => {
-    localStorage.setItem("sewestian-bookmarks", JSON.stringify(bookmarks));
+    localStorage.setItem(
+      storageKey("sewestian-bookmarks"),
+      JSON.stringify(bookmarks),
+    );
   }, [bookmarks]);
   useEffect(() => {
     if (toast) {
@@ -269,7 +302,10 @@ function App() {
     }
   }, [toast]);
   useEffect(() => {
-    localStorage.setItem("sewestian-effects", JSON.stringify(effectsEnabled));
+    localStorage.setItem(
+      storageKey("sewestian-effects"),
+      JSON.stringify(effectsEnabled),
+    );
   }, [effectsEnabled]);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -281,6 +317,7 @@ function App() {
   }, []);
   const value = {
     ...catalog,
+    account,
     access,
     effectsEnabled,
     setEffectsEnabled,
@@ -298,6 +335,7 @@ function App() {
       <BrowserRouter>
         <CosmicScene enabled={effectsEnabled} />
         <PortalGate
+          account={account}
           catalog={catalog}
           access={access}
           error={error}
@@ -314,9 +352,12 @@ function App() {
     </Context.Provider>
   );
 }
-function PortalGate({ catalog, access, error, refresh }) {
+function PortalGate({ account, catalog, access, error, refresh }) {
   const location = useLocation();
-  if (location.pathname === "/mobile") return <AppDownload />;
+  if (location.pathname === "/mobile" && !offline) return <AppDownload />;
+  if (account?.required && !account.authenticated)
+    return <Login api={api} status={account} refresh={refresh} />;
+  if (offline && location.pathname === "/admin") return <OfflineHelp />;
   return catalog ? (
     <Shell />
   ) : access?.enabled && !access.allowed ? (
@@ -334,11 +375,13 @@ function PortalGate({ catalog, access, error, refresh }) {
   );
 }
 function StudentSupport() {
-  const { courses, courseId } = useApp();
+  if (offline) return <OfflineHelp />;
+  const { courses, courseId, account } = useApp();
   const course = courses.find((c) => c.id === courseId);
   return (
     <SupportInbox
       api={api}
+      accountMode={!!account?.user}
       defaultContext={
         course ? `${course.board} ${course.grade} ${course.code}` : ""
       }
@@ -346,7 +389,15 @@ function StudentSupport() {
   );
 }
 function Shell() {
-  const { courses, courseId, effectsEnabled, setEffectsEnabled } = useApp(),
+  const navigate = useNavigate();
+  const {
+      courses,
+      courseId,
+      effectsEnabled,
+      setEffectsEnabled,
+      account,
+      refresh,
+    } = useApp(),
     [search, setSearch] = useState(false),
     [mobile, setMobile] = useState(false),
     location = useLocation();
@@ -377,8 +428,8 @@ function Shell() {
     ["/animations", "Visual learning", Orbit],
     ["/labs", "Practice lab", FlaskConical],
     ["/practicals", "Practical journal", FileText],
-    ["/support", "Doubts & feedback", Mail],
-    ["/mobile", "Get Android app", Download],
+    ["/support", offline ? "Question notebook" : "Doubts & feedback", Mail],
+    ...(!offline ? [["/mobile", "Get Android app", Download]] : []),
   ];
   return (
     <div className="app-shell">
@@ -417,11 +468,13 @@ function Shell() {
               <br />a little curiosity.
             </p>
           </div>
-          <Link className="teacher-link" to="/admin">
-            <ShieldCheck size={18} />
-            <span>Teacher workspace</span>
-            <ArrowUpRight size={16} />
-          </Link>
+          {!offline && (
+            <Link className="teacher-link" to="/admin">
+              <ShieldCheck size={18} />
+              <span>Teacher workspace</span>
+              <ArrowUpRight size={16} />
+            </Link>
+          )}
           <div className="sidebar-foot">
             <span className="online-dot" /> A little wiser, every day.
           </div>
@@ -444,8 +497,20 @@ function Shell() {
             >
               <Menu size={22} />
             </button>
+            <button
+              className="icon-button"
+              aria-label="Go back"
+              onClick={() =>
+                window.history.state?.idx > 0 ? navigate(-1) : navigate("/")
+              }
+            >
+              <ArrowLeft size={19} />
+            </button>
             <span className="breadcrumb">
-              Your universe <ChevronRight size={13} />{" "}
+              <Link to="/" aria-label="Your universe — go home">
+                Your universe
+              </Link>{" "}
+              <ChevronRight size={13} />{" "}
               <strong>
                 {location.pathname.startsWith("/unit/")
                   ? "Unit study book"
@@ -480,12 +545,34 @@ function Shell() {
               <Sparkles size={17} />
               <span>{effectsEnabled ? "Magic on" : "Magic off"}</span>
             </button>
+            {account?.authenticated && (
+              <button
+                className="button account-signout"
+                onClick={async () => {
+                  try {
+                    await api("/student/logout", { method: "POST" });
+                    setUserScope(null);
+                    navigate("/");
+                    await refresh();
+                  } catch (e) {
+                    alert(e.message);
+                  }
+                }}
+              >
+                Sign out
+              </button>
+            )}
             <span className="topbar-divider" />
             <div className="avatar" title="Your local learner profile">
               S<span />
             </div>
           </div>
         </header>
+        {offline && (
+          <div className="offline-banner">
+            Offline edition · Accounts and progress stay on this phone
+          </div>
+        )}
         <main id="main-content" key={location.pathname} className="portal-page">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -520,7 +607,7 @@ function Shell() {
           <Link to="/courses">
             Explore your syllabus <ArrowUpRight size={12} />
           </Link>
-          <Link to="/mobile">Download Android APK</Link>
+          {!offline && <Link to="/mobile">Download Android APK</Link>}
           <span>© {new Date().getFullYear()} Sewestian</span>
         </footer>
       </div>
@@ -1393,7 +1480,9 @@ function Lesson() {
         className="button"
         to={`/support?topic=${encodeURIComponent(l.title)}`}
       >
-        Ask your teacher about this lesson
+        {offline
+          ? "Write a question about this lesson"
+          : "Ask your teacher about this lesson"}
       </Link>
       <div className="lesson-tabs">
         {[

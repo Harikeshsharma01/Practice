@@ -70,6 +70,7 @@ ensure_sdk()
 TOOLS = SDK / "build-tools/android-16"
 JAR = SDK / "platforms/android-36/android.jar"
 APP = ROOT / "android/app/src/main"
+run(["npm", "run", "android:web"])
 for generated in ("classes", "generated", "dex", "policy-test"):
     directory = BUILD / generated
     if directory.exists():
@@ -78,8 +79,9 @@ for generated in ("classes", "generated", "dex", "policy-test"):
 
 compiler = ["java", "-m", "jdk.compiler/com.sun.tools.javac.Main"]
 run([*compiler, "-d", BUILD / "policy-test",
-     APP / "java/com/sewestian/learning/ConnectionPolicy.java", ROOT / "android/ConnectionPolicyTest.java"])
+     APP / "java/com/sewestian/learning/ConnectionPolicy.java", APP / "java/com/sewestian/learning/ByteRange.java", ROOT / "android/ConnectionPolicyTest.java", ROOT / "android/ByteRangeTest.java"])
 run(["java", "-cp", BUILD / "policy-test", "ConnectionPolicyTest"])
+run(["java", "-cp", BUILD / "policy-test", "ByteRangeTest"])
 ET.register_namespace("android", "http://schemas.android.com/apk/res/android")
 manifest = ET.parse(APP / "AndroidManifest.xml")
 manifest.getroot().set("package", "com.sewestian.learning")
@@ -101,6 +103,10 @@ shutil.copyfile(BUILD / "resources.apk", BUILD / "unsigned.apk")
 with zipfile.ZipFile(BUILD / "unsigned.apk", "a", zipfile.ZIP_DEFLATED) as z:
     for p in (BUILD / "dex").glob("*.dex"):
         z.write(p, p.name)
+    for p in (BUILD / "web").rglob("*"):
+        if p.is_file():
+            kind = zipfile.ZIP_STORED if p.suffix in (".mp4", ".webm", ".mp3") else zipfile.ZIP_DEFLATED
+            z.write(p, "assets/www/" + p.relative_to(BUILD / "web").as_posix(), compress_type=kind)
 run([TOOLS / "zipalign", "-f", "-p", "4", BUILD / "unsigned.apk", BUILD / "aligned.apk"])
 
 PRIVATE.mkdir(exist_ok=True, mode=0o700)

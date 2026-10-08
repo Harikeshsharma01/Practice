@@ -1,3 +1,4 @@
+import { storageKey } from "../auth/runtime";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -103,7 +104,8 @@ export default function PracticalLibrary({ courses, practicals = [] }) {
     [journal, setJournal] = useState(() => {
       try {
         return JSON.parse(
-          localStorage.getItem("sewestian-practical-journal") || "{}",
+          localStorage.getItem(storageKey("sewestian-practical-journal")) ||
+            "{}",
         );
       } catch {
         return {};
@@ -111,7 +113,7 @@ export default function PracticalLibrary({ courses, practicals = [] }) {
     });
   useEffect(() => {
     localStorage.setItem(
-      "sewestian-practical-journal",
+      storageKey("sewestian-practical-journal"),
       JSON.stringify(journal),
     );
   }, [journal]);

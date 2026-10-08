@@ -4,7 +4,7 @@ import { mkdtemp, rm, mkdir } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { createStore } from "../server/store.js";
-import { createApp } from "../server/app.js";
+import { createApp } from "./helpers/content-app.js";
 const directory = await mkdtemp(path.join(os.tmpdir(), "study-reader-"));
 const store = await createStore({ directory });
 const server = createApp(store).listen(0, "127.0.0.1");

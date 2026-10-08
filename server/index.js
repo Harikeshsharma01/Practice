@@ -26,6 +26,9 @@ const app = createApp(store, {
   production,
   classroomLan: process.env.CLASSROOM_LAN === "1",
   clientOrigin: process.env.CLIENT_ORIGIN,
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  googleRedirectUri: process.env.GOOGLE_REDIRECT_URI,
 });
 const port = Number(process.env.PORT) || 4000;
 app.listen(port, "0.0.0.0", () =>

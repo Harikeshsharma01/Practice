@@ -24,6 +24,7 @@ export async function createStore({
 } = {}) {
   if (mongoUri) {
     await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 });
+    await Document.init();
     const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
       bucketName: "sewestian_media",
     });
@@ -37,6 +38,15 @@ export async function createStore({
       },
       async get(key) {
         return (await Document.findOne({ key }).lean())?.value ?? null;
+      },
+      async create(key, value) {
+        try {
+          await Document.create({ key, value });
+          return true;
+        } catch (e) {
+          if (e.code === 11000) return false;
+          throw e;
+        }
       },
       async set(key, value) {
         await Document.updateOne(
@@ -111,6 +121,18 @@ export async function createStore({
         return JSON.parse(await readFile(file(key), "utf8"));
       } catch (e) {
         if (e.code === "ENOENT") return null;
+        throw e;
+      }
+    },
+    async create(key, value) {
+      try {
+        await writeFile(file(key), JSON.stringify(value), {
+          mode: 0o600,
+          flag: "wx",
+        });
+        return true;
+      } catch (e) {
+        if (e.code === "EEXIST") return false;
         throw e;
       }
     },

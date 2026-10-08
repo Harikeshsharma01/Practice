@@ -16,18 +16,19 @@ export function AppDownload() {
       <Link to="/" className="back-link">
         ← Sewestian learning home
       </Link>
-      <span className="overline">YOUR CLASSROOM, IN YOUR POCKET</span>
+      <span className="overline">LEARN WITHOUT A SERVER</span>
       <div className="app-download-icon">
         <Smartphone size={44} />
       </div>
       <h1>
-        The same learning universe.
+        Your learning universe.
         <br />
-        Now on Android.
+        Now available offline.
       </h1>
       <p>
-        Your lessons, visual labs and teacher conversations come from the same
-        Sewestian server in the website and app.
+        Create a local account on your Android phone and open bundled lessons,
+        notes, simulations and narrated videos. No hosted-site or Wi-Fi setup
+        screen.
       </p>
       <a
         className="button primary"
@@ -37,53 +38,47 @@ export function AppDownload() {
         <Download size={18} /> Download Android APK
       </a>
       <p className="support-muted">
-        Version {release.version} · Android {release.minimumAndroid}+ · Preview
+        Version {release.version} · Android {release.minimumAndroid}+ · Offline
+        preview · about 36 MB
       </p>
       <div className="support-card">
-        <h2>Connect once. Keep learning.</h2>
+        <h2>Install. Sign up. Start exploring.</h2>
         <ol>
           <li>
-            Install the downloaded APK. Android may ask you to allow
-            installation from your browser.
+            Download and install the APK. Allow installation from your browser
+            if Android asks.
           </li>
-          <li>Open Sewestian and choose Hosted website or Classroom Wi-Fi.</li>
           <li>
-            Enter this website’s address below. For Wi-Fi, keep your teacher’s
-            computer running and join the same network.
+            Open Sewestian, choose Sign up, and create a local email/password
+            account. Do not use your Google password.
+          </li>
+          <li>
+            Log in to learn. Use Your universe or the app's Home button to
+            return home, and Back to return to the previous page.
           </li>
         </ol>
-        <label>
-          Current website address
-          <input
-            readOnly
-            value={window.location.origin}
-            onFocus={(e) => e.target.select()}
-          />
-        </label>
         <p>
-          Hosted mode requires HTTPS. For a local class, use the teacher’s
-          private network address, not localhost. Classroom students still need
-          teacher approval.
+          Updating with the same signing key keeps app data. Clearing data or
+          uninstalling deletes local accounts and progress.
         </p>
       </div>
       <div className="support-card">
-        <h2>One shared platform</h2>
+        <h2>Know where your work is saved</h2>
         <p>
-          Published lesson and website changes appear in both when they connect
-          to the same server. Reload to pick up a deployed update.
-          Android-specific upgrades require installing a newer APK from this
-          page.
+          Website accounts live on the website server. Offline APK accounts and
+          progress stay on the phone. They do not sync. The offline question
+          notebook saves drafts locally; it does not send messages to your
+          teacher.
         </p>
         <p>
-          Use <Link to="/support">Doubts & feedback</Link> to ask your teacher a
-          question or report an issue. Keep your private inbox code to continue
-          the same conversation on another device.
+          Google sign-in is unavailable in this offline edition. The website can
+          offer Google sign-in after the teacher configures Google OAuth.
+          iPhones cannot install APK files.
         </p>
         <p className="support-muted">
-          This preview requires a working server. It is not an offline course
-          bundle and does not install on iPhones. Further emulator testing
-          encountered app/system timeouts; test it on your phone before
-          classroom rollout.
+          This is a preview. Native integration still requires physical-phone
+          testing. Bundled course maps remain provisional and need teacher
+          syllabus review.
         </p>
         <details>
           <summary>Verify the download</summary>
@@ -97,7 +92,12 @@ export function AppDownload() {
   );
 }
 
-export function SupportInbox({ api, teacher = false, defaultContext = "" }) {
+export function SupportInbox({
+  api,
+  teacher = false,
+  accountMode = false,
+  defaultContext = "",
+}) {
   const [params] = useSearchParams();
   const [threads, setThreads] = useState([]),
     [selected, setSelected] = useState(""),
@@ -227,7 +227,7 @@ export function SupportInbox({ api, teacher = false, defaultContext = "" }) {
           {notice}
         </p>
       )}
-      {!teacher && (
+      {!teacher && !accountMode && (
         <details className="support-card">
           <summary>Continue this inbox on another device</summary>
           <p>
@@ -290,6 +290,13 @@ export function SupportInbox({ api, teacher = false, defaultContext = "" }) {
             </button>
           </form>
         </details>
+      )}
+      {accountMode && (
+        <p className="support-notice">
+          Your inbox is linked to this website account. Sign in with the same
+          account on this server to read your replies. The offline APK has a
+          separate local question notebook.
+        </p>
       )}
       <div className="support-layout">
         <aside className="support-card support-list">

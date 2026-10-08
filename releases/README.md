@@ -1,28 +1,28 @@
-# Sewestian Android preview 1.0
+# Sewestian 1.1 offline preview
 
-[Download the signed APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.0-preview.apk) · [Installation and connection guide](../docs/ANDROID_APP.md) · [SHA-256 checksum](Sewestian-1.0-preview.apk.sha256)
+[Download the new APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk) · [Checksum](Sewestian-1.1-offline-preview.apk.sha256) · [Install guide](../docs/ANDROID_APP.md)
 
-Built on 8 October 2026. Package `com.sewestian.learning`, version code 1. Android 8.0+ with a current Android System WebView is required. This is a signed preview distributed directly, not a Google Play release. iPhones cannot install it.
+Released 8 October 2026. Android 8.0+, app ID `com.sewestian.learning`, version code 2. About 36 MB. Install over the earlier version to keep app data; the original signing key is retained.
 
-The app connects to your existing MERN service through a saved hosted HTTPS address or a private IPv4 classroom address. It includes native connection controls, Android Back, file picking, downloads up to 12 MB, print/PDF integration, full-screen video support and Android secure-window protection. Lessons and videos are loaded from the server; the small APK is not an offline content bundle.
+- Removed the hosted-site/classroom-Wi-Fi chooser. Home and Reload open bundled content.
+- Local email/password signup/login before learning, plus Sign out. Passwords are salted hashes, not plaintext.
+- Bundled canonical lessons, study books, simulations and 138 generated narrated videos/captions.
+- Clickable **Your universe** home link and Back button shared with the website.
+- Offline question drafts are explicitly not delivered to the teacher.
+- Google sign-in is unavailable offline. Website Google OAuth needs separate operator configuration and real-provider validation.
 
-The shared website now includes **Doubts & feedback**, cross-device inbox linking and teacher replies. These appear in this APK after the connected website/backend is updated and reloaded. The website serves the same signed APK from **Get Android app**. The release was rebuilt and its metadata/checksum synchronized; native behavior and version remain unchanged. See [shared platform instructions](../docs/SHARED_PLATFORM.md).
-
-The preview certificate's SHA-256 fingerprint is:
+Preview certificate SHA-256:
 
 ```
 f80a24e19aa6391fe4e9a12ec999d1cb690914b22add8fb0499c754b24ff6502
 ```
 
-Signing secrets are not included in Git. Retain `.android-private/` privately to rebuild updates with the same identity. For normal distribution, maintain your own release keystore and version numbers.
+Signing material stays in ignored `.android-private/`. Do not lose it or publish it.
 
-## Validation
+## Verification and limits
 
-- Android SDK 36 compilation, D8 conversion, APK v2/v3 signature verification and zip alignment passed.
-- JVM address-policy tests passed: hosted HTTPS, private classroom IPv4, invalid addresses and resource-origin restrictions.
-- Ten MERN integration tests, the Vite production build, classroom browser checks and study-book/video/export browser checks passed.
-- Classroom browser checks include intentional-print backgrounding versus ordinary privacy locking.
-- Installed and launched in an Android 15/API 35 x86_64 emulator with WebView 124. Android window inspection confirmed `FLAG_SECURE`; accessibility inspection confirmed the native connection chooser.
-- The software-only emulator reported both system and app “not responding” timeouts during further interaction. End-to-end lesson navigation and native upload/download/PDF checks could not be completed reliably. The cause has not been isolated on physical hardware; this remains a preview requiring on-device acceptance checks. The browser tests above do not substitute for them.
+The build verifies APK v2/v3 signatures, alignment, the bundled catalog/media, absence of nested APKs/private server data, and JVM origin/video-range rules. Backend tests cover mandatory login, password hashing, duplicate signup, student/teacher separation, logout, inbox isolation and mocked Google callbacks. Browser tests use the website and packaged Android-mode frontend; see the task report for executed results.
 
-Physical phones, iOS, a live hosted backend, Bluetooth tethering and a real classroom router were not tested. Native file-picker, PDF printer and media behavior can vary by device. Keep the WebView updated and test your teaching workflow on the phones you plan to use.
+This new native offline asset integration has not been validated on a physical phone. The earlier software emulator had system/app response timeouts. Browser and JVM tests do not prove Android WebView, native downloads or PDF printing behavior on every device. Keep System WebView updated and test before student rollout.
+
+The old 1.0 connected preview is retained in Git history/releases but is no longer the website's offered download. Offline accounts do not import old connected website sessions. Syllabus mappings remain provisional rather than officially verified.

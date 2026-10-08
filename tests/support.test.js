@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { createApp, hashPassword } from "../server/app.js";
+import { hashPassword } from "../server/app.js";
+import { createApp } from "./helpers/content-app.js";
 import { createStore } from "../server/store.js";
 
 test("private student inbox links across devices; teacher replies persist without leaking or overwriting messages", async () => {

@@ -13,7 +13,9 @@
     "classroom": "npm run build && node scripts/start-classroom.mjs",
     "android:apk": "python3 scripts/build-android.py",
     "prebuild": "node scripts/sync-android.mjs",
-    "predev": "node scripts/sync-android.mjs"
+    "predev": "node scripts/sync-android.mjs",
+    "android:web": "vite build --mode android --outDir android/.build/web && node scripts/prepare-offline.mjs",
+    "local": "npm run build && node scripts/start-local.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",
@@ -23,6 +25,7 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-rate-limit": "^8.1.0",
+    "google-auth-library": "^10.9.1",
     "helmet": "^8.1.0",
     "lucide-react": "^0.468.0",
     "mongoose": "^8.19.0",

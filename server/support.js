@@ -45,6 +45,11 @@ export function registerSupport(
       maxAge: 90 * 86400_000,
     });
   async function inbox(req) {
+    if (req.student)
+      return (
+        (await store.get("support-account-" + req.student.id))?.owner ||
+        hash("account:" + req.student.id)
+      );
     const token = tokenFrom(req);
     return token && (await store.get("support-inbox-" + hash(token)))
       ? hash(token)
@@ -52,6 +57,22 @@ export function registerSupport(
   }
   // Recovery is a bearer secret, independent of teacher login and classroom approval.
   app.post("/api/support/session", async (req, res) => {
+    if (req.student) {
+      if (req.body?.code !== undefined) {
+        const code = req.body.code;
+        if (
+          !validToken(code) ||
+          !(await store.get("support-inbox-" + hash(code)))
+        )
+          return res
+            .status(400)
+            .json({ error: "That previous inbox code was not found." });
+        await store.set("support-account-" + req.student.id, {
+          owner: hash(code),
+        });
+      }
+      return res.json({ account: true });
+    }
     let token = tokenFrom(req);
     if (req.body?.code !== undefined) {
       const code = req.body.code;

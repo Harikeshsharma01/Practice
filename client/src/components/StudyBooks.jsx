@@ -1,3 +1,4 @@
+import { storageKey } from "../auth/runtime";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -198,7 +199,8 @@ export function UnitBook({ courses, lessons }) {
   useEffect(() => {
     let saved = 0;
     try {
-      saved = Number(localStorage.getItem("sewestian-unit-" + id)) || 0;
+      saved =
+        Number(localStorage.getItem(storageKey("sewestian-unit-" + id))) || 0;
     } catch {}
     setPosition(saved);
     setPrintAll(false);
@@ -208,7 +210,7 @@ export function UnitBook({ courses, lessons }) {
     const p = Math.max(0, Math.min(next, book.pages.length - 1));
     setPosition(p);
     try {
-      localStorage.setItem("sewestian-unit-" + id, String(p));
+      localStorage.setItem(storageKey("sewestian-unit-" + id), String(p));
     } catch {}
   }
   function download() {

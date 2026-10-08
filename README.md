@@ -28,9 +28,11 @@ This is a foundation edition, **not a completed or officially verified curriculu
 
 CBSE IT means **Information Technology (802)** here, not Informatics Practices (065). The Maharashtra course maps need textbook and bifocal-subject verification. No claim of affiliation with ALLEN or a board is made. The bundled short videos are narrated slide explainers with a synthetic English voice. Hindi captions are key-idea summaries, not full Hindi narration or word-for-word translations. Teacher links and uploads remain supported. Uploaded media is validated and visible only when its lesson is published. The Vercel upload path supports a maximum of 4 MB per file; use a YouTube or Vimeo link for longer videos. “Handwritten” is a handwriting-font presentation of original typed notes, not scanned handwriting. Videos were rendered locally with FFmpeg/Pillow/Flite, not an external generative-video API. There is no arbitrary code execution. Optional text drafting requires a backend OpenAI API key; it is disabled without that key. Student progress is per browser, without cross-device accounts.
 
-## Android APK
+## Accounts and offline Android APK
 
-Download the [Sewestian Android preview](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.0-preview.apk) for Android 8.0+. It lets you choose a hosted HTTPS website or a classroom Wi-Fi server, with saved connections, Android file picking/downloads and secure-window screenshot protection. A running MERN server is required; this is not an offline lesson bundle or an iPhone app. See [installation and building instructions](docs/ANDROID_APP.md).
+Student signup/login is now required to open learning content. Run `npm run local` for a local website with accounts saved on the server. Google sign-in is disabled until configured; see [account setup](docs/ACCOUNTS.md).
+
+Download the [Sewestian offline Android preview](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk) for Android 8.0+. It bundles lessons/videos and local email/password accounts, with Home/Back navigation and no hosted/Wi-Fi chooser. Website and offline accounts do not sync. Teacher messaging and Google authentication are unavailable in the offline APK. See [installation/building](docs/ANDROID_APP.md) and [shared-code update rules](docs/SHARED_PLATFORM.md).
 
 ## Local development
 
@@ -68,6 +70,8 @@ node tests/study-books-browser.mjs
 node tests/classroom-browser.mjs
 # Shared student/teacher inbox, cross-device recovery, mobile and actual APK download:
 node tests/support-browser.mjs
+# Mandatory website auth plus packaged offline signup/login/video/Home/Back:
+node tests/accounts-browser.mjs
 # Galaxy interaction checks with the dev server running:
 node tests/cosmic-browser.mjs
 # Optional bundled example execution checks (g++ and Python required):

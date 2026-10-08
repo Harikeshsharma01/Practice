@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { mkdtemp, rm, mkdir } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { createApp, hashPassword } from "../server/app.js";
+import { hashPassword } from "../server/app.js";
+import { createApp } from "./helpers/content-app.js";
 import { createStore } from "../server/store.js";
 const directory = await mkdtemp(
   path.join(os.tmpdir(), "sewestian-studio-browser-"),

@@ -17,6 +17,9 @@ export default async function handler(req, res) {
     if (!/^[a-zA-Z0-9_/-]*$/.test(endpoint) || endpoint.includes(".."))
       return res.status(400).json({ error: "Invalid API path." });
     const target = new URL(`/api/${endpoint}`, base.origin);
+    for (const [key, value] of requestUrl.searchParams) {
+      if (key !== "path") target.searchParams.append(key, value);
+    }
     const multipart = (req.headers["content-type"] || "").startsWith(
       "multipart/form-data;",
     );
@@ -54,12 +57,14 @@ export default async function handler(req, res) {
         : multipart
           ? body
           : JSON.stringify(body),
-      redirect: "error",
+      redirect: "manual",
       signal: AbortSignal.timeout(
         endpoint === "admin/assistant/draft" ? 58000 : 25000,
       ),
     });
     res.status(response.status);
+    if (response.headers.has("location"))
+      res.setHeader("Location", response.headers.get("location"));
     res.setHeader("Cache-Control", "no-store");
     res.setHeader(
       "Content-Type",

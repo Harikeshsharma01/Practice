@@ -1,4 +1,5 @@
 import express from "express";
+import { registerStudents } from "./students.js";
 import { registerSupport } from "./support.js";
 import { registerClassroom } from "./classroom.js";
 import helmet from "helmet";
@@ -97,6 +98,11 @@ export function createApp(
     production = false,
     clientOrigin = "",
     classroomLan = false,
+    requireStudentLogin = true,
+    googleClientId = "",
+    googleClientSecret = "",
+    googleRedirectUri = "",
+    googleClient,
     interfaces,
     ...teachingOptions
   } = {},
@@ -183,6 +189,14 @@ export function createApp(
     classroomLan,
     production,
     interfaces,
+  });
+  registerStudents(app, store, {
+    production,
+    required: requireStudentLogin,
+    googleClientId,
+    googleClientSecret,
+    googleRedirectUri,
+    googleClient,
   });
   registerSupport(app, store, protect, { production });
   const mediaUpload = multer({
@@ -442,6 +456,13 @@ export function createApp(
   app.post("/api/auth/logout", protect, async (req, res) => {
     await store.delete(req.sessionKey);
     res.clearCookie("sewestian_session", { path: "/" });
+    const studentToken = req.cookies.sewestian_student_session;
+    if (/^[a-f0-9]{64}$/.test(studentToken || ""))
+      await store.delete(
+        "student-session-" +
+          createHash("sha256").update(studentToken).digest("hex"),
+      );
+    res.clearCookie("sewestian_student_session", { path: "/" });
     res.json({ ok: true });
   });
   registerTeachingRoutes(app, store, protect, teachingOptions);

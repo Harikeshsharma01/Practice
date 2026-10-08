@@ -1,3 +1,4 @@
+import { ensureStudent } from "./helpers/signin.mjs";
 import { chromium } from "@playwright/test";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -13,6 +14,7 @@ try {
   });
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await ensureStudent(page, base);
   await page.goto(base);
   await page.getByRole("heading", { name: /Hey, curious mind/ }).waitFor();
   const toggle = page.getByRole("button", {
@@ -90,6 +92,7 @@ try {
     viewport: { width: 1200, height: 900 },
     reducedMotion: "reduce",
   });
+  await ensureStudent(reduced, base);
   await reduced.goto(base);
   await reduced.getByRole("heading", { name: /Hey, curious mind/ }).waitFor();
   assert.equal(

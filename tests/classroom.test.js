@@ -4,7 +4,8 @@ import { mkdtemp, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { createApp, hashPassword } from "../server/app.js";
+import { hashPassword } from "../server/app.js";
+import { createApp } from "./helpers/content-app.js";
 import { createStore } from "../server/store.js";
 import { localPeer } from "../server/classroom.js";
 const interfaces = {

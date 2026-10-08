@@ -1,81 +1,43 @@
-# Sewestian Android app
+# Sewestian offline Android app — 1.1 preview
 
-The installable preview connects to the same MERN website you use in a browser. Choose your hosted HTTPS site or a teacher's local classroom server. Lessons, animations, simulations, teacher tools and approvals come from that server; the APK does not contain Node.js, MongoDB or an offline copy of the books/videos.
+[Download the current APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk), or use **Get Android app** at `/mobile` on your local/deployed Sewestian website. About 36 MB. Android 8.0+ with an updated System WebView; APKs do not install on iPhones.
 
-## Install on an Android phone
+## Install and sign in
 
-The website now has **Get Android app** at `/mobile`, with the APK hosted directly at `/downloads/Sewestian.apk`. Student questions, feedback and teacher replies are shared through the same backend; see [the shared platform guide](SHARED_PLATFORM.md). Connect both clients to the same server and use your private inbox code to carry a conversation across devices.
+1. Download/open the APK. Allow installation from your browser/file manager if Android requests it.
+2. Open Sewestian. The app directly opens its bundled sign-in screen; there is no hosted-site or classroom-Wi-Fi chooser.
+3. Select **Sign up**, enter a name/email and a Sewestian password of at least 12 characters. Do not enter a Google password.
+4. Sign in to open the learning pages. **Your universe** and native **Home** return home; Back returns to the previous page. Sign out is in the website-style top bar.
 
-1. Download [Sewestian-1.0-preview.apk](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.0-preview.apk) on your phone.
-2. Open the downloaded file. If Android asks, allow **Install unknown apps** for the browser or file manager you used, then install Sewestian. You can turn that permission off afterwards. This is a directly distributed preview, not a Google Play listing.
-3. Open **Sewestian** and choose **Hosted website** or **Classroom Wi-Fi**.
-4. Enter your real site/server address and tap **Open Sewestian**. Use **Connection** in the top bar to switch later; each mode remembers its last saved address.
+The same app ID (`com.sewestian.learning`) and signing certificate are retained, with version code 2. Install over version 1 to retain app data; do not uninstall first. Old connected-website sessions are not local accounts: create a local account for this new edition.
 
-Requires Android 8.0 or newer and an up-to-date Android System WebView. There are no CPU-specific native libraries in the APK. This does not guarantee compatibility with every phone; iPhones cannot install APK files. Devices without a functioning Android WebView cannot display the lessons.
+## What works offline
 
-## Hosted website
+The APK bundles the shared React UI, all 138 canonical lessons, provisional pathways, study-book generation, practical solutions, diagrams/simulations, fonts, and 138 narrated MP4s with caption assets. It serves these from a restricted virtual HTTPS origin inside Android, including byte-range requests for video playback/seeking. No Node/MongoDB service runs on the phone. Google and other external services are not bundled.
 
-Enter your actual HTTPS frontend address, without `/admin` or another page path. The Vercel site's `/api` bridge and Render/MongoDB backend must already work. A “learning server has not been connected” message is a website/backend configuration problem; installing the APK does not fix hosting. See the deployment section of the main README.
+Local accounts use IndexedDB with per-account random salts and PBKDF2-SHA-256 (210,000 iterations). Session access is local, and reading progress is namespaced by account. Passwords are not stored in plaintext. This is a local access gate, not encrypted lesson DRM or verified ownership of an email address. A rooted/device-owner inspection of packaged assets cannot be prevented. Normal screenshots remain restricted by Android `FLAG_SECURE` where supported.
 
-The app requires a valid HTTPS certificate. It does not bypass certificate errors. External website links open in the phone's browser, where the app's screenshot protection does not apply.
+Clearing app data or uninstalling deletes local accounts/progress. There is no email verification, cloud backup, self-service password reset or cross-device account recovery in this offline edition. Use your website account separately on the website.
 
-## Classroom Wi-Fi
+**Question notebook** saves drafts only on the phone and can export text for sharing yourself. It does not send messages or receive teacher replies. Online teacher tools remain on the website. Bundled content is a release snapshot of canonical repository material; live teacher edits, private uploads and private messages are not copied into the APK.
 
-On the teaching computer, update the repository and install dependencies:
+## Google and Credential Manager
 
-```bash
-git pull origin main
-npm ci
-npm run classroom
-```
+Google sign-in is disabled in the offline app. It needs network access, a configured Google project/client and a connected identity-verification design; a Google button cannot replace those requirements. The owner supplied [Android Credential Manager documentation](https://developer.android.com/identity/credential-manager). Direct access to that page returned a workspace proxy 403 during this task. Native Credential Manager/Google SDK integration is not claimed in this build.
 
-Configure your teacher account first if needed, following [classroom setup](CLASSROOM_ACCESS.md). Keep this computer and terminal running. On the computer, open `http://localhost:4100`, sign in as teacher, and start a class from **Classroom access**.
+The website has a separately configurable OAuth implementation; see [account setup](ACCOUNTS.md). Password signup works without Google configuration. Do not put OAuth client secrets in the APK or repository.
 
-On the phone, join the same Wi-Fi, choose **Classroom Wi-Fi**, and enter the computer's private IPv4 address and port, for example `192.168.1.20:4100`. Use the address shown by your own teacher workspace, not this example. `localhost` on a phone means the phone itself and is not accepted. Guest-network client isolation or a computer firewall can prevent connection.
+## Build and update both targets
 
-Students enter their name and the six-digit class code, then wait for teacher approval. Existing expiry, removal, phone-browser preference and classroom network checks still apply. Bluetooth pairing alone does not grant access. Hosted mode does not inherit the local server's classroom restrictions.
-
-## Phone features
-
-- Native dark violet connection screen, saved addresses, reload and Android Back navigation.
-- Website videos, including full-screen playback, subject to the phone's supported media formats.
-- Teacher file uploads through Android's document picker; the server's existing upload size/type rules still apply.
-- Notes, images, slides and same-site media downloads through Android's Save dialog, with a 12 MB per-file app limit. Larger files can be opened in a browser. Files you export remain accessible outside the app.
-- Website print buttons open Android's print dialog, including **Save as PDF** when the device provides a print service. Exported pages are not protected by the app's secure window.
-- Android `FLAG_SECURE` prevents ordinary screenshots and screen recording on supported devices. It cannot prevent an external camera, a modified operating system or previously downloaded material being copied. Website access in an external browser has only the browser privacy deterrents described in the classroom guide.
-
-App sign-ins are separate from Chrome/browser sign-ins. **Clear saved connection and app sign-ins** removes the app's remembered addresses and cookies, not server lessons or other students' sessions. Clearing the app or reinstalling it may reset local reading progress and require classroom approval again.
-
-## Build the APK
-
-The Linux x86_64 standalone builder uses Node.js, Python 3.9+, Java 17+ with `jdk.compiler` and `keytool`, and official Google Android SDK platform/build tools. It downloads the pinned SDK archives on first use and checks Google's published SHA-1 archive checksums. No npm dependencies or Gradle download are required for the native build itself.
+Requires the repository's Node/npm dependencies, Python 3.9+, Java 17+ (`jdk.compiler` and `keytool`), and Linux x86_64 for the standalone builder. Pinned official Google SDK archives are checksum verified. Existing toolchain override:
 
 ```bash
-npm run android:apk
-# Optional: reuse the standalone builder's SDK directory from another workspace:
-SEWESTIAN_ANDROID_SDK=/path/to/sdk npm run android:apk
-```
-
-The SDK directory must have this builder's extracted layout; a normal Android Studio SDK uses a different build-tools directory layout. Without the override, downloads go into ignored `.android-sdk/`. The output is `releases/Sewestian-1.0-preview.apk` and its SHA-256 checksum file. The script validates APK signing and zip alignment. Java 8 bytecode is generated for Android 8+; compile-time Java warnings about deprecated compatibility APIs are expected.
-
-Alternatively, open the `android/` Gradle project in Android Studio with SDK 36, Java 17+ and Gradle 8.13. This repository does not include a Gradle wrapper. Use Android Studio's signed APK workflow with your own keystore; the Gradle release build is not preconfigured with signing credentials.
-
-### Keep the signing key private
-
-The standalone builder creates a preview signing key and random password in ignored `.android-private/`. **Back up that directory privately before replacing this workspace.** It is deliberately not pushed to GitHub. Android updates require the same application ID and signing key; a new key cannot update an existing installation without uninstalling it, which can remove app-local data. A production release should use your own securely retained signing key and incremented version code.
-
-The app ID is `com.sewestian.learning`, version `1.0-preview` / code `1`, minimum SDK 26, target SDK 36. Only Internet and network-state permissions are declared; there are no Bluetooth, location, camera or broad file-storage permissions. Local HTTP is enabled for the chosen private IPv4 classroom origin; other HTTP subresources are blocked by the app. Hosted connections must use HTTPS. Downloads preserve same-site cookies and do not follow redirects.
-
-## Checks
-
-```bash
-mkdir -p android/.build/policy-test
-java -m jdk.compiler/com.sun.tools.javac.Main -d android/.build/policy-test android/app/src/main/java/com/sewestian/learning/ConnectionPolicy.java android/ConnectionPolicyTest.java
-java -cp android/.build/policy-test ConnectionPolicyTest
-npm test
+SEWESTIAN_ANDROID_SDK=/workspace/android-sdk npm run android:apk
 npm run build
-node tests/classroom-browser.mjs
-node tests/study-books-browser.mjs
 ```
 
-Address-policy tests cover private IPv4, HTTPS hosting, unsafe/ambiguous addresses and same-origin resource rules. Browser tests exercise classroom admission, privacy controls and unit-book exports. Native device testing is recorded in [release notes](../releases/README.md); browser tests alone do not prove Android integration or classroom router compatibility.
+Without the override, the builder downloads into ignored `.android-sdk/`. It first builds the UI in Android mode, exports only canonical public catalog data, removes nested APK downloads, adds assets, runs JVM origin/range tests, compiles/signs/verifies the APK, updates `shared/android-release.json` and stages the website download. The website build then includes that verified APK at `/downloads/Sewestian.apk`.
+
+For future distributed revisions, increase `versionCode` and change `version` in `shared/android-release.json`. Back up ignored `.android-private/` securely; the same signing key is required to update installed apps. Never commit it. The Gradle project can be opened in Android Studio using SDK 36 and Gradle 8.13; first run `npm run android:web`, and use your retained signing key. No Gradle wrapper or signing secrets are committed.
+
+See [release validation and limitations](../releases/README.md). Browser tests of packaged assets do not prove physical Android behavior.

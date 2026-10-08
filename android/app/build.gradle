@@ -13,3 +13,9 @@ android {
     compileOptions { sourceCompatibility JavaVersion.VERSION_1_8; targetCompatibility JavaVersion.VERSION_1_8 }
     buildTypes { release { minifyEnabled false } }
 }
+
+// First run npm run android:web from the repository root.
+android.sourceSets.main.assets.srcDirs = ["../.build/assets"]
+tasks.register("stageOfflineAssets", Copy) { from "../.build/web"; into "../.build/assets/www"; exclude "downloads/**" }
+tasks.named("preBuild").configure { dependsOn "stageOfflineAssets" }
+android.androidResources.noCompress += ["mp4", "webm", "mp3"]

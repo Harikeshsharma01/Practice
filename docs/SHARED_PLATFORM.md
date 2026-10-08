@@ -1,33 +1,15 @@
-# One Sewestian website and Android platform
+# Website and offline APK: shared code, separate accounts
 
-## What stays in sync
+On 8 October 2026 the owner chose an offline APK because no working website or Google OAuth configuration was available. This supersedes the earlier hosted/classroom chooser design.
 
-The Android APK opens the same React website and Express API as the browser. When both connect to the **same server/database**, published lessons, videos, layouts, simulations, student conversations and teacher replies come from the same source. Website changes must first be deployed (or the local server rebuilt/restarted); use Reload in the APK to refresh. No duplicated lesson database is stored in the APK.
+The website and APK use the same React learning source, navigation and canonical content. The website uses Express with MongoDB or a local server file store. The APK contains a built snapshot and device-local email/password accounts. There is no automatic account, progress, teacher-edit or message sync between them.
 
-A hosted Vercel/Render deployment and a local classroom with its own `.data/` directory are separate installations. They do not automatically copy each other's content or messages. Choose the same hosted address everywhere for one online classroom, or the same local server for a Wi-Fi class. Deliberately sharing MongoDB can share stored content, but local classroom admission remains separate.
+Future changes must be applied to the shared source, tested on both targets, and rebuilt into a new APK as well as deployed/restarted on the website. Unlike the original connected preview, the offline APK does **not** receive website updates just by reloading. Increment the version, preserve the signing key, rebuild, and have students install the replacement APK over their current installation.
 
-Android-specific features—permissions, connection setup, secure-window behavior, native uploads/printing—require an APK update. Students download and install it; the app never silently installs software. Web-only changes appear in the existing APK after deployment and refresh.
+The website's **Get Android app** page (`/mobile`) serves `/downloads/Sewestian.apk`. Build scripts verify it against `shared/android-release.json` and prevent embedding a nested APK inside the offline assets. The download page is available before sign-in; learning content requires login.
 
-## Students: questions, feedback and issues
+Website students use **Doubts & feedback** and teachers use **Teacher workspace → Student inbox** for real private conversations. The website inbox follows the logged-in account. The offline app has **Question notebook** instead, clearly marked as local drafts that have not been sent. Students can export a text file and share it themselves.
 
-Open **Doubts & feedback** in the navigation, or **Ask your teacher about this lesson** from a lesson. Choose a doubt, feedback or issue, enter a name, subject and message, and send it. Return to the conversation to read the teacher's reply and add follow-up questions. The open page refreshes every 15 seconds. There are no email/push alerts or AI-generated replies.
+[Account/Google setup](ACCOUNTS.md) · [Android installation/building](ANDROID_APP.md)
 
-Only your inbox and the authenticated teacher can access your conversations. Names are self-entered, not verified accounts. Save the **private inbox code** from “Continue this inbox on another device”; enter it on the other browser/APK to link the same inbox. Both must use the same server. This code grants full student access to that inbox, so keep it private. Cookies last 90 days; clearing app/browser data requires the saved code to recover access. The teacher never sees the recovery code. A lost code cannot be recovered through the public site.
-
-In classroom mode, student inbox routes also require current teacher approval. Restoring an inbox code does not approve a new device or bypass removal. Closed classes prevent student access until the teacher admits the device again.
-
-## Teacher replies
-
-Sign in to **Teacher workspace → Student inbox**. Filter open/resolved conversations, doubts, feedback or issues. Select a conversation, reply, and mark it resolved when finished. Reopen it if students need to continue. Students cannot impersonate the teacher or open other students' conversations. Text is rendered as text; HTML supplied in a question is not executed.
-
-Records persist in the existing MongoDB store, or the local development store in classroom/development mode. They are not committed to Git. Back up the chosen database with your normal teaching data. Messages use separate records so simultaneous replies cannot overwrite each other. This is a small-classroom inbox; listing very large message histories will need indexed pagination before larger-scale use.
-
-## Website APK download
-
-Students open **Get Android app** or the footer's **Download Android APK** link. `/mobile` works even when the learning API is unavailable. The actual download is served by the website at `/downloads/Sewestian.apk`, with a matching SHA-256 file. Students still need a working learning server after installing.
-
-`npm run dev` and `npm run build` first validate the release against `shared/android-release.json`, then stage it in ignored `public/downloads/`. Vite includes these files in `dist/`; Vercel and the local Express website serve the same artifact. The canonical signed APK stays in `releases/`.
-
-For native releases, update `version` and increment `versionCode` in `shared/android-release.json`, then run `npm run android:apk`. The builder and Gradle use that version source. The standalone builder signs/verifies the APK, updates the manifest checksum/file and stages the website download. Retain the signing key privately. Android Studio builds need the same deliberate signing/release-metadata process before replacing the download.
-
-The root `AGENTS.md` records the owner's requirement for future coding sessions to update and check both experiences. It is a repository instruction, not a claim that requests outside this repository are remembered or executed automatically.
+The root `AGENTS.md` records the owner's ongoing requirement to update both targets. It is a repository instruction for future work, not an automatic deployment or a promise of memory outside this repository.
