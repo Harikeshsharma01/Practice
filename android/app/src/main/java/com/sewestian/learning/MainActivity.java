@@ -3,7 +3,6 @@ package com.sewestian.learning;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -58,7 +57,6 @@ public final class MainActivity extends Activity {
   private final Handler handler = new Handler(Looper.getMainLooper());
   private final ExecutorService executor = Executors.newSingleThreadExecutor();
   private FrameLayout content;
-  private TextView location;
   private ProgressBar progress;
   private WebView web;
   private View fullVideo;
@@ -96,34 +94,6 @@ public final class MainActivity extends Activity {
               insets.getSystemWindowInsetBottom());
           return insets.consumeSystemWindowInsets();
         });
-    LinearLayout toolbar = new LinearLayout(this);
-    toolbar.setGravity(Gravity.CENTER_VERTICAL);
-    toolbar.setPadding(dp(14), dp(6), dp(10), dp(6));
-    TextView brand = text("✦ sewestian.", 20, ACCENT);
-    brand.setTypeface(null, Typeface.BOLD);
-    toolbar.addView(brand, new LinearLayout.LayoutParams(0, dp(48), 1));
-    Button reload = button("Reload", false);
-    reload.setContentDescription("Reload current lesson");
-    reload.setOnClickListener(
-        v -> {
-          if (!base.isEmpty()) {
-            openWeb();
-            web.reload();
-          }
-        });
-    toolbar.addView(reload);
-    Button connect = button("Home", false);
-    connect.setOnClickListener(
-        v -> {
-          openWeb();
-          web.loadUrl(base + "/");
-        });
-    toolbar.addView(connect);
-    shell.addView(toolbar);
-    location = text("Android learning app", 11, MUTED);
-    location.setPadding(dp(16), 0, dp(16), dp(9));
-    location.setMaxLines(1);
-    shell.addView(location);
     progress = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
     progress.setProgressTintList(ColorStateList.valueOf(ACCENT));
     progress.setVisibility(View.GONE);
@@ -228,7 +198,6 @@ public final class MainActivity extends Activity {
             failed = false;
             if (!setup) {
               progress.setVisibility(View.VISIBLE);
-              location.setText("Offline learning · Account stays on this phone");
             }
           }
 
@@ -248,7 +217,7 @@ public final class MainActivity extends Activity {
               WebView view, WebResourceRequest request, WebResourceError error) {
             if (request.isForMainFrame())
               showConnectionError(
-                  "The bundled learning page could not be opened. Reload, or reinstall the latest"
+                  "The bundled learning page could not be opened. Reopen the app, or reinstall the latest"
                       + " Sewestian APK.");
           }
 
@@ -366,7 +335,6 @@ public final class MainActivity extends Activity {
     if (web.getParent() != null) ((ViewGroup) web.getParent()).removeView(web);
     content.addView(web, new FrameLayout.LayoutParams(-1, -1));
     web.onResume();
-    location.setText("Offline learning · Account stays on this phone");
   }
 
   private void showConnectionError(String detail) {

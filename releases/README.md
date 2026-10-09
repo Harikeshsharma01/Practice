@@ -1,10 +1,12 @@
-# Sewestian 1.1 offline preview
+# Sewestian 1.2 offline preview
 
-[Download the new APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk) · [Checksum](Sewestian-1.1-offline-preview.apk.sha256) · [Install guide](../docs/ANDROID_APP.md)
+[Download the new APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.2-offline-preview.apk) · [Checksum](Sewestian-1.2-offline-preview.apk.sha256) · [Install guide](../docs/ANDROID_APP.md)
 
-Released 8 October 2026. Android 8.0+, app ID `com.sewestian.learning`, version code 2. About 36 MB. Install over the earlier version to keep app data; the original signing key is retained.
+Released 9 October 2026. Android 8.0+, app ID `com.sewestian.learning`, version code 3. About 36 MB. Install over the earlier version to keep app data; the original signing key is retained.
 
-- Removed the hosted-site/classroom-Wi-Fi chooser. Home and Reload open bundled content.
+- Removed the native Reload/Home toolbar and its persistent status row.
+- Sidebar, course summary and book contents scroll with the page instead of staying pinned.
+- The app opens bundled content without a hosted-site/classroom-Wi-Fi chooser.
 - Local email/password signup/login before learning, plus Sign out. Passwords are salted hashes, not plaintext.
 - Bundled canonical lessons, study books, simulations and 138 generated narrated videos/captions.
 - Clickable **Your universe** home link and Back button shared with the website.

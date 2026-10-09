@@ -53,7 +53,7 @@ export function AppDownload() {
             account. Do not use your Google password.
           </li>
           <li>
-            Log in to learn. Use Your universe or the app's Home button to
+            Log in to learn. Use Your universe to
             return home, and Back to return to the previous page.
           </li>
         </ol>

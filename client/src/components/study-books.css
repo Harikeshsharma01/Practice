@@ -30,8 +30,7 @@
   align-items: start;
 }
 .unit-book-toc {
-  position: sticky;
-  top: 100px;
+  position: static;
   background: rgba(25, 22, 49, 0.9);
   border: 1px solid #494064;
   border-radius: 20px;

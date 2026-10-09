@@ -32,7 +32,7 @@ CBSE IT means **Information Technology (802)** here, not Informatics Practices (
 
 Student signup/login is now required to open learning content. Run `npm run local` for a local website with accounts saved on the server. Google sign-in is disabled until configured; see [account setup](docs/ACCOUNTS.md).
 
-Download the [Sewestian offline Android preview](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk) for Android 8.0+. It bundles lessons/videos and local email/password accounts, with Home/Back navigation and no hosted/Wi-Fi chooser. Website and offline accounts do not sync. Teacher messaging and Google authentication are unavailable in the offline APK. See [installation/building](docs/ANDROID_APP.md) and [shared-code update rules](docs/SHARED_PLATFORM.md).
+Download the [Sewestian offline Android preview](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.2-offline-preview.apk) for Android 8.0+. It bundles lessons/videos and local email/password accounts, with Home/Back navigation and no hosted/Wi-Fi chooser. Website and offline accounts do not sync. Teacher messaging and Google authentication are unavailable in the offline APK. See [installation/building](docs/ANDROID_APP.md) and [shared-code update rules](docs/SHARED_PLATFORM.md).
 
 ## Local development
 

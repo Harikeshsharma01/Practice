@@ -84,8 +84,9 @@ svg {
 }
 .sidebar {
   width: 224px;
-  position: fixed;
-  inset: 0 auto 0 0;
+  position: relative;
+  align-self: flex-start;
+  flex-shrink: 0;
   background: #161519;
   border-right: 1px solid #29262d;
   padding: 35px 20px 20px;
@@ -266,7 +267,7 @@ svg {
 }
 .main-shell {
   width: calc(100% - 224px);
-  margin-left: 224px;
+  margin-left: 0;
   display: flex;
   flex-direction: column;
 }
@@ -1467,8 +1468,7 @@ select {
   border: 1px solid #342c42;
   border-radius: 10px;
   padding: 23px;
-  position: sticky;
-  top: 20px;
+  position: static;
 }
 .course-summary h2 {
   font-size: 54px;
@@ -2865,7 +2865,7 @@ textarea {
     padding-right: 16px;
   }
   .main-shell {
-    margin-left: 204px;
+    margin-left: 0;
     width: calc(100% - 204px);
   }
   .brand {
@@ -3311,6 +3311,8 @@ textarea {
 }
 @media (max-width: 760px) {
   .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
     transform: translateX(-100%);
     transition: transform 0.25s;
     width: 235px;

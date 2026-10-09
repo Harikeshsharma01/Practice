@@ -1,15 +1,17 @@
-# Sewestian offline Android app — 1.1 preview
+# Sewestian offline Android app — 1.2 preview
 
-[Download the current APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.1-offline-preview.apk), or use **Get Android app** at `/mobile` on your local/deployed Sewestian website. About 36 MB. Android 8.0+ with an updated System WebView; APKs do not install on iPhones.
+[Download the current APK](https://github.com/Harikeshsharma01/Practice/raw/refs/heads/main/releases/Sewestian-1.2-offline-preview.apk), or use **Get Android app** at `/mobile` on your local/deployed Sewestian website. About 36 MB. Android 8.0+ with an updated System WebView; APKs do not install on iPhones.
 
 ## Install and sign in
 
 1. Download/open the APK. Allow installation from your browser/file manager if Android requests it.
 2. Open Sewestian. The app directly opens its bundled sign-in screen; there is no hosted-site or classroom-Wi-Fi chooser.
 3. Select **Sign up**, enter a name/email and a Sewestian password of at least 12 characters. Do not enter a Google password.
-4. Sign in to open the learning pages. **Your universe** and native **Home** return home; Back returns to the previous page. Sign out is in the website-style top bar.
+4. Sign in to open the learning pages. **Your universe** returns home; Back returns to the previous page. Sign out is in the website-style top bar.
 
-The same app ID (`com.sewestian.learning`) and signing certificate are retained, with version code 2. Install over version 1 to retain app data; do not uninstall first. Old connected-website sessions are not local accounts: create a local account for this new edition.
+The same app ID (`com.sewestian.learning`) and signing certificate are retained, with version code 3. Install over your earlier version to retain app data; do not uninstall first. Old connected-website sessions are not local accounts: create a local account for this new edition.
+
+The native Reload/Home bar has been removed. Website navigation and the book contents panel scroll away while reading.
 
 ## What works offline
 

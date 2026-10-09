@@ -1,8 +1,8 @@
 {
-  "version": "1.1-offline-preview",
-  "versionCode": 2,
-  "file": "Sewestian-1.1-offline-preview.apk",
+  "version": "1.2-offline-preview",
+  "versionCode": 3,
+  "file": "Sewestian-1.2-offline-preview.apk",
   "minimumAndroid": "8.0",
-  "sha256": "206565fd85cafb536c7be068cb3139ec92a1f57c4fed82642a1c1ea10beeebe3",
+  "sha256": "1d890b63796326112978eb541404ef046a744fe9d61411cb33a4b68999892224",
   "edition": "offline"
 }
